@@ -35,13 +35,8 @@ export default function ContactPage() {
               Get in touch with Dwarkadhish Paper Products. Our team welcomes your enquiry.
             </p>
           </div>
-          <div className="contact-logo-panel" aria-label="Dwarkadhish Paper Products logo placeholder">
-            <div className="contact-logo-placeholder">
-              <div className="contact-logo-symbol">DP</div>
-              <strong>DWARKADHISH</strong>
-              <span>Paper Products</span>
-              <small>Stationery Manufacturer</small>
-            </div>
+          <div className="contact-logo-panel" aria-label="Logo placeholder">
+            <div className="contact-logo-placeholder" />
           </div>
         </div>
       </section>
