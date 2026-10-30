@@ -185,3 +185,66 @@
  .catalog-image{height:125px;flex-basis:125px}
  .catalog-card{min-height:275px}
 }
+
+
+/* Product catalogue scale refinement — wider desktop canvas */
+.products-content{width:min(1120px,calc(100% - 64px));padding-top:44px;padding-bottom:30px}
+.products-banner{height:238px;padding:34px 42px}
+.products-banner-copy>p{font-size:10px}
+.products-banner-copy h1{font-size:39px}
+.products-banner-copy>div{font-size:12px}
+.banner-notebook{transform:scale(1.12) rotate(-5deg);margin-right:34px}
+.products-toolbar{grid-template-columns:1fr 150px;gap:18px;margin-top:24px}
+.products-search,.products-sort{height:40px}
+.products-search input,.products-sort select{font-size:12px}
+.products-filters{gap:9px;margin-top:17px}
+.products-filters button{height:28px;padding:0 14px;font-size:10px}
+.products-heading-row{margin:22px 0 12px}
+.products-heading-row h2{font-size:18px}
+.products-heading-row>span{font-size:10px}
+.products-card-grid{gap:18px}
+.catalog-card{min-height:390px}
+.catalog-image{height:195px;flex-basis:195px}
+.catalog-details{padding:15px 13px 14px}
+.catalog-details h3{font-size:13px}
+.catalog-meta{font-size:9px}
+.catalog-description{font-size:10px}
+.catalog-rating{font-size:9px}
+.catalog-price{font-size:15px}
+.catalog-actions button{height:29px;font-size:9px}
+.catalog-coming button{height:30px;min-width:108px;font-size:9px}
+.products-explore{margin-top:23px}
+.products-explore button{height:38px;font-size:11px}
+.products-footer{min-height:125px}
+.products-footer>b{font-size:11px}
+.products-footer>span,.products-footer>p{font-size:9px}
+@media(max-width:760px){
+ .products-content{width:calc(100% - 32px);padding:23px 0 22px}
+ .products-banner{height:auto;min-height:175px;padding:22px 18px}
+ .products-banner-copy>p{font-size:8px}
+ .products-banner-copy h1{font-size:27px}
+ .products-banner-copy>div{font-size:9px}
+ .banner-notebook{transform:rotate(-5deg);margin-right:0}
+ .products-toolbar{grid-template-columns:1fr 115px;gap:8px;margin-top:15px}
+ .products-search,.products-sort{height:34px}
+ .products-search input,.products-sort,.products-sort select{font-size:9px}
+ .products-filters{gap:6px;margin-top:12px}
+ .products-filters button{height:24px;padding:0 9px;font-size:8px}
+ .products-heading-row{margin:17px 0 9px}
+ .products-heading-row h2{font-size:14px}
+ .products-heading-row>span{font-size:9px}
+ .products-card-grid{gap:11px}
+ .catalog-card{min-height:295px}
+ .catalog-image{height:145px;flex-basis:145px}
+ .catalog-details{padding:10px 9px}
+ .catalog-details h3{font-size:10px}
+ .catalog-meta{font-size:7px}
+ .catalog-description{font-size:8px}
+ .catalog-rating{font-size:8px}
+ .catalog-price{font-size:13px}
+ .catalog-actions button{height:26px;padding:0 6px;font-size:7px}
+ .catalog-coming button{height:27px;min-width:96px;font-size:8px}
+ .products-explore{margin-top:20px}
+ .products-explore button{height:34px;font-size:10px}
+ .products-footer{min-height:105px}
+}
