@@ -35,7 +35,7 @@ export const products = [
 export const navItems = [
   ["Home", "#home"],
   ["Products", "/products"],
-  ["Customize Book", "/customize"],
+  ["Customize Book", "/customize-book"],
   ["About Us", "/about"],
   ["Contact", "/contact"],
 ];

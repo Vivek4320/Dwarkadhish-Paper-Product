@@ -129,7 +129,7 @@ export default function AboutPage() {
             <p className="text-[10px] font-extrabold tracking-[0.19em] text-[#ED1C2E]">
               ABOUT OUR COMPANY
             </p>
-            <h1 className="mt-4 text-5xl font-extrabold tracking-[-0.045em] text-[#ED1C2E] sm:text-6xl">
+            <h1 className="mt-4 text-5xl font-extrabold tracking-[-0.045em] text-black sm:text-6xl">
               About Us.
             </h1>
             <p className="mt-5 max-w-xl text-sm leading-7 text-[#666] sm:text-base">
