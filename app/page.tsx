@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useClerk, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import SiteHeader from "../components/SiteHeader";
 import HomeHero from "../components/HomeHero";
 import BenefitsStrip from "../components/BenefitsStrip";
@@ -12,23 +12,18 @@ import LoginModal from "../components/LoginModal";
 
 export default function HomePage() {
   const [loginOpen, setLoginOpen] = useState(false);
-  const { isSignedIn, user } = useUser();
-  const { signOut } = useClerk();
+  const { isSignedIn } = useUser();
 
   useEffect(() => {
     if (isSignedIn) setLoginOpen(false);
   }, [isSignedIn]);
 
-  async function handleLogout() {
-    await signOut();
-  }
 
   return (
     <main id="home" className="site-shell">
       <SiteHeader
         onLogin={() => setLoginOpen(true)}
-        userEmail={user?.primaryEmailAddress?.emailAddress ?? null}
-        onLogout={handleLogout}
+        isSignedIn={Boolean(isSignedIn)}
       />
       <HomeHero />
       <BenefitsStrip />
