@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import SiteHeader from "./SiteHeader";
+import LoginModal from "./LoginModal";
 
 type Product = {
   id: number;
@@ -201,9 +204,15 @@ function ProductArtwork({ type }: { type: Product["artwork"] }) {
 }
 
 export default function ProductsPage() {
+  const [loginOpen, setLoginOpen] = useState(false);
+  const { isSignedIn } = useUser();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All Products");
   const [sort, setSort] = useState("featured");
+
+  useEffect(() => {
+    if (isSignedIn) setLoginOpen(false);
+  }, [isSignedIn]);
 
   const visibleProducts = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -234,51 +243,10 @@ export default function ProductsPage() {
 
   return (
     <main className="min-h-screen bg-white font-[Arial,Helvetica,sans-serif] text-[#211F1E]">
-      <header className="sticky top-0 z-30 border-b border-[#E9E3DD] bg-white/95 backdrop-blur">
-        <div className="mx-auto flex min-h-19 max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
-          <Link
-            href="/"
-            aria-label="Dwarkadhish Paper Products home"
-            className="flex h-12 w-40 items-center"
-          >
-            <Image
-              src="/Main-Logo.png"
-              alt="Dwarkadhish Paper Products"
-              width={340}
-              height={276}
-              priority
-              className="h-full w-auto max-w-full object-contain"
-            />
-          </Link>
-          <nav className="hidden items-center gap-6 text-[13px] font-medium md:flex">
-            <Link className="transition hover:text-[#D71920]" href="/">
-              Home
-            </Link>
-            <Link className="font-semibold text-[#D71920]" href="/products">
-              Products
-            </Link>
-            <Link className="transition hover:text-[#D71920]" href="/contact">
-              Customize
-            </Link>
-            <Link className="transition hover:text-[#D71920]" href="/about">
-              About
-            </Link>
-            <Link className="transition hover:text-[#D71920]" href="/contact">
-              Contact
-            </Link>
-          </nav>
-          <Link
-            href="/contact"
-            className="relative rounded-lg border border-[#E9E3DD] px-3 py-2 text-lg"
-            aria-label="Contact for cart and orders"
-          >
-            🛒
-            <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#D71920] text-[10px] text-white">
-              0
-            </span>
-          </Link>
-        </div>
-      </header>
+      <SiteHeader
+        onLogin={() => setLoginOpen(true)}
+        isSignedIn={Boolean(isSignedIn)}
+      />
 
       <div className="mx-auto max-w-7xl px-5 pb-20 pt-8 sm:px-8 lg:px-10">
         <p className="text-xs text-[#77716D]">
@@ -465,6 +433,7 @@ export default function ProductsPage() {
           <Link href="/contact">Contact</Link>
         </div>
       </footer>
+      {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
     </main>
   );
 }
