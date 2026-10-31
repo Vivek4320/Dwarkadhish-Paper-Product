@@ -136,7 +136,10 @@ export default function CustomizeBookPage() {
       unitPrice,
       total,
     };
-    sessionStorage.setItem("dwarkadhish-checkout-item", JSON.stringify(checkoutItem));
+    sessionStorage.setItem(
+      "dwarkadhish-checkout-item",
+      JSON.stringify(checkoutItem),
+    );
     router.push("/checkout");
   }
 
