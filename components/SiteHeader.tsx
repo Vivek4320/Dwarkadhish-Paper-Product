@@ -7,9 +7,14 @@ import { navItems } from "./site-data";
 type SiteHeaderProps = {
   onLogin: () => void;
   isSignedIn: boolean;
+  showAnnouncement?: boolean;
 };
 
-export default function SiteHeader({ onLogin, isSignedIn }: SiteHeaderProps) {
+export default function SiteHeader({
+  onLogin,
+  isSignedIn,
+  showAnnouncement = false,
+}: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleAccountAction = () => {
@@ -21,14 +26,16 @@ export default function SiteHeader({ onLogin, isSignedIn }: SiteHeaderProps) {
 
   return (
     <>
-      <div className="announcement-bar">
-        <div className="announcement-inner">
-          <span>CRAFTED FOR EVERY NOTE WORTH KEEPING</span>
-          <span className="announcement-gold">
-            STATIONERY MANUFACTURER&nbsp; · &nbsp;CUSTOM & BULK ORDERS
-          </span>
+{showAnnouncement && (
+        <div className="announcement-bar">
+          <div className="announcement-inner">
+            <span>CRAFTED FOR EVERY NOTE WORTH KEEPING</span>
+            <span className="announcement-gold">
+              STATIONERY MANUFACTURER&nbsp; · &nbsp;CUSTOM & BULK ORDERS
+            </span>
+          </div>
         </div>
-      </div>
+      )}
       <header className="site-header">
         <div className="header-inner">
           <a
