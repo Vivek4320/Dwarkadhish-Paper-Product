@@ -290,7 +290,9 @@ export default function CheckoutPage() {
             <div className="space-y-3 border-b border-[#F0ECE8] py-5 text-xs">
               <div className="flex justify-between text-[#77716E]">
                 <span>Subtotal</span>
-                <span className="font-semibold text-[#211F1F]">{money(subtotal)}</span>
+                <span className="font-semibold text-[#211F1F]">
+                  {money(subtotal)}
+                </span>
               </div>
               <div className="flex justify-between text-[#16803D]">
                 <span>Coupon Discount</span>
@@ -298,7 +300,9 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between text-[#77716E]">
                 <span>Shipping</span>
-                <span className="font-semibold text-[#211F1F]">{money(shipping)}</span>
+                <span className="font-semibold text-[#211F1F]">
+                  {money(shipping)}
+                </span>
               </div>
               <div className="flex justify-between text-[#77716E]">
                 <span>Taxes</span>
@@ -314,7 +318,8 @@ export default function CheckoutPage() {
             </div>
 
             <div className="mb-4 rounded-xl bg-[#F9F6F2] p-3 text-[10px] leading-5 text-[#6E6966]">
-              🚚 Shipping charges are calculated from your store&apos;s delivery rules.
+              🚚 Shipping charges are calculated from your store&apos;s delivery
+              rules.
               <br />
               This sample uses a demo shipping rate.
             </div>
@@ -326,7 +331,8 @@ export default function CheckoutPage() {
               Place Order · {money(finalAmount)}
             </button>
             <p className="mt-3 text-center text-[10px] leading-5 text-[#8A817A]">
-              By continuing, you agree to the store&apos;s Terms &amp; Conditions and Privacy Policy.
+              By continuing, you agree to the store&apos;s Terms &amp;
+              Conditions and Privacy Policy.
             </p>
             <Link
               href="/customize-book"
