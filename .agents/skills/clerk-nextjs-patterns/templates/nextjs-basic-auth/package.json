@@ -1,7 +1,11 @@
 {
   "name": "clerk-nextjs",
   "private": true,
-  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
   "dependencies": {
     "@clerk/nextjs": "7.9.18",
     "next": "16.4.2",

@@ -8,14 +8,14 @@
 
 ```tsx
 // app/profile/page.tsx
-import { auth } from '@clerk/nextjs/server';
-import { cacheLife, cacheTag } from 'next/cache';
-import { Suspense } from 'react';
+import { auth } from "@clerk/nextjs/server";
+import { cacheLife, cacheTag } from "next/cache";
+import { Suspense } from "react";
 
 async function getUserData(userId: string) {
-  'use cache';
+  "use cache";
   cacheTag(`user-${userId}`);
-  cacheLife('minutes');
+  cacheLife("minutes");
   return db.users.findUnique({ where: { id: userId } });
 }
 
@@ -41,17 +41,17 @@ export default function ProfilePage() {
 ## Revalidate After Updates
 
 ```typescript
-'use server';
-import { updateTag } from 'next/cache';
-import { auth } from '@clerk/nextjs/server';
+"use server";
+import { updateTag } from "next/cache";
+import { auth } from "@clerk/nextjs/server";
 
 export async function updateProfile(formData: FormData) {
   const { userId } = await auth();
-  if (!userId) throw new Error('Unauthorized');
+  if (!userId) throw new Error("Unauthorized");
 
   await db.users.update({
     where: { id: userId },
-    data: { name: formData.get('name') as string },
+    data: { name: formData.get("name") as string },
   });
   updateTag(`user-${userId}`);
 }
@@ -61,7 +61,7 @@ export async function updateProfile(formData: FormData) {
 
 ```tsx
 async function getOrgData(orgId: string) {
-  'use cache';
+  "use cache";
   cacheTag(`org-${orgId}`);
   return db.orgData.findMany({ where: { organizationId: orgId } });
 }
@@ -82,8 +82,8 @@ Render `OrgData` inside `<Suspense>`, the same way as `Profile` above.
 `'use cache'` needs `cacheComponents: true` in `next.config`, the `create-next-app` default since Next.js 16.4. On apps without it, use `unstable_cache` and include the ID in the key and tags:
 
 ```tsx
-import { auth } from '@clerk/nextjs/server';
-import { unstable_cache } from 'next/cache';
+import { auth } from "@clerk/nextjs/server";
+import { unstable_cache } from "next/cache";
 
 export default async function ProfilePage() {
   const { userId } = await auth();
@@ -92,7 +92,7 @@ export default async function ProfilePage() {
   const getCachedUserData = unstable_cache(
     () => db.users.findUnique({ where: { id: userId } }),
     [`user-${userId}`],
-    { revalidate: 60, tags: [`user-${userId}`] }
+    { revalidate: 60, tags: [`user-${userId}`] },
   );
 
   const userData = await getCachedUserData();
