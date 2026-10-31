@@ -123,7 +123,7 @@ function ProductArtwork({ type }: { type: Product["artwork"] }) {
   if (type === "file") {
     return (
       <div className="flex h-full w-full items-center justify-center bg-[#FAF7F2]">
-        <div className="relative h-40 w-28 rounded-md border-l-[10px] border-[#272524] bg-[#f6e6c5] shadow-[9px_7px_0_0_#bf151b]">
+        <div className="relative h-40 w-28 rounded-md border-1-10 border-[#272524] bg-[#f6e6c5] shadow-[9px_7px_0_0_#bf151b]">
           <div className="absolute inset-3 border border-[#d6b65d]" />
           <span className="absolute inset-x-0 top-16 text-center text-xs font-bold">
             DOCUMENT
@@ -160,7 +160,7 @@ function ProductArtwork({ type }: { type: Product["artwork"] }) {
   if (type === "banner" || type === "card") {
     return (
       <div className="flex h-full w-full items-center justify-center bg-[#FAF7F2]">
-        <div className="relative flex h-40 w-28 flex-col items-center justify-center rounded-md border-l-[10px] border-[#272524] bg-[#f6e6c5] shadow-[9px_7px_0_0_#bf151b]">
+        <div className="relative flex h-40 w-28 flex-col items-center justify-center rounded-md border-1-10 border-[#272524] bg-[#f6e6c5] shadow-[9px_7px_0_0_#bf151b]">
           <div className="absolute inset-2 border border-[#d6b65d]" />
           <span className="relative text-xs font-bold">WARRIOR</span>
           <span className="relative mt-1 text-[10px] font-bold">YOUR BOOK</span>
@@ -235,7 +235,7 @@ export default function ProductsPage() {
   return (
     <main className="min-h-screen bg-white font-[Arial,Helvetica,sans-serif] text-[#211F1E]">
       <header className="sticky top-0 z-30 border-b border-[#E9E3DD] bg-white/95 backdrop-blur">
-        <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
+        <div className="mx-auto flex min-h-19 max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
           <Link
             href="/"
             aria-label="Dwarkadhish Paper Products home"
@@ -288,12 +288,12 @@ export default function ProductsPage() {
           / <span className="text-[#D71920]">Products</span>
         </p>
 
-        <section className="relative mt-6 overflow-hidden rounded-2xl bg-[linear-gradient(98deg,#FFF2ED_0%,#FAF7F2_100%)] px-6 py-10 sm:px-10 sm:py-12 lg:min-h-[290px]">
+        <section className="relative mt-6 overflow-hidden rounded-2xl bg-[linear-gradient(98deg,#FFF2ED_0%,#FAF7F2_100%)] px-6 py-10 sm:px-10 sm:py-12 lg:min-h-72.5">
           <div className="relative z-10 max-w-xl">
             <p className="text-[11px] font-bold tracking-[0.18em] text-[#D71920]">
               MADE FOR YOUR EVERYDAY
             </p>
-            <h1 className="mt-4 max-w-sm text-4xl font-bold leading-[1.12] tracking-[-0.04em] text-[#D71920] sm:text-5xl">
+            <h1 className="mt-4 max-w-sm text-4xl font-bold leading-[1.12] tracking-[-0.04em] text-black sm:text-5xl">
               Notebooks for every idea.
             </h1>
             <p className="mt-5 max-w-lg text-sm leading-6 text-[#77716D]">
@@ -301,11 +301,11 @@ export default function ProductsPage() {
               Products. Choose a design or customise your own cover.
             </p>
           </div>
-          <div className="pointer-events-none absolute -right-2 top-8 hidden h-56 w-[330px] items-center justify-center lg:flex">
+          <div className="pointer-events-none absolute -right-2 top-8 hidden h-56 w-82.5 items-center justify-center lg:flex">
             <span className="absolute right-20 top-0 text-5xl text-[#D71920]">
               ♥
             </span>
-            <div className="relative mt-10 flex h-36 w-28 rotate-6 items-center justify-center rounded-md border-l-[10px] border-[#242222] bg-[#F5E5C4] shadow-[10px_7px_0_0_#C5151D]">
+            <div className="relative mt-10 flex h-36 w-28 rotate-6 items-center justify-center rounded-md border-1-10 border-[#242222] bg-[#F5E5C4] shadow-[10px_7px_0_0_#C5151D]">
               <span className="text-center text-sm font-bold leading-5">
                 YOUR
                 <br />
@@ -316,7 +316,7 @@ export default function ProductsPage() {
         </section>
 
         <section className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <label className="flex h-12 w-full items-center gap-3 rounded-lg border border-[#E9E3DD] px-4 lg:max-w-[450px]">
+          <label className="flex h-12 w-full items-center gap-3 rounded-lg border border-[#E9E3DD] px-4 lg:max-w-112.5">
             <span className="text-xl text-[#77716D]">⌕</span>
             <input
               value={query}
@@ -366,7 +366,7 @@ export default function ProductsPage() {
                 key={product.id}
                 className="overflow-hidden rounded-xl border border-[#E9E3DD] bg-white transition duration-200 hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="relative h-[225px] overflow-hidden">
+                <div className="relative h-56.25 overflow-hidden">
                   <ProductArtwork type={product.artwork} />
                   {product.badge && (
                     <span className="absolute left-3 top-3 rounded-md bg-[#D71920] px-2.5 py-1.5 text-[10px] font-bold text-white">
@@ -374,7 +374,7 @@ export default function ProductsPage() {
                     </span>
                   )}
                 </div>
-                <div className="flex min-h-[225px] flex-col p-4">
+                <div className="flex min-h-56.25 flex-col p-4">
                   <p className="text-[10px] tracking-[0.08em] text-[#77716D]">
                     {product.detail}
                   </p>
@@ -415,7 +415,7 @@ export default function ProductsPage() {
                     <div className="mt-auto flex justify-center pt-7">
                       <Link
                         href={`/coming-soon?product=${encodeURIComponent(product.name)}`}
-                        className="inline-flex min-h-9 min-w-[112px] items-center justify-center rounded-md border border-[#D71920] bg-white px-5 text-[11px] font-semibold text-[#211F1E] transition hover:bg-[#fff4f3]"
+                        className="inline-flex min-h-9 min-w-28 items-center justify-center rounded-md border border-[#D71920] bg-white px-5 text-[11px] font-semibold text-[#211F1E] transition hover:bg-[#fff4f3]"
                       >
                         Coming Soon
                       </Link>
