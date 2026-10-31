@@ -30,22 +30,74 @@ const values = [
 ];
 
 const products = [
-  ["▤", "Notebooks & Exercise Books", "Quality notebooks for schools, students, and everyday use."],
-  ["▧", "School Diaries", "Customized diaries designed for educational institutions."],
-  ["▤", "Examination Answer Books", "Answer books and examination stationery for schools, colleges, and institutions."],
-  ["▥", "Registers & Record Books", "Practical registers for offices, organizations, and government departments."],
-  ["✎", "Drawing Books & Writing Pads", "Paper products for educational, professional, and everyday applications."],
-  ["▣", "Bill Books & Business Stationery", "Customized bill books, letterheads, and essential business stationery."],
-  ["♧", "Paper Bags", "Paper-based packaging solutions for different business requirements."],
-  ["✳", "Customized Printing Solutions", "Printing tailored to customer specifications, including sizes, page counts, layouts, and designs."],
+  [
+    "▤",
+    "Notebooks & Exercise Books",
+    "Quality notebooks for schools, students, and everyday use.",
+  ],
+  [
+    "▧",
+    "School Diaries",
+    "Customized diaries designed for educational institutions.",
+  ],
+  [
+    "▤",
+    "Examination Answer Books",
+    "Answer books and examination stationery for schools, colleges, and institutions.",
+  ],
+  [
+    "▥",
+    "Registers & Record Books",
+    "Practical registers for offices, organizations, and government departments.",
+  ],
+  [
+    "✎",
+    "Drawing Books & Writing Pads",
+    "Paper products for educational, professional, and everyday applications.",
+  ],
+  [
+    "▣",
+    "Bill Books & Business Stationery",
+    "Customized bill books, letterheads, and essential business stationery.",
+  ],
+  [
+    "♧",
+    "Paper Bags",
+    "Paper-based packaging solutions for different business requirements.",
+  ],
+  [
+    "✳",
+    "Customized Printing Solutions",
+    "Printing tailored to customer specifications, including sizes, page counts, layouts, and designs.",
+  ],
 ];
 
 const reasons = [
-  ["01", "Quality-Focused Approach", "We emphasize product quality and consistency at every stage."],
-  ["02", "Customized Solutions", "We work to meet customer requirements for sizes, specifications, designs, and quantities."],
-  ["03", "Wide Product Range", "From notebooks and examination answer books to office stationery and customized printing."],
-  ["04", "Customer-Centric Service", "We value customer requirements and aim to provide responsive, dependable service."],
-  ["05", "Commitment to Excellence", 'Our principle, "Give More Than Expected," reflects our dedication to customer satisfaction.'],
+  [
+    "01",
+    "Quality-Focused Approach",
+    "We emphasize product quality and consistency at every stage.",
+  ],
+  [
+    "02",
+    "Customized Solutions",
+    "We work to meet customer requirements for sizes, specifications, designs, and quantities.",
+  ],
+  [
+    "03",
+    "Wide Product Range",
+    "From notebooks and examination answer books to office stationery and customized printing.",
+  ],
+  [
+    "04",
+    "Customer-Centric Service",
+    "We value customer requirements and aim to provide responsive, dependable service.",
+  ],
+  [
+    "05",
+    "Commitment to Excellence",
+    'Our principle, "Give More Than Expected," reflects our dedication to customer satisfaction.',
+  ],
 ];
 
 const missions = [
@@ -106,7 +158,14 @@ export default function AboutPage() {
           <div className="relative mx-auto flex min-h-64 w-full max-w-md items-center justify-center">
             <div className="absolute right-4 top-4 h-56 w-56 rounded-full bg-[#ED1C2E]/[0.04] sm:right-12" />
             <div className="relative flex h-56 w-full max-w-[320px] items-center justify-center rounded-md border border-[#eee5df] bg-white/90 p-8 shadow-[0_15px_45px_rgba(0,0,0,0.07)]">
-              <Image src="/Main-Logo.png" alt="Dwarkadhish Paper Products" width={340} height={276} priority className="h-full w-full object-contain" />
+              <Image
+                src="/Main-Logo.png"
+                alt="Dwarkadhish Paper Products"
+                width={340}
+                height={276}
+                priority
+                className="h-full w-full object-contain"
+              />
             </div>
             <div className="absolute -bottom-2 right-0 flex items-center gap-2 border border-[#eee] bg-white px-4 py-3 text-[10px] font-semibold shadow-[0_5px_18px_rgba(0,0,0,0.04)] sm:right-3">
               <span className="h-1.5 w-1.5 rounded-full bg-[#ED1C2E]" />
@@ -135,7 +194,13 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
           <div className="flex min-h-[300px] flex-col items-center justify-center rounded-md bg-[#202020] p-8 text-center">
             <div className="flex h-44 w-48 items-center justify-center rounded-lg bg-white p-5">
-              <Image src="/Main-Logo.png" alt="Dwarkadhish Paper Products" width={340} height={276} className="h-full w-full object-contain" />
+              <Image
+                src="/Main-Logo.png"
+                alt="Dwarkadhish Paper Products"
+                width={340}
+                height={276}
+                className="h-full w-full object-contain"
+              />
             </div>
             <p className="mt-5 text-[9px] font-medium tracking-[0.19em] text-[#ddd]">
               PAPER PRODUCTS &amp; PRINTING SOLUTIONS
@@ -229,7 +294,9 @@ export default function AboutPage() {
                 <span className="flex h-9 w-9 items-center justify-center rounded-sm bg-[#fff0ef] text-lg text-[#ED1C2E]">
                   {icon}
                 </span>
-                <h3 className="mt-5 text-sm font-extrabold leading-6">{title}</h3>
+                <h3 className="mt-5 text-sm font-extrabold leading-6">
+                  {title}
+                </h3>
                 <p className="mt-2 text-xs leading-5 text-[#666]">
                   {description}
                 </p>
@@ -312,8 +379,8 @@ export default function AboutPage() {
                 To Become a Trusted Name.
               </h3>
               <p className="relative mt-5 text-sm leading-7 text-[#666]">
-                To become a trusted and preferred name in the paper products
-                and printing industry by delivering quality products, embracing
+                To become a trusted and preferred name in the paper products and
+                printing industry by delivering quality products, embracing
                 innovation, and building lasting customer relationships across
                 India.
               </p>
@@ -357,8 +424,13 @@ export default function AboutPage() {
           </div>
           <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {reasons.map(([number, title, description]) => (
-              <article key={number} className="border border-[#eee] bg-white p-6">
-                <p className="text-xs font-extrabold text-[#ED1C2E]">{number}</p>
+              <article
+                key={number}
+                className="border border-[#eee] bg-white p-6"
+              >
+                <p className="text-xs font-extrabold text-[#ED1C2E]">
+                  {number}
+                </p>
                 <h3 className="mt-4 text-sm font-extrabold">{title}</h3>
                 <p className="mt-3 text-xs leading-5 text-[#666]">
                   {description}
@@ -422,8 +494,8 @@ export default function AboutPage() {
           <p className="mt-5 text-sm leading-7 text-[#666]">
             At Dwarkadhish Paper Products, we believe that every product
             represents our commitment to quality and trust. We aim to deliver
-            products that meet expectations, service that builds confidence,
-            and value that encourages long-term partnerships.
+            products that meet expectations, service that builds confidence, and
+            value that encourages long-term partnerships.
           </p>
           <p className="mt-6 text-[10px] font-bold tracking-[0.15em] text-[#ED1C2E]">
             GIVE MORE THAN EXPECTED.

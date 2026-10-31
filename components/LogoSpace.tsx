@@ -2,7 +2,12 @@ import Image from "next/image";
 
 export default function LogoSpace({ className = "" }: { className?: string }) {
   return (
-    <span className={"logo-space relative inline-flex items-center justify-center " + className}>
+    <span
+      className={
+        "logo-space relative inline-flex items-center justify-center " +
+        className
+      }
+    >
       <Image
         src="/Main-Logo.png"
         alt="Dwarkadhish Paper Products"
