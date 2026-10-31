@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { navItems } from "./site-data";
-import LogoSpace from "./LogoSpace";
 export default function SiteHeader({ onLogin }: { onLogin: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const handleLogin = () => {
@@ -25,7 +24,11 @@ export default function SiteHeader({ onLogin }: { onLogin: () => void }) {
             href="#home"
             aria-label="Dwarkadhish Paper Products home"
           >
-            <LogoSpace />
+            <img
+              src="/Main-Logo.png"
+              alt="Dwarkadhish Paper Products"
+              className="brand-logo"
+            />
           </a>
           <nav className="desktop-nav" aria-label="Main navigation">
             {navItems.map(([label, href]) => (
