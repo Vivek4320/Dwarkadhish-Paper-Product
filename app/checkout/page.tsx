@@ -37,6 +37,9 @@ export default function CheckoutPage() {
   }, []);
 
   const subtotal = item?.total ?? 0;
+  const shipping = item ? 50 : 0;
+  const couponDiscount = 0;
+  const finalAmount = subtotal - couponDiscount + shipping;
 
   return (
     <main className="min-h-screen bg-[#F8F6F2] font-[Arial,Helvetica,sans-serif] text-[#211F1F]">
@@ -269,36 +272,61 @@ export default function CheckoutPage() {
               </div>
             )}
 
+            <div className="mt-5 flex gap-2 border-b border-[#F0ECE8] pb-5">
+              <input
+                type="text"
+                placeholder="COUPON CODE"
+                aria-label="Coupon code"
+                className="h-11 min-w-0 flex-1 rounded-lg border border-[#E9E3DD] px-3 text-xs outline-none placeholder:text-[#A69B92] focus:border-[#D71920]"
+              />
+              <button
+                type="button"
+                className="h-11 rounded-lg border border-[#D71920] px-4 text-xs font-semibold text-[#D71920] transition hover:bg-[#FFF5F5]"
+              >
+                Apply
+              </button>
+            </div>
+
             <div className="space-y-3 border-b border-[#F0ECE8] py-5 text-xs">
               <div className="flex justify-between text-[#77716E]">
                 <span>Subtotal</span>
-                <span className="font-semibold text-[#211F1F]">
-                  {money(subtotal)}
-                </span>
+                <span className="font-semibold text-[#211F1F]">{money(subtotal)}</span>
+              </div>
+              <div className="flex justify-between text-[#16803D]">
+                <span>Coupon Discount</span>
+                <span className="font-semibold">−{money(couponDiscount)}</span>
               </div>
               <div className="flex justify-between text-[#77716E]">
                 <span>Shipping</span>
-                <span className="text-[#8A817A]">Calculated later</span>
+                <span className="font-semibold text-[#211F1F]">{money(shipping)}</span>
               </div>
               <div className="flex justify-between text-[#77716E]">
-                <span>Discount</span>
-                <span>—</span>
+                <span>Taxes</span>
+                <span className="font-semibold text-[#8A817A]">Included</span>
               </div>
             </div>
+
             <div className="flex items-center justify-between py-5">
-              <span className="text-sm font-bold">Estimated total</span>
+              <span className="text-sm font-bold">Final Amount</span>
               <span className="text-2xl font-bold text-[#D71920]">
-                {money(subtotal)}
+                {money(finalAmount)}
               </span>
             </div>
+
+            <div className="mb-4 rounded-xl bg-[#F9F6F2] p-3 text-[10px] leading-5 text-[#6E6966]">
+              🚚 Shipping charges are calculated from your store&apos;s delivery rules.
+              <br />
+              This sample uses a demo shipping rate.
+            </div>
+
             <button
               type="button"
               className="min-h-12 w-full rounded-lg bg-[#D71920] px-4 text-sm font-bold text-white transition hover:bg-[#B91620]"
             >
-              Place Order
+              Place Order · {money(finalAmount)}
             </button>
             <p className="mt-3 text-center text-[10px] leading-5 text-[#8A817A]">
-              Order submission and payment will be connected in the next step.
+              By continuing, you agree to the store&apos;s Terms &amp; Conditions and Privacy Policy.
             </p>
             <Link
               href="/customize-book"
