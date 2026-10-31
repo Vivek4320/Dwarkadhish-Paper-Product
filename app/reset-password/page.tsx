@@ -86,7 +86,9 @@ export default function ResetPasswordPage() {
         </p>
 
         {!ready ? (
-          <p className="mt-6 text-sm text-[#6E6966]">Verifying your reset link...</p>
+          <p className="mt-6 text-sm text-[#6E6966]">
+            Verifying your reset link...
+          </p>
         ) : success ? (
           <p className="mt-6 rounded-md bg-[#F0F8F0] p-3 text-sm text-[#28633A]">
             {message}

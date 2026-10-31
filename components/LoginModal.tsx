@@ -259,9 +259,7 @@ export default function LoginModal({
                 Password
                 <input
                   type="password"
-                  autoComplete={
-                    isSignup ? "new-password" : "current-password"
-                  }
+                  autoComplete={isSignup ? "new-password" : "current-password"}
                   placeholder="Enter your password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
