@@ -51,7 +51,9 @@ export default function ComingSoonPage() {
             </p>
 
             <div className="w-full max-w-[410px] rounded-[5px] border border-[#D7AD51] border-l-[3px] bg-white px-[17px] pb-[15px] pt-5">
-              <p className="text-[10px] text-[#77716B]">YOU&apos;RE LOOKING FOR</p>
+              <p className="text-[10px] text-[#77716B]">
+                YOU&apos;RE LOOKING FOR
+              </p>
               <p className="mt-1 text-[15px] font-bold text-[#211F1F]">
                 {productName}
               </p>
