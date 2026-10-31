@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { User } from "@supabase/supabase-js";
-import { getSupabaseBrowserClient } from "@/lib/supabase";
+import { useClerk, useUser } from "@clerk/nextjs";
 import SiteHeader from "./SiteHeader";
 import HomeHero from "./HomeHero";
 import BenefitsStrip from "./BenefitsStrip";
@@ -13,36 +12,22 @@ import LoginModal from "./LoginModal";
 
 export default function HomePage() {
   const [loginOpen, setLoginOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const { isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
 
   useEffect(() => {
-    const supabase = getSupabaseBrowserClient();
-    if (!supabase) return;
-
-    supabase.auth.getUser().then(({ data }) => setUser(data.user));
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+    if (isSignedIn) setLoginOpen(false);
+  }, [isSignedIn]);
 
   async function handleLogout() {
-    const supabase = getSupabaseBrowserClient();
-    if (!supabase) return;
-
-    await supabase.auth.signOut();
-    setUser(null);
+    await signOut();
   }
 
   return (
     <main id="home" className="site-shell">
       <SiteHeader
         onLogin={() => setLoginOpen(true)}
-        userEmail={user?.email ?? null}
+        userEmail={user?.primaryEmailAddress?.emailAddress ?? null}
         onLogout={handleLogout}
       />
       <HomeHero />
@@ -51,10 +36,7 @@ export default function HomePage() {
       <SiteFooter />
       <MobileBottomNav />
       {loginOpen && (
-        <LoginModal
-          onClose={() => setLoginOpen(false)}
-          onAuthenticated={() => setLoginOpen(false)}
-        />
+        <LoginModal onClose={() => setLoginOpen(false)} />
       )}
     </main>
   );
