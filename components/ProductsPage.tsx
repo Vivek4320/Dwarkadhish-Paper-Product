@@ -368,12 +368,14 @@ export default function ProductsPage() {
                         <Link
                           href="/contact"
                           className="flex min-h-9 items-center justify-center rounded-md border border-[#D71920] px-2 text-[11px] font-bold text-[#D71920] transition hover:bg-[#fff4f3]"
+                          style={{ color: "#D71920" }}
                         >
                           View Details
                         </Link>
                         <Link
-                          href="/contact"
-                          className="flex min-h-9 items-center justify-center rounded-md border border-[#D71920] bg-[#D71920] px-2 text-[11px] font-bold text-white transition hover:bg-[#b81720]"
+                          href="/customize-book"
+                          className="flex min-h-9 items-center justify-center rounded-md border border-[#D71920] bg-[#D71920] px-2 text-[11px] font-bold transition hover:bg-[#b81720]"
+                          style={{ color: "#FFFFFF" }}
                         >
                           Customize Now
                         </Link>
@@ -414,7 +416,8 @@ export default function ProductsPage() {
         <div className="mt-14 flex justify-center">
           <Link
             href="/contact"
-            className="inline-flex min-h-12 items-center justify-center rounded-lg border border-[#D71920] px-7 text-sm font-bold text-[#D71920] transition hover:bg-[#D71920] hover:text-white"
+            className="inline-flex min-h-12 items-center justify-center rounded-lg px-7 text-sm font-bold text-[#D71920] bg-[#D71920] transition hover:bg-[#b81720]"
+            style={{ color: "#FFFFFF" }}
           >
             Explore All Products
           </Link>

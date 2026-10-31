@@ -149,7 +149,7 @@ export default function AboutPage() {
                 Discover Our Story →
               </a>
               <Link
-                href="/contact"
+                href="/products"
                 className="inline-flex min-h-11 items-center justify-center rounded-sm border border-[#dedede] bg-white px-5 text-xs font-semibold text-[#202020] transition hover:border-[#ED1C2E] hover:text-[#ED1C2E]"
               >
                 Our Products
