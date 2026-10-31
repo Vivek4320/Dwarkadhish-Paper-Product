@@ -35,9 +35,7 @@ export default function HomePage() {
       <CustomizeSection />
       <SiteFooter />
       <MobileBottomNav />
-      {loginOpen && (
-        <LoginModal onClose={() => setLoginOpen(false)} />
-      )}
+      {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
     </main>
   );
 }
