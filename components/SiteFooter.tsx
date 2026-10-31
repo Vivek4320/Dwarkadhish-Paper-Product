@@ -5,7 +5,7 @@ export default function SiteFooter() {
         <div className="footer-brand" id="about">
           <div className="footer-brand-row">
             <img
-              src="/Main-Logo.png"
+              src="/Logo.jpeg"
               alt="Dwarkadhish Paper Products"
               className="footer-mark-placeholder object-contain"
             />
@@ -23,16 +23,16 @@ export default function SiteFooter() {
         <div className="footer-column">
           <h3>EXPLORE</h3>
           <a href="#home">Home</a>
-          <a href="#products">Our Products</a>
-          <a href="#customize">Customize Book</a>
-          <a href="#about">About Us</a>
+          <a href="/products">Our Products</a>
+          <a href="/customize-book">Customize Book</a>
+          <a href="/about">About Us</a>
         </div>
         <div className="footer-column">
           <h3>HELP & SUPPORT</h3>
-          <a href="#contact">Contact Us</a>
-          <a href="#contact">Bulk Enquiries</a>
-          <a href="#contact">Custom Orders</a>
-          <a href="#contact">Frequently Asked Questions</a>
+          <a href="/contact">Contact Us</a>
+          <a href="/contact">Bulk Enquiries</a>
+          <a href="/contact">Custom Orders</a>
+          <a href="/contact">Frequently Asked Questions</a>
         </div>
         <div className="footer-column footer-contact">
           <h3>GET IN TOUCH</h3>

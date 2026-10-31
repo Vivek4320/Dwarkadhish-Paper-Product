@@ -10,7 +10,7 @@ export default function CustomizeSection() {
             Choose size, binding and page style. Add your text or logo, preview
             the cover, then save your design or send an enquiry.
           </p>
-          <a className="button-primary customize-button" href="#contact">
+          <a className="button-primary customize-button" href="/customize-book">
             Start designing&nbsp; ↗
           </a>
         </div>
