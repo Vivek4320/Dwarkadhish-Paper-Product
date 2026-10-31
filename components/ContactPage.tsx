@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const fieldClass = "h-10 w-full rounded-md border border-[#e7e1db] bg-white px-3 text-[11px] font-normal text-[#292522] outline-none transition focus:border-[#e51e2a] focus:ring-2 focus:ring-red-100 placeholder:text-[#aaa39d]";
 const labelClass = "flex min-w-0 flex-col gap-2 text-[10px] font-bold text-[#302c29]";
@@ -40,8 +41,10 @@ export default function ContactPage() {
               Have a question about our paper products, notebook manufacturing or a business enquiry? Get in touch with Dwarkadhish Paper Products. Our team welcomes your enquiry.
             </p>
           </div>
-          <div aria-label="Logo placeholder" className="grid h-[150px] place-items-center rounded-xl bg-[#211f1f] sm:h-[205px]">
-            <div className="h-[90px] w-3/4 rounded-2xl border border-[#e9e3dc] bg-white sm:h-28 sm:w-[245px]" />
+          <div aria-label="Dwarkadhish Paper Products logo" className="grid h-[150px] place-items-center rounded-xl bg-[#211f1f] sm:h-[205px]">
+            <div className="flex h-[90px] w-3/4 items-center justify-center rounded-2xl bg-white p-3 sm:h-28 sm:w-[245px]">
+              <Image src="/Main-Logo.png" alt="Dwarkadhish Paper Products" width={340} height={276} className="h-full w-full object-contain" />
+            </div>
           </div>
         </div>
       </section>
