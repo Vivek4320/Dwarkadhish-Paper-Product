@@ -1,12 +1,32 @@
 "use client";
+
 import { useState } from "react";
 import { navItems } from "./site-data";
-export default function SiteHeader({ onLogin }: { onLogin: () => void }) {
+
+type SiteHeaderProps = {
+  onLogin: () => void;
+  userEmail: string | null;
+  onLogout: () => void;
+};
+
+export default function SiteHeader({
+  onLogin,
+  userEmail,
+  onLogout,
+}: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const handleLogin = () => {
+
+  const handleAccountAction = () => {
     setMenuOpen(false);
-    onLogin();
+    if (userEmail) {
+      onLogout();
+    } else {
+      onLogin();
+    }
   };
+
+  const accountLabel = userEmail ? "Sign Out" : "Get Started";
+
   return (
     <>
       <div className="announcement-bar">
@@ -37,8 +57,8 @@ export default function SiteHeader({ onLogin }: { onLogin: () => void }) {
               </a>
             ))}
           </nav>
-          <button className="header-cta" onClick={handleLogin}>
-            Get Started <span>↗</span>
+          <button className="header-cta" onClick={handleAccountAction}>
+            {accountLabel} <span>{userEmail ? "↗" : "↗"}</span>
           </button>
           <button
             className="mobile-menu-button"
@@ -58,7 +78,7 @@ export default function SiteHeader({ onLogin }: { onLogin: () => void }) {
                 {label}
               </a>
             ))}
-            <button onClick={handleLogin}>Get Started ↗</button>
+            <button onClick={handleAccountAction}>{accountLabel} ↗</button>
           </nav>
         )}
       </header>
