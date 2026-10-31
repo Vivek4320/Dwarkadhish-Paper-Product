@@ -26,7 +26,7 @@ export default function SiteHeader({
 
   return (
     <>
-{showAnnouncement && (
+      {showAnnouncement && (
         <div className="announcement-bar">
           <div className="announcement-inner">
             <span>CRAFTED FOR EVERY NOTE WORTH KEEPING</span>
