@@ -18,7 +18,6 @@ export default function HomePage() {
     if (isSignedIn) setLoginOpen(false);
   }, [isSignedIn]);
 
-
   return (
     <main id="home" className="site-shell">
       <SiteHeader

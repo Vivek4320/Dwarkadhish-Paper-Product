@@ -9,10 +9,7 @@ type SiteHeaderProps = {
   isSignedIn: boolean;
 };
 
-export default function SiteHeader({
-  onLogin,
-  isSignedIn,
-}: SiteHeaderProps) {
+export default function SiteHeader({ onLogin, isSignedIn }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleAccountAction = () => {
