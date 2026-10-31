@@ -144,6 +144,7 @@ export default function AboutPage() {
               <a
                 href="#who-we-are"
                 className="inline-flex min-h-11 items-center justify-center rounded-sm border border-[#ED1C2E] bg-[#ED1C2E] px-5 text-xs font-semibold text-white transition hover:bg-[#c91829]"
+                style={{ color: "#FFFFFF" }}
               >
                 Discover Our Story →
               </a>
