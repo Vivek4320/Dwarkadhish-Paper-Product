@@ -1,31 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { UserButton } from "@clerk/nextjs";
 import { navItems } from "./site-data";
 
 type SiteHeaderProps = {
   onLogin: () => void;
-  userEmail: string | null;
-  onLogout: () => void;
+  isSignedIn: boolean;
 };
 
 export default function SiteHeader({
   onLogin,
-  userEmail,
-  onLogout,
+  isSignedIn,
 }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleAccountAction = () => {
     setMenuOpen(false);
-    if (userEmail) {
-      onLogout();
-    } else {
-      onLogin();
-    }
+    if (!isSignedIn) onLogin();
   };
 
-  const accountLabel = userEmail ? "Sign Out" : "Get Started";
+  const accountLabel = "Get Started";
 
   return (
     <>
@@ -57,9 +52,15 @@ export default function SiteHeader({
               </a>
             ))}
           </nav>
-          <button className="header-cta" onClick={handleAccountAction}>
-            {accountLabel} <span>{userEmail ? "↗" : "↗"}</span>
-          </button>
+          {isSignedIn ? (
+            <div className="header-profile" aria-label="Your account">
+              <UserButton />
+            </div>
+          ) : (
+            <button className="header-cta" onClick={handleAccountAction}>
+              {accountLabel} <span>↗</span>
+            </button>
+          )}
           <button
             className="mobile-menu-button"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -78,7 +79,14 @@ export default function SiteHeader({
                 {label}
               </a>
             ))}
-            <button onClick={handleAccountAction}>{accountLabel} ↗</button>
+            {isSignedIn ? (
+              <div className="mobile-account-row">
+                <span>Your account</span>
+                <UserButton />
+              </div>
+            ) : (
+              <button onClick={handleAccountAction}>{accountLabel} ↗</button>
+            )}
           </nav>
         )}
       </header>
