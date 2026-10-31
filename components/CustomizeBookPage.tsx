@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useMemo, useState } from "react";
 
 const templates = [
@@ -51,6 +52,7 @@ const pageOptions = [
 ];
 
 export default function CustomizeBookPage() {
+  const router = useRouter();
   const [templateId, setTemplateId] = useState<string>("heart");
   const [coverColor, setCoverColor] = useState("#D20D13");
   const [coverText, setCoverText] = useState("YOUR NOTEBOOK");
@@ -118,10 +120,24 @@ export default function CustomizeBookPage() {
   }
 
   function submitDesign(action: "cart" | "buy") {
-    const summary = `${action === "cart" ? "Design added to your cart preview" : "Your design is ready for an enquiry"}: ${selectedTemplate.name}, ${pages} pages, quantity ${quantity}, total ₹${total}.`;
-    setMessage(
-      `${summary} Please contact us to confirm availability and complete your order.`,
-    );
+    if (action === "cart") {
+      setMessage("Cart functionality will be connected later.");
+      return;
+    }
+
+    const checkoutItem = {
+      templateId,
+      templateName: selectedTemplate.name,
+      coverColor,
+      coverText,
+      uploadedImage,
+      pages,
+      quantity,
+      unitPrice,
+      total,
+    };
+    sessionStorage.setItem("dwarkadhish-checkout-item", JSON.stringify(checkoutItem));
+    router.push("/checkout");
   }
 
   return (
