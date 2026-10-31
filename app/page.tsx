@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import SiteHeader from "../components/SiteHeader";
 import HomeHero from "../components/HomeHero";
 import BenefitsStrip from "../components/BenefitsStrip";
+import HomeProductsSection from "../components/HomeProductsSection";
 import CustomizeSection from "../components/CustomizeSection";
 import SiteFooter from "../components/SiteFooter";
 import MobileBottomNav from "../components/MobileBottomNav";
@@ -26,6 +27,7 @@ export default function HomePage() {
       />
       <HomeHero />
       <BenefitsStrip />
+      <HomeProductsSection />
       <CustomizeSection />
       <SiteFooter />
       <MobileBottomNav />
