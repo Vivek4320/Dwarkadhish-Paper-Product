@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 type Product = {
@@ -75,7 +76,7 @@ export default function ProductsPage() {
     <main className="min-h-screen bg-white font-[Arial,Helvetica,sans-serif] text-[#211F1E]">
       <header className="sticky top-0 z-30 border-b border-[#E9E3DD] bg-white/95 backdrop-blur">
         <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
-          <Link href="/" aria-label="Dwarkadhish Paper Products home" className="flex h-11 w-40 items-center text-[10px] font-bold tracking-widest text-[#aaa]">LOGO SPACE</Link>
+          <Link href="/" aria-label="Dwarkadhish Paper Products home" className="flex h-12 w-40 items-center" ><Image src="/Main-Logo.png" alt="Dwarkadhish Paper Products" width={340} height={276} priority className="h-full w-auto max-w-full object-contain" /></Link>
           <nav className="hidden items-center gap-6 text-[13px] font-medium md:flex">
             <Link className="transition hover:text-[#D71920]" href="/">Home</Link>
             <Link className="font-semibold text-[#D71920]" href="/products">Products</Link>
