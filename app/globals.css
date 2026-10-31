@@ -98,9 +98,10 @@ button {
   align-items: center;
 }
 
-.logo-space {
+.brand-logo {
   width: 85px;
   height: 69px;
+  object-fit: contain;
 }
 
 .desktop-nav {
@@ -983,7 +984,7 @@ button {
     width: 72px;
   }
 
-  .logo-space {
+  .brand-logo {
     width: 60px;
     height: 49px;
   }
