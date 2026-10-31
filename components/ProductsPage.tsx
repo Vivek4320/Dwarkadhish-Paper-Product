@@ -413,13 +413,12 @@ export default function ProductsPage() {
                     </>
                   ) : (
                     <div className="mt-auto flex justify-center pt-7">
-                      <button
-                        type="button"
-                        disabled
-                        className="min-h-9 min-w-[112px] cursor-not-allowed rounded-md border border-[#D71920] bg-white px-5 text-[11px] font-semibold text-[#211F1E]"
+                      <Link
+                        href={`/coming-soon?product=${encodeURIComponent(product.name)}`}
+                        className="inline-flex min-h-9 min-w-[112px] items-center justify-center rounded-md border border-[#D71920] bg-white px-5 text-[11px] font-semibold text-[#211F1E] transition hover:bg-[#fff4f3]"
                       >
                         Coming Soon
-                      </button>
+                      </Link>
                     </div>
                   )}
                 </div>
