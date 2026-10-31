@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import LogoSpace from "./LogoSpace";
 export default function LoginModal({
   onClose,
   onContinue,
@@ -24,7 +23,11 @@ export default function LoginModal({
         aria-labelledby="login-title"
       >
         <div className="login-brand-panel">
-          <LogoSpace className="login-logo-placeholder" />
+          <img
+            src="/Main-Logo.png"
+            alt="Dwarkadhish Paper Products"
+            className="login-logo-placeholder object-contain"
+          />
           <p className="login-brand-name">DWARKADHISH</p>
           <h2>
             Good ideas
