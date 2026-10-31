@@ -138,12 +138,29 @@ export default function ProductsPage() {
                 <div className="flex min-h-[225px] flex-col p-4">
                   <p className="text-[10px] tracking-[0.08em] text-[#77716D]">{product.detail}</p>
                   <h3 className="mt-3 text-[15px] font-bold leading-5">{product.name}</h3>
-                  <p className="mt-2 text-xs leading-5 text-[#77716D]">{product.status === "Available" ? "Quality stationery for everyday writing." : product.detail}</p>
-                  {product.price ? <div className="mt-4 flex items-center gap-2"><span className="text-xl font-bold">₹{product.price}</span><span className="text-xs text-[#999] line-through">₹{product.oldPrice}</span></div> : <div className="mt-4 text-sm font-semibold text-[#77716D]">Coming Soon</div>}
-                  <div className="mt-auto grid grid-cols-2 gap-2 pt-5">
-                    <Link href="/contact" className="flex min-h-9 items-center justify-center rounded-md border border-[#D71920] px-2 text-[11px] font-bold text-[#D71920] transition hover:bg-[#fff4f3]">{product.status === "Available" ? "View Details" : "Notify Me"}</Link>
-                    <Link href="/contact" className="flex min-h-9 items-center justify-center rounded-md border border-[#D71920] bg-[#D71920] px-2 text-[11px] font-bold text-white transition hover:bg-[#b81720]">{product.status === "Available" ? "Customize Now" : "Enquire Now"}</Link>
-                  </div>
+                  {product.status === "Available" ? (
+                    <>
+                      <p className="mt-2 text-xs leading-5 text-[#77716D]">Quality stationery for everyday writing.</p>
+                      <div className="mt-4 flex items-center gap-2">
+                        <span className="text-xl font-bold">₹{product.price}</span>
+                        {product.oldPrice && <span className="text-xs text-[#999] line-through">₹{product.oldPrice}</span>}
+                      </div>
+                      <div className="mt-auto grid grid-cols-2 gap-2 pt-5">
+                        <Link href="/contact" className="flex min-h-9 items-center justify-center rounded-md border border-[#D71920] px-2 text-[11px] font-bold text-[#D71920] transition hover:bg-[#fff4f3]">View Details</Link>
+                        <Link href="/contact" className="flex min-h-9 items-center justify-center rounded-md border border-[#D71920] bg-[#D71920] px-2 text-[11px] font-bold text-white transition hover:bg-[#b81720]">Customize Now</Link>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="mt-auto flex justify-center pt-7">
+                      <button
+                        type="button"
+                        disabled
+                        className="min-h-9 min-w-[112px] cursor-not-allowed rounded-md border border-[#D71920] bg-white px-5 text-[11px] font-semibold text-[#211F1E]"
+                      >
+                        Coming Soon
+                      </button>
+                    </div>
+                  )}
                 </div>
               </article>
             ))}
