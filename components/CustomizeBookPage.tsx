@@ -3,7 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import SiteHeader from "./SiteHeader";
+import LoginModal from "./LoginModal";
 
 const templates = [
   {
@@ -53,6 +56,12 @@ const pageOptions = [
 
 export default function CustomizeBookPage() {
   const router = useRouter();
+  const [loginOpen, setLoginOpen] = useState(false);
+  const { isSignedIn } = useUser();
+
+  useEffect(() => {
+    if (isSignedIn) setLoginOpen(false);
+  }, [isSignedIn]);
   const [templateId, setTemplateId] = useState<string>("heart");
   const [coverColor, setCoverColor] = useState("#D20D13");
   const [coverText, setCoverText] = useState("YOUR NOTEBOOK");
@@ -148,47 +157,10 @@ export default function CustomizeBookPage() {
       <div className="bg-[#211F1F] px-5 py-2 text-[10px] font-semibold tracking-wide text-[#D4A84A] sm:px-10">
         STATIONERY MANUFACTURER · CUSTOM &amp; BULK ORDERS
       </div>
-      <header className="border-b border-[#E9E3DD] bg-white">
-        <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-5 px-5 sm:px-8 lg:px-10">
-          <Link
-            href="/"
-            className="flex h-12 w-40 items-center"
-            aria-label="Home"
-          >
-            <Image
-              src="/Main-Logo.png"
-              alt="Dwarkadhish Paper Products"
-              width={340}
-              height={276}
-              priority
-              className="h-full w-auto max-w-full object-contain"
-            />
-          </Link>
-          <nav className="hidden items-center gap-7 text-[13px] font-semibold md:flex">
-            <Link href="/" className="hover:text-[#D71920]">
-              Home
-            </Link>
-            <Link href="/products" className="hover:text-[#D71920]">
-              Products
-            </Link>
-            <Link href="/customize-book" className="text-[#D71920]">
-              Customize Book
-            </Link>
-            <Link href="/about" className="hover:text-[#D71920]">
-              About Us
-            </Link>
-            <Link href="/contact" className="hover:text-[#D71920]">
-              Contact
-            </Link>
-          </nav>
-          <Link
-            href="/contact"
-            className="rounded-lg border border-[#E9E3DD] px-4 py-2 text-xs font-semibold hover:border-[#D71920]"
-          >
-            Enquire
-          </Link>
-        </div>
-      </header>
+      <SiteHeader
+        onLogin={() => setLoginOpen(true)}
+        isSignedIn={Boolean(isSignedIn)}
+      />
 
       <div className="mx-auto max-w-7xl px-5 pb-20 pt-8 sm:px-8 lg:px-10">
         <p className="text-xs text-[#6E6966]">
@@ -538,6 +510,7 @@ export default function CustomizeBookPage() {
           </div>
         </div>
       </footer>
+      {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
     </main>
   );
 }
