@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About Us | Dwarkadhish Paper Products",
@@ -105,9 +106,7 @@ export default function AboutPage() {
           <div className="relative mx-auto flex min-h-64 w-full max-w-md items-center justify-center">
             <div className="absolute right-4 top-4 h-56 w-56 rounded-full bg-[#ED1C2E]/[0.04] sm:right-12" />
             <div className="relative flex h-56 w-full max-w-[320px] items-center justify-center rounded-md border border-[#eee5df] bg-white/90 p-8 shadow-[0_15px_45px_rgba(0,0,0,0.07)]">
-              <div className="flex h-full w-full items-center justify-center border border-dashed border-[#ded7d0] text-center text-[10px] font-semibold tracking-[0.16em] text-[#aaa]">
-                LOGO SPACE
-              </div>
+              <Image src="/Main-Logo.png" alt="Dwarkadhish Paper Products" width={340} height={276} priority className="h-full w-full object-contain" />
             </div>
             <div className="absolute -bottom-2 right-0 flex items-center gap-2 border border-[#eee] bg-white px-4 py-3 text-[10px] font-semibold shadow-[0_5px_18px_rgba(0,0,0,0.04)] sm:right-3">
               <span className="h-1.5 w-1.5 rounded-full bg-[#ED1C2E]" />
@@ -136,9 +135,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
           <div className="flex min-h-[300px] flex-col items-center justify-center rounded-md bg-[#202020] p-8 text-center">
             <div className="flex h-44 w-48 items-center justify-center rounded-lg bg-white p-5">
-              <div className="flex h-full w-full items-center justify-center border border-dashed border-[#ddd] text-[10px] font-semibold tracking-[0.14em] text-[#aaa]">
-                LOGO SPACE
-              </div>
+              <Image src="/Main-Logo.png" alt="Dwarkadhish Paper Products" width={340} height={276} className="h-full w-full object-contain" />
             </div>
             <p className="mt-5 text-[9px] font-medium tracking-[0.19em] text-[#ddd]">
               PAPER PRODUCTS &amp; PRINTING SOLUTIONS
