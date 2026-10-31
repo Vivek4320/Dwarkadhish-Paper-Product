@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ChangeEvent, useMemo, useState } from "react";
 
 const templates = [
@@ -84,7 +85,7 @@ export default function CustomizeBookPage() {
       </div>
       <header className="border-b border-[#E9E3DD] bg-white">
         <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-5 px-5 sm:px-8 lg:px-10">
-          <Link href="/" className="flex h-11 w-40 items-center text-[10px] font-bold tracking-widest text-[#aaa]" aria-label="Home">LOGO SPACE</Link>
+          <Link href="/" className="flex h-12 w-40 items-center" aria-label="Home"><Image src="/Main-Logo.png" alt="Dwarkadhish Paper Products" width={340} height={276} priority className="h-full w-auto max-w-full object-contain" /></Link>
           <nav className="hidden items-center gap-7 text-[13px] font-semibold md:flex">
             <Link href="/" className="hover:text-[#D71920]">Home</Link>
             <Link href="/products" className="hover:text-[#D71920]">Products</Link>
