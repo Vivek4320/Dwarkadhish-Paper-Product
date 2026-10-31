@@ -24,6 +24,7 @@ export default function HomePage() {
       <SiteHeader
         onLogin={() => setLoginOpen(true)}
         isSignedIn={Boolean(isSignedIn)}
+        showAnnouncement
       />
       <HomeHero />
       <BenefitsStrip />
