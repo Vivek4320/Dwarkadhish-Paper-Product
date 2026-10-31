@@ -1,11 +1,14 @@
-import LogoSpace from "./LogoSpace";
 export default function SiteFooter() {
   return (
     <footer className="site-footer" id="contact">
       <div className="footer-main">
         <div className="footer-brand" id="about">
           <div className="footer-brand-row">
-            <LogoSpace className="footer-mark-placeholder" />
+            <img
+              src="/Main-Logo.png"
+              alt="Dwarkadhish Paper Products"
+              className="footer-mark-placeholder object-contain"
+            />
             <div>
               <h2>DWARKADHISH PAPER PRODUCTS</h2>
               <span>Give more than expected.</span>
