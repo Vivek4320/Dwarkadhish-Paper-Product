@@ -63,7 +63,7 @@ export default function HomeCarousel() {
   useEffect(() => {
     const timer = window.setInterval(
       () => setActive((current) => (current + 1) % slides.length),
-      5000,
+      3000,
     );
     return () => window.clearInterval(timer);
   }, []);
