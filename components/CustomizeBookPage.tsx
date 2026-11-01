@@ -70,8 +70,10 @@ export default function CustomizeBookPage() {
   const [backUploadedImage, setBackUploadedImage] = useState<string | null>(
     null,
   );
+  const [spreadImage, setSpreadImage] = useState<string | null>(null);
   const [frontZoom, setFrontZoom] = useState(1);
   const [backZoom, setBackZoom] = useState(1);
+  const [spreadZoom, setSpreadZoom] = useState(1);
   const [activeCover, setActiveCover] = useState<"front" | "back">("front");
   const [quantity, setQuantity] = useState(1);
   const [pages, setPages] = useState(200);
@@ -128,6 +130,7 @@ export default function CustomizeBookPage() {
     const reader = new FileReader();
     reader.onload = () => {
       const image = typeof reader.result === "string" ? reader.result : null;
+      setSpreadImage(image);
       if (side === "front") setUploadedImage(image);
       else setBackUploadedImage(image);
       setMessage(`${side === "front" ? "Front" : "Back"} cover image added.`);
@@ -142,6 +145,8 @@ export default function CustomizeBookPage() {
     setBackCoverColor("#F7E8C8");
     setBackCoverText("MADE WITH CARE");
     setBackUploadedImage(null);
+    setSpreadImage(null);
+    setSpreadZoom(1);
     setFrontZoom(1);
     setBackZoom(1);
     setActiveCover("front");
@@ -166,6 +171,8 @@ export default function CustomizeBookPage() {
       backCoverColor,
       backCoverText,
       backUploadedImage,
+      spreadImage,
+      spreadZoom,
       frontZoom,
       backZoom,
       pages,
@@ -241,6 +248,14 @@ export default function CustomizeBookPage() {
 
               <div className="relative mx-auto w-full max-w-[680px] rounded-md bg-[#c9beb0] p-[7px] shadow-[0_18px_35px_rgba(55,42,30,0.18)]">
                 <div className="relative flex overflow-hidden rounded-[3px]">
+                  {spreadImage && (
+                    <img
+                      src={spreadImage}
+                      alt="Full open-book cover artwork"
+                      className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
+                      style={{ transform: `scale(${spreadZoom})` }}
+                    />
+                  )}
                   <div
                     className={`relative flex min-w-0 flex-1 flex-col items-center overflow-hidden border-r border-black/10 px-2 pb-5 pt-5 transition-shadow sm:px-4 sm:pt-7 ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
                     style={{
@@ -257,22 +272,11 @@ export default function CustomizeBookPage() {
                     >
                       {backCoverText}
                     </p>
-                    <label className="relative z-10 flex aspect-[1.05/1] w-[88%] cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 sm:w-[82%]">
-                      {backUploadedImage ? (
-                        <img
-                          src={backUploadedImage}
-                          alt="Back cover photo"
-                          className="h-full w-full object-cover transition-transform"
-                          style={{ transform: `scale(${backZoom})` }}
-                        />
-                      ) : (
-                        <span className="flex flex-col items-center gap-1 text-[#77716E] sm:gap-2">
-                          <span className="text-2xl leading-none sm:text-3xl">
-                            ↑
-                          </span>
-                          <span className="text-[9px] font-semibold sm:text-xs">
-                            Upload Photo
-                          </span>
+                    <label className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center">
+                      {!spreadImage && (
+                        <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
+                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
+                          <span className="text-[9px] font-semibold sm:text-xs">Upload full book photo</span>
                         </span>
                       )}
                       <input
@@ -315,22 +319,11 @@ export default function CustomizeBookPage() {
                     >
                       {coverText || selectedTemplate.text}
                     </p>
-                    <label className="relative z-10 flex aspect-[1.05/1] w-[88%] cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 sm:w-[82%]">
-                      {uploadedImage ? (
-                        <img
-                          src={uploadedImage}
-                          alt="Front cover photo"
-                          className="h-full w-full object-cover transition-transform"
-                          style={{ transform: `scale(${frontZoom})` }}
-                        />
-                      ) : (
-                        <span className="flex flex-col items-center gap-1 text-[#77716E] sm:gap-2">
-                          <span className="text-2xl leading-none sm:text-3xl">
-                            ↑
-                          </span>
-                          <span className="text-[9px] font-semibold sm:text-xs">
-                            Upload Photo
-                          </span>
+                    <label className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center">
+                      {!spreadImage && (
+                        <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
+                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
+                          <span className="text-[9px] font-semibold sm:text-xs">Upload full book photo</span>
                         </span>
                       )}
                       <input
@@ -499,13 +492,10 @@ export default function CustomizeBookPage() {
                     htmlFor="photo-zoom"
                     className="text-xs font-semibold text-[#514B47]"
                   >
-                    Adjust {activeCover === "front" ? "front" : "back"} photo
-                    size
+                    Adjust full-book photo size
                   </label>
                   <span className="text-xs font-bold text-[#D71920]">
-                    {Math.round(
-                      (activeCover === "front" ? frontZoom : backZoom) * 100,
-                    )}
+                    {Math.round(spreadZoom * 100)}
                     %
                   </span>
                 </div>
@@ -515,17 +505,14 @@ export default function CustomizeBookPage() {
                   min="1"
                   max="2.5"
                   step="0.05"
-                  value={activeCover === "front" ? frontZoom : backZoom}
-                  onChange={(event) =>
-                    activeCover === "front"
-                      ? setFrontZoom(Number(event.target.value))
-                      : setBackZoom(Number(event.target.value))
-                  }
+                  value={spreadZoom}
+                  onChange={(event) => setSpreadZoom(Number(event.target.value))}
                   className="mt-3 w-full accent-[#D71920]"
                 />
                 <p className="mt-1 text-[10px] text-[#77716E]">
-                  Landscape and portrait photos automatically fit the photo
-                  frame. Use the slider to zoom in or out.
+                  Your photo covers the complete open-book spread. Landscape
+                  and portrait images are automatically cropped to fit; use
+                  the slider to adjust the overall image size.
                 </p>
               </div>
               <button
