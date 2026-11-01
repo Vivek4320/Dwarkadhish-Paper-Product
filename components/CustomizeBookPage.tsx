@@ -497,7 +497,9 @@ export default function CustomizeBookPage() {
                     <input
                       type="color"
                       aria-label="Choose custom cover colour"
-                      value={activeCover === "front" ? coverColor : backCoverColor}
+                      value={
+                        activeCover === "front" ? coverColor : backCoverColor
+                      }
                       onChange={(event) =>
                         activeCover === "front"
                           ? setCoverColor(event.target.value)
