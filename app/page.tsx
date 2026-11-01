@@ -13,11 +13,17 @@ import LoginModal from "../components/LoginModal";
 export default function HomePage() {
   const [loginOpen, setLoginOpen] = useState(false);
   const { isSignedIn } = useUser();
-  useEffect(() => { if (isSignedIn) setLoginOpen(false); }, [isSignedIn]);
+  useEffect(() => {
+    if (isSignedIn) setLoginOpen(false);
+  }, [isSignedIn]);
 
   return (
     <main id="home" className="site-shell">
-      <SiteHeader onLogin={() => setLoginOpen(true)} isSignedIn={Boolean(isSignedIn)} showAnnouncement />
+      <SiteHeader
+        onLogin={() => setLoginOpen(true)}
+        isSignedIn={Boolean(isSignedIn)}
+        showAnnouncement
+      />
       <HomeCarousel />
       <BenefitsStrip />
       <HomeProductsSection />
