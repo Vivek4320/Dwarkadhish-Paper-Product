@@ -70,6 +70,8 @@ export default function CustomizeBookPage() {
   const [backUploadedImage, setBackUploadedImage] = useState<string | null>(
     null,
   );
+  const [frontZoom, setFrontZoom] = useState(1);
+  const [backZoom, setBackZoom] = useState(1);
   const [activeCover, setActiveCover] = useState<"front" | "back">("front");
   const [quantity, setQuantity] = useState(1);
   const [pages, setPages] = useState(200);
@@ -140,6 +142,8 @@ export default function CustomizeBookPage() {
     setBackCoverColor("#F7E8C8");
     setBackCoverText("MADE WITH CARE");
     setBackUploadedImage(null);
+    setFrontZoom(1);
+    setBackZoom(1);
     setActiveCover("front");
     setQuantity(1);
     setPages(200);
@@ -162,6 +166,8 @@ export default function CustomizeBookPage() {
       backCoverColor,
       backCoverText,
       backUploadedImage,
+      frontZoom,
+      backZoom,
       pages,
       quantity,
       unitPrice,
@@ -229,13 +235,27 @@ export default function CustomizeBookPage() {
                     style={{ backgroundColor: backCoverColor }}
                   >
                     <div className="absolute inset-2 rounded-sm border border-[#D6B65D]/80" />
-                    {backUploadedImage && (
-                      <img
-                        src={backUploadedImage}
-                        alt="Back cover artwork"
-                        className="absolute inset-x-3 top-8 z-10 max-h-20 w-[calc(100%-1.5rem)] object-contain"
+                    <label className="absolute left-[13%] top-[29%] z-10 flex aspect-[1.18/1] w-[74%] cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-[#bdb7b1] bg-white/90">
+                      {backUploadedImage ? (
+                        <img
+                          src={backUploadedImage}
+                          alt="Back cover photo"
+                          className="h-full w-full object-cover transition-transform"
+                          style={{ transform: `scale(${backZoom})` }}
+                        />
+                      ) : (
+                        <span className="flex flex-col items-center gap-2 text-[#77716E]">
+                          <span className="text-3xl leading-none">↑</span>
+                          <span className="text-[10px] font-semibold">Upload Photo</span>
+                        </span>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        onChange={(event) => handleUpload(event, "back")}
+                        className="sr-only"
                       />
-                    )}
+                    </label>
                     <span
                       className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold"
                       style={{ color: selectedTemplate.textColor }}
@@ -266,13 +286,27 @@ export default function CustomizeBookPage() {
                     style={{ backgroundColor: coverColor }}
                   >
                     <div className="absolute inset-2 rounded-sm border border-[#D6B65D]/80" />
-                    {uploadedImage && (
-                      <img
-                        src={uploadedImage}
-                        alt="Front cover artwork"
-                        className="absolute inset-x-3 top-8 z-10 max-h-20 w-[calc(100%-1.5rem)] object-contain"
+                    <label className="absolute left-[13%] top-[29%] z-10 flex aspect-[1.18/1] w-[74%] cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-[#bdb7b1] bg-white/90">
+                      {uploadedImage ? (
+                        <img
+                          src={uploadedImage}
+                          alt="Front cover photo"
+                          className="h-full w-full object-cover transition-transform"
+                          style={{ transform: `scale(${frontZoom})` }}
+                        />
+                      ) : (
+                        <span className="flex flex-col items-center gap-2 text-[#77716E]">
+                          <span className="text-3xl leading-none">↑</span>
+                          <span className="text-[10px] font-semibold">Upload Photo</span>
+                        </span>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        onChange={(event) => handleUpload(event, "front")}
+                        className="sr-only"
                       />
-                    )}
+                    </label>
                     <span
                       className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold"
                       style={{ color: selectedTemplate.textColor }}
@@ -425,6 +459,33 @@ export default function CustomizeBookPage() {
                     />
                   ))}
                 </div>
+              </div>
+              <div className="mt-5 rounded-lg bg-[#F9F6F2] p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <label htmlFor="photo-zoom" className="text-xs font-semibold text-[#514B47]">
+                    Adjust {activeCover === "front" ? "front" : "back"} photo size
+                  </label>
+                  <span className="text-xs font-bold text-[#D71920]">
+                    {Math.round((activeCover === "front" ? frontZoom : backZoom) * 100)}%
+                  </span>
+                </div>
+                <input
+                  id="photo-zoom"
+                  type="range"
+                  min="1"
+                  max="2.5"
+                  step="0.05"
+                  value={activeCover === "front" ? frontZoom : backZoom}
+                  onChange={(event) =>
+                    activeCover === "front"
+                      ? setFrontZoom(Number(event.target.value))
+                      : setBackZoom(Number(event.target.value))
+                  }
+                  className="mt-3 w-full accent-[#D71920]"
+                />
+                <p className="mt-1 text-[10px] text-[#77716E]">
+                  Landscape and portrait photos automatically fit the photo frame. Use the slider to zoom in or out.
+                </p>
               </div>
               <button
                 type="button"
