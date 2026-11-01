@@ -3,10 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { useUser } from "@clerk/nextjs";
-import SiteHeader from "./SiteHeader";
-import LoginModal from "./LoginModal";
+import { ChangeEvent, useMemo, useState } from "react";
 
 const templates = [
   {
@@ -56,12 +53,6 @@ const pageOptions = [
 
 export default function CustomizeBookPage() {
   const router = useRouter();
-  const [loginOpen, setLoginOpen] = useState(false);
-  const { isSignedIn } = useUser();
-
-  useEffect(() => {
-    if (isSignedIn) setLoginOpen(false);
-  }, [isSignedIn]);
   const [templateId, setTemplateId] = useState<string>("heart");
   const [coverColor, setCoverColor] = useState("#D20D13");
   const [coverText, setCoverText] = useState("YOUR NOTEBOOK");
@@ -185,10 +176,13 @@ export default function CustomizeBookPage() {
       <div className="bg-[#211F1F] px-5 py-2 text-[10px] font-semibold tracking-wide text-[#D4A84A] sm:px-10">
         STATIONERY MANUFACTURER · CUSTOM &amp; BULK ORDERS
       </div>
-      <SiteHeader
-        onLogin={() => setLoginOpen(true)}
-        isSignedIn={Boolean(isSignedIn)}
-      />
+      <div className="border-b border-[#E9E3DD] bg-white px-5 py-4 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-7xl">
+          <Link href="/" className="inline-flex items-center gap-2 rounded-lg border border-[#E9E3DD] px-4 py-2.5 text-sm font-semibold text-[#211F1F] transition hover:border-[#D71920] hover:text-[#D71920]">
+            <span aria-hidden="true">←</span> Back to Home
+          </Link>
+        </div>
+      </div>
 
       <div className="mx-auto max-w-7xl px-5 pb-20 pt-8 sm:px-8 lg:px-10">
         <p className="text-xs text-[#6E6966]">
@@ -735,7 +729,6 @@ export default function CustomizeBookPage() {
           </div>
         </div>
       </footer>
-      {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
     </main>
   );
 }
