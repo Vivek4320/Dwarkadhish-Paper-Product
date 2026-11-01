@@ -275,8 +275,12 @@ export default function CustomizeBookPage() {
                     <label className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center">
                       {!spreadImage && (
                         <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
-                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
-                          <span className="text-[9px] font-semibold sm:text-xs">Upload full book photo</span>
+                          <span className="text-2xl leading-none sm:text-3xl">
+                            ↑
+                          </span>
+                          <span className="text-[9px] font-semibold sm:text-xs">
+                            Upload full book photo
+                          </span>
                         </span>
                       )}
                       <input
@@ -322,8 +326,12 @@ export default function CustomizeBookPage() {
                     <label className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center">
                       {!spreadImage && (
                         <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
-                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
-                          <span className="text-[9px] font-semibold sm:text-xs">Upload full book photo</span>
+                          <span className="text-2xl leading-none sm:text-3xl">
+                            ↑
+                          </span>
+                          <span className="text-[9px] font-semibold sm:text-xs">
+                            Upload full book photo
+                          </span>
                         </span>
                       )}
                       <input
@@ -495,8 +503,7 @@ export default function CustomizeBookPage() {
                     Adjust full-book photo size
                   </label>
                   <span className="text-xs font-bold text-[#D71920]">
-                    {Math.round(spreadZoom * 100)}
-                    %
+                    {Math.round(spreadZoom * 100)}%
                   </span>
                 </div>
                 <input
@@ -506,13 +513,15 @@ export default function CustomizeBookPage() {
                   max="2.5"
                   step="0.05"
                   value={spreadZoom}
-                  onChange={(event) => setSpreadZoom(Number(event.target.value))}
+                  onChange={(event) =>
+                    setSpreadZoom(Number(event.target.value))
+                  }
                   className="mt-3 w-full accent-[#D71920]"
                 />
                 <p className="mt-1 text-[10px] text-[#77716E]">
-                  Your photo covers the complete open-book spread. Landscape
-                  and portrait images are automatically cropped to fit; use
-                  the slider to adjust the overall image size.
+                  Your photo covers the complete open-book spread. Landscape and
+                  portrait images are automatically cropped to fit; use the
+                  slider to adjust the overall image size.
                 </p>
               </div>
               <button
