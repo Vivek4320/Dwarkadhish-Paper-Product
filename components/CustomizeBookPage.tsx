@@ -501,10 +501,14 @@ export default function CustomizeBookPage() {
                     htmlFor="photo-zoom"
                     className="text-xs font-semibold text-[#514B47]"
                   >
-                    Adjust {activeCover === "front" ? "front" : "back"} cover photo size
+                    Adjust {activeCover === "front" ? "front" : "back"} cover
+                    photo size
                   </label>
                   <span className="text-xs font-bold text-[#D71920]">
-                    {Math.round((activeCover === "front" ? frontZoom : backZoom) * 100)}%
+                    {Math.round(
+                      (activeCover === "front" ? frontZoom : backZoom) * 100,
+                    )}
+                    %
                   </span>
                 </div>
                 <input
@@ -522,8 +526,9 @@ export default function CustomizeBookPage() {
                   className="mt-3 w-full accent-[#D71920]"
                 />
                 <p className="mt-1 text-[10px] text-[#77716E]">
-                  Each cover has its own full-page photo. Upload a different image for
-                  the front and back, then adjust each image size separately.
+                  Each cover has its own full-page photo. Upload a different
+                  image for the front and back, then adjust each image size
+                  separately.
                 </p>
               </div>
               <button
