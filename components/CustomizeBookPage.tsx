@@ -246,7 +246,9 @@ export default function CustomizeBookPage() {
                       ) : (
                         <span className="flex flex-col items-center gap-2 text-[#77716E]">
                           <span className="text-3xl leading-none">↑</span>
-                          <span className="text-[10px] font-semibold">Upload Photo</span>
+                          <span className="text-[10px] font-semibold">
+                            Upload Photo
+                          </span>
                         </span>
                       )}
                       <input
@@ -297,7 +299,9 @@ export default function CustomizeBookPage() {
                       ) : (
                         <span className="flex flex-col items-center gap-2 text-[#77716E]">
                           <span className="text-3xl leading-none">↑</span>
-                          <span className="text-[10px] font-semibold">Upload Photo</span>
+                          <span className="text-[10px] font-semibold">
+                            Upload Photo
+                          </span>
                         </span>
                       )}
                       <input
@@ -462,11 +466,18 @@ export default function CustomizeBookPage() {
               </div>
               <div className="mt-5 rounded-lg bg-[#F9F6F2] p-4">
                 <div className="flex items-center justify-between gap-3">
-                  <label htmlFor="photo-zoom" className="text-xs font-semibold text-[#514B47]">
-                    Adjust {activeCover === "front" ? "front" : "back"} photo size
+                  <label
+                    htmlFor="photo-zoom"
+                    className="text-xs font-semibold text-[#514B47]"
+                  >
+                    Adjust {activeCover === "front" ? "front" : "back"} photo
+                    size
                   </label>
                   <span className="text-xs font-bold text-[#D71920]">
-                    {Math.round((activeCover === "front" ? frontZoom : backZoom) * 100)}%
+                    {Math.round(
+                      (activeCover === "front" ? frontZoom : backZoom) * 100,
+                    )}
+                    %
                   </span>
                 </div>
                 <input
@@ -484,7 +495,8 @@ export default function CustomizeBookPage() {
                   className="mt-3 w-full accent-[#D71920]"
                 />
                 <p className="mt-1 text-[10px] text-[#77716E]">
-                  Landscape and portrait photos automatically fit the photo frame. Use the slider to zoom in or out.
+                  Landscape and portrait photos automatically fit the photo
+                  frame. Use the slider to zoom in or out.
                 </p>
               </div>
               <button
