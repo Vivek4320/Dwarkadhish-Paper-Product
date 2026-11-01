@@ -111,13 +111,13 @@ const missions = [
 export default function AboutPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-white text-[#202020]">
-      <div className="border-b border-[#f0f0f0]">
-        <div className="mx-auto flex w-full max-w-7xl items-center px-5 py-4 sm:px-8 lg:px-10">
+      <div className="border-b border-[#E9E3DD] bg-white px-5 py-4 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-7xl">
           <Link
             href="/"
-            className="text-xs font-medium text-[#555] transition hover:text-[#ED1C2E]"
+            className="inline-flex items-center gap-2 rounded-lg border border-[#E9E3DD] px-4 py-2.5 text-sm font-semibold text-[#211F1E] transition hover:border-[#D71920] hover:text-[#D71920]"
           >
-            ← Back to Home
+            <span aria-hidden="true">←</span> Back to Home
           </Link>
         </div>
       </div>
