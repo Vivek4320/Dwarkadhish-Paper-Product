@@ -1383,3 +1383,60 @@ button {
   cursor: not-allowed;
   opacity: 0.65;
 }
+
+
+/* Homepage featured carousel */
+.home-carousel{min-height:555px;position:relative;overflow:hidden;background:var(--cream);transition:background-color .35s ease}
+.carousel-slide-warm{background:#fbf8f2}.carousel-slide-blue{background:#f1f5f8}.carousel-slide-gold{background:#f7f2e8}
+.carousel-inner{width:min(1240px,calc(100% - 64px));min-height:555px;margin:auto;display:grid;grid-template-columns:1fr .95fr;align-items:center;gap:48px}
+.carousel-copy{max-width:590px;padding:38px 0 48px;animation:carousel-copy-in .45s ease both}
+@keyframes carousel-copy-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.carousel-eyebrow{display:inline-flex;min-height:32px;align-items:center;padding:0 13px;border-radius:18px;background:#fcebeb;color:var(--red);font-size:11px;font-weight:800;letter-spacing:.045em}
+.carousel-copy h1{margin:22px 0 0;color:var(--ink);font-size:clamp(42px,5vw,62px);line-height:1.04;letter-spacing:-2.2px;font-weight:800}
+.carousel-accent{margin:5px 0 0;color:var(--red);font-size:clamp(31px,4.4vw,54px);line-height:1.12;font-weight:800;letter-spacing:-1.6px}
+.carousel-description{max-width:525px;margin:23px 0 0;color:var(--muted);font-size:17px;line-height:1.55}
+.carousel-actions{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:25px}
+.carousel-actions .button-primary{width:auto;min-width:220px;padding:0 20px;gap:9px}
+.carousel-actions .button-secondary{width:auto;min-width:155px;padding:0 18px;gap:8px}
+.carousel-visual{position:relative;justify-self:end;width:min(100%,490px);height:430px;border-radius:24px;background:#f2e5cc;overflow:hidden}
+.carousel-slide-blue .carousel-visual{background:#dce7ef}.carousel-slide-gold .carousel-visual{background:#eee1c4}
+.carousel-paper-shape{position:absolute;width:330px;height:330px;right:-45px;bottom:-105px;border:1px solid #ffffffa8;border-radius:50%;box-shadow:0 0 0 28px #ffffff25,0 0 0 58px #ffffff18}
+.carousel-notebook-back{position:absolute;left:155px;top:67px;width:260px;height:330px;border-radius:10px;background:var(--red-dark);transform:rotate(8deg);box-shadow:10px 16px 28px #28211c20}
+.carousel-notebook{position:absolute;left:105px;top:42px;width:245px;height:340px;border-radius:9px;background:var(--red);color:#fff;box-shadow:10px 14px 28px #28211c24;transform:rotate(-5deg)}
+.carousel-notebook:before{content:"";position:absolute;inset:0 auto 0 0;width:15px;border-radius:6px 0 0 6px;background:#00000022}
+.carousel-cover-blue{background:#263c58}.carousel-cover-gold{background:#d4a84a;color:#211f1f}
+.carousel-cover-blue:before{background:#17283d}.carousel-cover-gold:before{background:#b78b34}
+.carousel-monogram{position:absolute;left:37px;top:32px;color:var(--gold);font-size:55px;font-weight:800}
+.carousel-cover-gold .carousel-monogram{color:#fff4d9}
+.carousel-cover-rule{position:absolute;left:38px;top:125px;width:48px;height:4px;background:var(--gold)}
+.carousel-cover-gold .carousel-cover-rule{background:#fff4d9}
+.carousel-notebook strong{position:absolute;left:37px;top:148px;font-size:31px;line-height:1.12}
+.carousel-notebook small{position:absolute;left:38px;bottom:36px;font-size:9px;font-weight:800;letter-spacing:.08em;opacity:.8}
+.carousel-floating-card{position:absolute;z-index:2;right:18px;top:55px;display:flex;flex-direction:column;gap:8px;min-width:190px;padding:15px 16px;border-radius:10px;background:#fff;box-shadow:0 8px 24px #2c201318;font-size:12px}
+.carousel-floating-card span{padding-left:22px;color:var(--muted);font-size:11px}
+.carousel-stamp{position:absolute;left:20px;bottom:22px;color:#655a4a;font-size:9px;font-weight:800;line-height:1.45;letter-spacing:.12em}
+.carousel-controls{position:absolute;left:max(32px,calc((100% - 1240px)/2));right:max(32px,calc((100% - 1240px)/2));bottom:22px;display:flex;align-items:center;justify-content:space-between}
+.carousel-dots,.carousel-arrows{display:flex;align-items:center;gap:10px}
+.carousel-dots button{width:8px;height:8px;padding:0;border:0;border-radius:20px;background:#c9c0b5;transition:width .25s ease,background .25s ease}
+.carousel-dots button.active{width:27px;background:var(--red)}
+.carousel-arrows button{width:34px;height:34px;border:1px solid #d9d0c5;border-radius:50%;background:#ffffffb8;color:var(--ink);font-size:19px;transition:.2s ease}
+.carousel-arrows button:hover{border-color:var(--red);color:var(--red);background:#fff}
+.carousel-arrows span{color:var(--muted);font-size:11px;font-weight:700}.carousel-arrows i{margin:0 4px;color:#b5aaa0;font-style:normal}
+@media(max-width:1100px){.carousel-inner{gap:25px}.carousel-visual{transform:scale(.9);transform-origin:center right}.carousel-copy h1{font-size:50px}.carousel-accent{font-size:43px}}
+@media(max-width:760px){
+.home-carousel{min-height:610px}.carousel-inner{width:100%;min-height:610px;display:flex;flex-direction:column;justify-content:flex-start;gap:12px;padding:25px 20px 72px}
+.carousel-copy{width:100%;padding:0;text-align:center}.carousel-eyebrow{min-height:29px;font-size:9px}
+.carousel-copy h1{margin-top:14px;font-size:35px;line-height:1.06;letter-spacing:-1.1px}.carousel-accent{margin-top:3px;font-size:27px;letter-spacing:-.8px}
+.carousel-description{max-width:340px;margin:12px auto 0;font-size:12px;line-height:1.45}
+.carousel-actions{justify-content:center;gap:8px;margin-top:13px}
+.carousel-actions .button-primary,.carousel-actions .button-secondary{min-width:0;min-height:39px;padding:0 12px;font-size:11px}
+.carousel-visual{justify-self:auto;flex:0 0 215px;width:min(100%,340px);height:215px;margin:0 auto;border-radius:16px;transform:none}
+.carousel-notebook-back{left:calc(50% - 35px);top:27px;width:118px;height:165px}
+.carousel-notebook{left:calc(50% - 83px);top:20px;width:122px;height:165px;border-radius:6px}
+.carousel-notebook:before{width:8px}.carousel-monogram{left:19px;top:15px;font-size:29px}
+.carousel-cover-rule{left:20px;top:63px;width:27px;height:2px}.carousel-notebook strong{left:19px;top:77px;font-size:17px}
+.carousel-notebook small{left:20px;bottom:17px;font-size:5px}
+.carousel-floating-card{right:8px;top:15px;min-width:122px;gap:5px;padding:9px;font-size:9px}
+.carousel-floating-card span{padding-left:0;font-size:8px}.carousel-stamp{left:10px;bottom:10px;font-size:6px}
+.carousel-controls{left:20px;right:20px;bottom:17px}.carousel-arrows{gap:7px}.carousel-arrows button{width:30px;height:30px}
+}
