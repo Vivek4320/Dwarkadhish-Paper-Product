@@ -471,7 +471,7 @@ export default function CustomizeBookPage() {
                 <p className="text-xs font-medium text-[#514B47]">
                   Cover colour
                 </p>
-                <div className="mt-3 flex flex-wrap gap-3">
+                <div className="mt-3 flex flex-wrap items-center gap-3">
                   {[
                     "#D20D13",
                     "#F7E8C8",
@@ -489,10 +489,27 @@ export default function CustomizeBookPage() {
                           ? setCoverColor(color)
                           : setBackCoverColor(color)
                       }
-                      className={`h-8 w-8 rounded-full border-2 ${(activeCover === "front" ? coverColor : backCoverColor) === color ? "border-[#D71920] ring-2 ring-[#D71920]/20" : "border-white shadow"}`}
+                      className={`h-8 w-8 rounded-full border-2 ${(activeCover === "front" ? coverColor : backCoverColor).toUpperCase() === color ? "border-[#D71920] ring-2 ring-[#D71920]/20" : "border-white shadow"}`}
                       style={{ backgroundColor: color }}
                     />
                   ))}
+                  <label className="flex h-10 cursor-pointer items-center gap-2 rounded-full border border-[#E9E3DD] bg-white px-3 text-xs font-semibold text-[#514B47] shadow-sm transition hover:border-[#D71920]">
+                    <input
+                      type="color"
+                      aria-label="Choose custom cover colour"
+                      value={activeCover === "front" ? coverColor : backCoverColor}
+                      onChange={(event) =>
+                        activeCover === "front"
+                          ? setCoverColor(event.target.value)
+                          : setBackCoverColor(event.target.value)
+                      }
+                      className="h-6 w-6 cursor-pointer rounded-full border-0 bg-transparent p-0"
+                    />
+                    <span>Custom colour</span>
+                  </label>
+                  <span className="text-[10px] font-medium text-[#77716E]">
+                    {activeCover === "front" ? coverColor : backCoverColor}
+                  </span>
                 </div>
               </div>
               <div className="mt-5 rounded-lg bg-[#F9F6F2] p-4">
