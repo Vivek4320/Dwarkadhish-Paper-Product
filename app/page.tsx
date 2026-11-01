@@ -1,9 +1,8 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import SiteHeader from "../components/SiteHeader";
-import HomeHero from "../components/HomeHero";
+import HomeCarousel from "../components/HomeCarousel";
 import BenefitsStrip from "../components/BenefitsStrip";
 import HomeProductsSection from "../components/HomeProductsSection";
 import CustomizeSection from "../components/CustomizeSection";
@@ -14,19 +13,12 @@ import LoginModal from "../components/LoginModal";
 export default function HomePage() {
   const [loginOpen, setLoginOpen] = useState(false);
   const { isSignedIn } = useUser();
-
-  useEffect(() => {
-    if (isSignedIn) setLoginOpen(false);
-  }, [isSignedIn]);
+  useEffect(() => { if (isSignedIn) setLoginOpen(false); }, [isSignedIn]);
 
   return (
     <main id="home" className="site-shell">
-      <SiteHeader
-        onLogin={() => setLoginOpen(true)}
-        isSignedIn={Boolean(isSignedIn)}
-        showAnnouncement
-      />
-      <HomeHero />
+      <SiteHeader onLogin={() => setLoginOpen(true)} isSignedIn={Boolean(isSignedIn)} showAnnouncement />
+      <HomeCarousel />
       <BenefitsStrip />
       <HomeProductsSection />
       <CustomizeSection />
