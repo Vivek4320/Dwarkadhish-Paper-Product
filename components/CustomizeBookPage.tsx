@@ -65,6 +65,10 @@ export default function CustomizeBookPage() {
   const [templateId, setTemplateId] = useState<string>("heart");
   const [coverColor, setCoverColor] = useState("#D20D13");
   const [coverText, setCoverText] = useState("YOUR NOTEBOOK");
+  const [backCoverColor, setBackCoverColor] = useState("#F7E8C8");
+  const [backCoverText, setBackCoverText] = useState("MADE WITH CARE");
+  const [backUploadedImage, setBackUploadedImage] = useState<string | null>(null);
+  const [activeCover, setActiveCover] = useState<"front" | "back">("front");
   const [quantity, setQuantity] = useState(1);
   const [pages, setPages] = useState(200);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -81,7 +85,7 @@ export default function CustomizeBookPage() {
     if (!template) return;
     setTemplateId(id);
     setCoverColor(template.color);
-    setCoverText(
+    const nextText =
       id === "blank"
         ? ""
         : id === "minimal"
@@ -90,12 +94,21 @@ export default function CustomizeBookPage() {
             ? "BOOK"
             : id === "corporate"
               ? "DP."
-              : "YOUR NOTEBOOK",
-    );
+              : "YOUR NOTEBOOK";
+    if (activeCover === "front") {
+      setCoverColor(template.color);
+      setCoverText(nextText);
+    } else {
+      setBackCoverColor(template.color);
+      setBackCoverText(nextText);
+    }
     setMessage("");
   }
 
-  function handleUpload(event: ChangeEvent<HTMLInputElement>) {
+  function handleUpload(
+    event: ChangeEvent<HTMLInputElement>,
+    side: "front" | "back",
+  ) {
     const file = event.target.files?.[0];
     if (!file) return;
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
@@ -110,10 +123,10 @@ export default function CustomizeBookPage() {
     }
     const reader = new FileReader();
     reader.onload = () => {
-      setUploadedImage(
-        typeof reader.result === "string" ? reader.result : null,
-      );
-      setMessage("Image added to your cover preview.");
+      const image = typeof reader.result === "string" ? reader.result : null;
+      if (side === "front") setUploadedImage(image);
+      else setBackUploadedImage(image);
+      setMessage(`${side === "front" ? "Front" : "Back"} cover image added.`);
     };
     reader.readAsDataURL(file);
   }
@@ -122,6 +135,10 @@ export default function CustomizeBookPage() {
     setTemplateId("heart");
     setCoverColor(templates[0].color);
     setCoverText("YOUR NOTEBOOK");
+    setBackCoverColor("#F7E8C8");
+    setBackCoverText("MADE WITH CARE");
+    setBackUploadedImage(null);
+    setActiveCover("front");
     setQuantity(1);
     setPages(200);
     setUploadedImage(null);
@@ -140,6 +157,9 @@ export default function CustomizeBookPage() {
       coverColor,
       coverText,
       uploadedImage,
+      backCoverColor,
+      backCoverText,
+      backUploadedImage,
       pages,
       quantity,
       unitPrice,
@@ -185,38 +205,69 @@ export default function CustomizeBookPage() {
 
         <div className="mt-9 grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)]">
           <section className="xl:sticky xl:top-6">
-            <div className="flex min-h-[460px] items-center justify-center rounded-2xl bg-[#F5F2ED] p-8 sm:p-12">
-              <div
-                className="relative flex h-[360px] w-[250px] items-center justify-center rounded-r-xl border-l-[14px] border-[#242222] shadow-[18px_14px_0_0_#c7bdb0,22px_18px_28px_rgba(0,0,0,0.16)] transition-colors"
-                style={{ backgroundColor: coverColor }}
-              >
-                <div className="absolute inset-4 rounded-sm border border-[#D6B65D]/80" />
-                {uploadedImage && (
-                  <img
-                    src={uploadedImage}
-                    alt="Uploaded cover artwork"
-                    className="absolute inset-x-7 top-12 z-10 max-h-28 w-[calc(100%-3.5rem)] object-contain"
-                  />
-                )}
-                <div
-                  className="relative z-20 max-w-[190px] break-words px-3 text-center text-2xl font-extrabold tracking-wide"
-                  style={{ color: selectedTemplate.textColor }}
-                >
-                  {coverText || selectedTemplate.text}
-                </div>
-                <div
-                  className="absolute bottom-12 z-20 text-center text-[9px] font-semibold tracking-[0.18em]"
-                  style={{ color: selectedTemplate.textColor }}
-                >
-                  DWARKADHISH
-                  <br />
-                  PAPER PRODUCTS
-                </div>
+            <div className="rounded-2xl bg-[#F5F2ED] p-5 sm:p-7">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
+                <p className="text-sm font-bold">Live book preview</p>
+                <span className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-[#6E6966]">
+                  Front + Back
+                </span>
               </div>
+              <div className="grid grid-cols-2 items-center gap-3 sm:gap-5">
+                <button
+                  type="button"
+                  onClick={() => setActiveCover("back")}
+                  aria-pressed={activeCover === "back"}
+                  className={`rounded-xl p-2 text-left transition ${activeCover === "back" ? "bg-white ring-2 ring-[#D71920]" : "bg-white/50 hover:bg-white"}`}
+                >
+                  <span className="mb-2 block text-center text-[10px] font-bold uppercase tracking-wider text-[#6E6966]">
+                    Back cover
+                  </span>
+                  <div
+                    className="relative mx-auto flex aspect-[0.69] w-full max-w-[175px] items-center justify-center overflow-hidden rounded-r-lg border-l-[8px] border-[#242222] shadow-[8px_8px_0_0_#c7bdb0,12px_12px_18px_rgba(0,0,0,0.12)]"
+                    style={{ backgroundColor: backCoverColor }}
+                  >
+                    <div className="absolute inset-2 rounded-sm border border-[#D6B65D]/80" />
+                    {backUploadedImage && (
+                      <img src={backUploadedImage} alt="Back cover artwork" className="absolute inset-x-3 top-8 z-10 max-h-20 w-[calc(100%-1.5rem)] object-contain" />
+                    )}
+                    <span className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold" style={{ color: selectedTemplate.textColor }}>
+                      {backCoverText}
+                    </span>
+                    <span className="absolute bottom-7 z-20 text-center text-[7px] font-semibold tracking-widest" style={{ color: selectedTemplate.textColor }}>
+                      DWARKADHISH<br />PAPER PRODUCTS
+                    </span>
+                  </div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveCover("front")}
+                  aria-pressed={activeCover === "front"}
+                  className={`rounded-xl p-2 text-left transition ${activeCover === "front" ? "bg-white ring-2 ring-[#D71920]" : "bg-white/50 hover:bg-white"}`}
+                >
+                  <span className="mb-2 block text-center text-[10px] font-bold uppercase tracking-wider text-[#6E6966]">
+                    Front cover
+                  </span>
+                  <div
+                    className="relative mx-auto flex aspect-[0.69] w-full max-w-[175px] items-center justify-center overflow-hidden rounded-r-lg border-l-[8px] border-[#242222] shadow-[8px_8px_0_0_#c7bdb0,12px_12px_18px_rgba(0,0,0,0.12)]"
+                    style={{ backgroundColor: coverColor }}
+                  >
+                    <div className="absolute inset-2 rounded-sm border border-[#D6B65D]/80" />
+                    {uploadedImage && (
+                      <img src={uploadedImage} alt="Front cover artwork" className="absolute inset-x-3 top-8 z-10 max-h-20 w-[calc(100%-1.5rem)] object-contain" />
+                    )}
+                    <span className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold" style={{ color: selectedTemplate.textColor }}>
+                      {coverText || selectedTemplate.text}
+                    </span>
+                    <span className="absolute bottom-7 z-20 text-center text-[7px] font-semibold tracking-widest" style={{ color: selectedTemplate.textColor }}>
+                      DWARKADHISH<br />PAPER PRODUCTS
+                    </span>
+                  </div>
+                </button>
+              </div>
+              <p className="mt-5 text-center text-[11px] text-[#77716E]">
+                Select either cover to customise its colour, text and artwork.
+              </p>
             </div>
-            <p className="mt-3 text-center text-xs text-[#77716E]">
-              Live cover preview · Artwork shown for illustration
-            </p>
           </section>
 
           <section className="rounded-2xl border border-[#E9E3DD] bg-white p-5 shadow-[0_8px_25px_rgba(0,0,0,0.025)] sm:p-7">
@@ -272,7 +323,7 @@ export default function CustomizeBookPage() {
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp"
-                  onChange={handleUpload}
+                  onChange={(event) => handleUpload(event, activeCover)}
                   className="sr-only"
                 />
               </label>
@@ -289,16 +340,26 @@ export default function CustomizeBookPage() {
 
             <div className="border-b border-[#F0ECE8] py-6">
               <h2 className="text-base font-bold">03. Additional Options</h2>
+              <div className="mt-4 flex gap-2">
+                <button type="button" onClick={() => setActiveCover("front")} className={`rounded-lg px-4 py-2 text-xs font-bold ${activeCover === "front" ? "bg-[#D71920] text-white" : "bg-[#F5F2ED] text-[#514B47]"}`}>
+                  Front cover
+                </button>
+                <button type="button" onClick={() => setActiveCover("back")} className={`rounded-lg px-4 py-2 text-xs font-bold ${activeCover === "back" ? "bg-[#D71920] text-white" : "bg-[#F5F2ED] text-[#514B47]"}`}>
+                  Back cover
+                </button>
+              </div>
               <label className="mt-4 block text-xs font-medium text-[#514B47]">
-                Cover text
+                {activeCover === "front" ? "Front cover text" : "Back cover text"}
               </label>
               <input
-                value={coverText}
+                value={activeCover === "front" ? coverText : backCoverText}
                 onChange={(event) =>
-                  setCoverText(event.target.value.slice(0, 32))
+                  activeCover === "front"
+                    ? setCoverText(event.target.value.slice(0, 32))
+                    : setBackCoverText(event.target.value.slice(0, 32))
                 }
                 maxLength={32}
-                placeholder="Enter text for your cover"
+                placeholder="Enter text for this cover"
                 className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm outline-none transition focus:border-[#D71920]"
               />
               <div className="mt-4">
@@ -318,8 +379,8 @@ export default function CustomizeBookPage() {
                       key={color}
                       type="button"
                       aria-label={`Choose cover colour ${color}`}
-                      onClick={() => setCoverColor(color)}
-                      className={`h-8 w-8 rounded-full border-2 ${coverColor === color ? "border-[#D71920] ring-2 ring-[#D71920]/20" : "border-white shadow"}`}
+                      onClick={() => activeCover === "front" ? setCoverColor(color) : setBackCoverColor(color)}
+                      className={`h-8 w-8 rounded-full border-2 ${(activeCover === "front" ? coverColor : backCoverColor) === color ? "border-[#D71920] ring-2 ring-[#D71920]/20" : "border-white shadow"}`}
                       style={{ backgroundColor: color }}
                     />
                   ))}
