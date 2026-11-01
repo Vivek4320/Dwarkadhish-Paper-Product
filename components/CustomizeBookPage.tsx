@@ -67,7 +67,9 @@ export default function CustomizeBookPage() {
   const [coverText, setCoverText] = useState("YOUR NOTEBOOK");
   const [backCoverColor, setBackCoverColor] = useState("#F7E8C8");
   const [backCoverText, setBackCoverText] = useState("MADE WITH CARE");
-  const [backUploadedImage, setBackUploadedImage] = useState<string | null>(null);
+  const [backUploadedImage, setBackUploadedImage] = useState<string | null>(
+    null,
+  );
   const [activeCover, setActiveCover] = useState<"front" | "back">("front");
   const [quantity, setQuantity] = useState(1);
   const [pages, setPages] = useState(200);
@@ -228,13 +230,25 @@ export default function CustomizeBookPage() {
                   >
                     <div className="absolute inset-2 rounded-sm border border-[#D6B65D]/80" />
                     {backUploadedImage && (
-                      <img src={backUploadedImage} alt="Back cover artwork" className="absolute inset-x-3 top-8 z-10 max-h-20 w-[calc(100%-1.5rem)] object-contain" />
+                      <img
+                        src={backUploadedImage}
+                        alt="Back cover artwork"
+                        className="absolute inset-x-3 top-8 z-10 max-h-20 w-[calc(100%-1.5rem)] object-contain"
+                      />
                     )}
-                    <span className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold" style={{ color: selectedTemplate.textColor }}>
+                    <span
+                      className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold"
+                      style={{ color: selectedTemplate.textColor }}
+                    >
                       {backCoverText}
                     </span>
-                    <span className="absolute bottom-7 z-20 text-center text-[7px] font-semibold tracking-widest" style={{ color: selectedTemplate.textColor }}>
-                      DWARKADHISH<br />PAPER PRODUCTS
+                    <span
+                      className="absolute bottom-7 z-20 text-center text-[7px] font-semibold tracking-widest"
+                      style={{ color: selectedTemplate.textColor }}
+                    >
+                      DWARKADHISH
+                      <br />
+                      PAPER PRODUCTS
                     </span>
                   </div>
                 </button>
@@ -253,13 +267,25 @@ export default function CustomizeBookPage() {
                   >
                     <div className="absolute inset-2 rounded-sm border border-[#D6B65D]/80" />
                     {uploadedImage && (
-                      <img src={uploadedImage} alt="Front cover artwork" className="absolute inset-x-3 top-8 z-10 max-h-20 w-[calc(100%-1.5rem)] object-contain" />
+                      <img
+                        src={uploadedImage}
+                        alt="Front cover artwork"
+                        className="absolute inset-x-3 top-8 z-10 max-h-20 w-[calc(100%-1.5rem)] object-contain"
+                      />
                     )}
-                    <span className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold" style={{ color: selectedTemplate.textColor }}>
+                    <span
+                      className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold"
+                      style={{ color: selectedTemplate.textColor }}
+                    >
                       {coverText || selectedTemplate.text}
                     </span>
-                    <span className="absolute bottom-7 z-20 text-center text-[7px] font-semibold tracking-widest" style={{ color: selectedTemplate.textColor }}>
-                      DWARKADHISH<br />PAPER PRODUCTS
+                    <span
+                      className="absolute bottom-7 z-20 text-center text-[7px] font-semibold tracking-widest"
+                      style={{ color: selectedTemplate.textColor }}
+                    >
+                      DWARKADHISH
+                      <br />
+                      PAPER PRODUCTS
                     </span>
                   </div>
                 </button>
@@ -341,15 +367,25 @@ export default function CustomizeBookPage() {
             <div className="border-b border-[#F0ECE8] py-6">
               <h2 className="text-base font-bold">03. Additional Options</h2>
               <div className="mt-4 flex gap-2">
-                <button type="button" onClick={() => setActiveCover("front")} className={`rounded-lg px-4 py-2 text-xs font-bold ${activeCover === "front" ? "bg-[#D71920] text-white" : "bg-[#F5F2ED] text-[#514B47]"}`}>
+                <button
+                  type="button"
+                  onClick={() => setActiveCover("front")}
+                  className={`rounded-lg px-4 py-2 text-xs font-bold ${activeCover === "front" ? "bg-[#D71920] text-white" : "bg-[#F5F2ED] text-[#514B47]"}`}
+                >
                   Front cover
                 </button>
-                <button type="button" onClick={() => setActiveCover("back")} className={`rounded-lg px-4 py-2 text-xs font-bold ${activeCover === "back" ? "bg-[#D71920] text-white" : "bg-[#F5F2ED] text-[#514B47]"}`}>
+                <button
+                  type="button"
+                  onClick={() => setActiveCover("back")}
+                  className={`rounded-lg px-4 py-2 text-xs font-bold ${activeCover === "back" ? "bg-[#D71920] text-white" : "bg-[#F5F2ED] text-[#514B47]"}`}
+                >
                   Back cover
                 </button>
               </div>
               <label className="mt-4 block text-xs font-medium text-[#514B47]">
-                {activeCover === "front" ? "Front cover text" : "Back cover text"}
+                {activeCover === "front"
+                  ? "Front cover text"
+                  : "Back cover text"}
               </label>
               <input
                 value={activeCover === "front" ? coverText : backCoverText}
@@ -379,7 +415,11 @@ export default function CustomizeBookPage() {
                       key={color}
                       type="button"
                       aria-label={`Choose cover colour ${color}`}
-                      onClick={() => activeCover === "front" ? setCoverColor(color) : setBackCoverColor(color)}
+                      onClick={() =>
+                        activeCover === "front"
+                          ? setCoverColor(color)
+                          : setBackCoverColor(color)
+                      }
                       className={`h-8 w-8 rounded-full border-2 ${(activeCover === "front" ? coverColor : backCoverColor) === color ? "border-[#D71920] ring-2 ring-[#D71920]/20" : "border-white shadow"}`}
                       style={{ backgroundColor: color }}
                     />
