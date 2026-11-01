@@ -252,12 +252,20 @@ export default function CustomizeBookPage() {
                     }}
                   >
                     {backUploadedImage && (
-                      <img
-                        src={backUploadedImage}
-                        alt="Back cover full-page artwork"
-                        className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
-                        style={{ transform: `scale(${backZoom})` }}
-                      />
+                      <>
+                        <img
+                          src={backUploadedImage}
+                          alt=""
+                          aria-hidden="true"
+                          className="pointer-events-none absolute -inset-3 z-0 h-[calc(100%+24px)] w-[calc(100%+24px)] scale-110 object-cover opacity-70 blur-xl"
+                        />
+                        <img
+                          src={backUploadedImage}
+                          alt="Back cover full-page artwork"
+                          className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
+                          style={{ transform: `scale(${backZoom})` }}
+                        />
+                      </>
                     )}
                     <span className="pointer-events-none absolute inset-2 border border-[#D6B65D]/70 sm:inset-3" />
                     <p
@@ -311,12 +319,20 @@ export default function CustomizeBookPage() {
                     }}
                   >
                     {uploadedImage && (
-                      <img
-                        src={uploadedImage}
-                        alt="Front cover full-page artwork"
-                        className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
-                        style={{ transform: `scale(${frontZoom})` }}
-                      />
+                      <>
+                        <img
+                          src={uploadedImage}
+                          alt=""
+                          aria-hidden="true"
+                          className="pointer-events-none absolute -inset-3 z-0 h-[calc(100%+24px)] w-[calc(100%+24px)] scale-110 object-cover opacity-70 blur-xl"
+                        />
+                        <img
+                          src={uploadedImage}
+                          alt="Front cover full-page artwork"
+                          className="pointer-events-none absolute inset-0 z-10 h-full w-full object-cover"
+                          style={{ transform: `scale(${frontZoom})` }}
+                        />
+                      </>
                     )}
                     <span className="pointer-events-none absolute inset-2 border border-[#D6B65D]/70 sm:inset-3" />
                     <p
