@@ -178,7 +178,10 @@ export default function CustomizeBookPage() {
       </div>
       <div className="border-b border-[#E9E3DD] bg-white px-5 py-4 sm:px-8 lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <Link href="/" className="inline-flex items-center gap-2 rounded-lg border border-[#E9E3DD] px-4 py-2.5 text-sm font-semibold text-[#211F1F] transition hover:border-[#D71920] hover:text-[#D71920]">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-lg border border-[#E9E3DD] px-4 py-2.5 text-sm font-semibold text-[#211F1F] transition hover:border-[#D71920] hover:text-[#D71920]"
+          >
             <span aria-hidden="true">←</span> Back to Home
           </Link>
         </div>
