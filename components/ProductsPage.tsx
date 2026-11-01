@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
-import { useUser } from "@clerk/nextjs";
-import SiteHeader from "./SiteHeader";
-import LoginModal from "./LoginModal";
+import { useMemo, useState } from "react";
 
 type Product = {
   id: number;
@@ -204,15 +201,9 @@ function ProductArtwork({ type }: { type: Product["artwork"] }) {
 }
 
 export default function ProductsPage() {
-  const [loginOpen, setLoginOpen] = useState(false);
-  const { isSignedIn } = useUser();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All Products");
   const [sort, setSort] = useState("featured");
-
-  useEffect(() => {
-    if (isSignedIn) setLoginOpen(false);
-  }, [isSignedIn]);
 
   const visibleProducts = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -243,10 +234,13 @@ export default function ProductsPage() {
 
   return (
     <main className="min-h-screen bg-white font-[Arial,Helvetica,sans-serif] text-[#211F1E]">
-      <SiteHeader
-        onLogin={() => setLoginOpen(true)}
-        isSignedIn={Boolean(isSignedIn)}
-      />
+      <div className="border-b border-[#E9E3DD] bg-white px-5 py-4 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-7xl">
+          <Link href="/" className="inline-flex items-center gap-2 rounded-lg border border-[#E9E3DD] px-4 py-2.5 text-sm font-semibold text-[#211F1E] transition hover:border-[#D71920] hover:text-[#D71920]">
+            <span aria-hidden="true">←</span> Back to Home
+          </Link>
+        </div>
+      </div>
 
       <div className="mx-auto max-w-7xl px-5 pb-20 pt-8 sm:px-8 lg:px-10">
         <p className="text-xs text-[#77716D]">
@@ -436,7 +430,6 @@ export default function ProductsPage() {
           <Link href="/contact">Contact</Link>
         </div>
       </footer>
-      {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
     </main>
   );
 }
