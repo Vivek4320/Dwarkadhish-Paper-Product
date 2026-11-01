@@ -214,28 +214,44 @@ export default function CustomizeBookPage() {
         <div className="mt-9 grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)]">
           <section className="xl:sticky xl:top-6">
             <div className="rounded-2xl bg-[#F5F2ED] p-5 sm:p-7">
-              <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
-                <p className="text-sm font-bold">Live book preview</p>
-                <span className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-[#6E6966]">
-                  Front + Back
-                </span>
-              </div>
-              <div className="grid grid-cols-2 items-center gap-3 sm:gap-5">
-                <button
-                  type="button"
-                  onClick={() => setActiveCover("back")}
-                  aria-pressed={activeCover === "back"}
-                  className={`rounded-xl p-2 text-left transition ${activeCover === "back" ? "bg-white ring-2 ring-[#D71920]" : "bg-white/50 hover:bg-white"}`}
-                >
-                  <span className="mb-2 block text-center text-[10px] font-bold uppercase tracking-wider text-[#6E6966]">
-                    Back cover
-                  </span>
-                  <div
-                    className="relative mx-auto flex aspect-[0.69] w-full max-w-[175px] items-center justify-center overflow-hidden rounded-r-lg border-l-[8px] border-[#242222] shadow-[8px_8px_0_0_#c7bdb0,12px_12px_18px_rgba(0,0,0,0.12)]"
-                    style={{ backgroundColor: backCoverColor }}
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-bold">Live open-book preview</p>
+                  <p className="mt-1 text-[10px] text-[#77716E]">A single notebook opened flat on a table</p>
+                </div>
+                <div className="flex rounded-full bg-white p-1">
+                  <button
+                    type="button"
+                    onClick={() => setActiveCover("back")}
+                    className={`rounded-full px-3 py-1.5 text-[10px] font-bold transition ${activeCover === "back" ? "bg-[#D71920] text-white" : "text-[#6E6966]"}`}
                   >
-                    <div className="absolute inset-2 rounded-sm border border-[#D6B65D]/80" />
-                    <label className="absolute left-[13%] top-[29%] z-10 flex aspect-[1.18/1] w-[74%] cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-[#bdb7b1] bg-white/90">
+                    Edit back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveCover("front")}
+                    className={`rounded-full px-3 py-1.5 text-[10px] font-bold transition ${activeCover === "front" ? "bg-[#D71920] text-white" : "text-[#6E6966]"}`}
+                  >
+                    Edit front
+                  </button>
+                </div>
+              </div>
+
+              <div className="relative mx-auto w-full max-w-[680px] rounded-md bg-[#c9beb0] p-[7px] shadow-[0_18px_35px_rgba(55,42,30,0.18)]">
+                <div className="relative flex overflow-hidden rounded-[3px]">
+                  <div
+                    className={`relative flex min-w-0 flex-1 flex-col items-center overflow-hidden border-r border-black/10 px-2 pb-5 pt-5 transition-shadow sm:px-4 sm:pt-7 ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
+                    style={{
+                      backgroundColor: backCoverColor,
+                      backgroundImage: "linear-gradient(90deg, rgba(0,0,0,0.07), transparent 12%, transparent 96%, rgba(0,0,0,0.04))",
+                      aspectRatio: "0.72 / 1",
+                    }}
+                  >
+                    <span className="pointer-events-none absolute inset-2 border border-[#D6B65D]/70 sm:inset-3" />
+                    <p className="relative z-20 mb-3 max-w-full break-words text-center text-[10px] font-extrabold sm:mb-5 sm:text-sm" style={{ color: selectedTemplate.textColor }}>
+                      {backCoverText}
+                    </p>
+                    <label className="relative z-10 flex aspect-[1.05/1] w-[88%] cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 sm:w-[82%]">
                       {backUploadedImage ? (
                         <img
                           src={backUploadedImage}
@@ -244,51 +260,43 @@ export default function CustomizeBookPage() {
                           style={{ transform: `scale(${backZoom})` }}
                         />
                       ) : (
-                        <span className="flex flex-col items-center gap-2 text-[#77716E]">
-                          <span className="text-3xl leading-none">↑</span>
-                          <span className="text-[10px] font-semibold">
-                            Upload Photo
-                          </span>
+                        <span className="flex flex-col items-center gap-1 text-[#77716E] sm:gap-2">
+                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
+                          <span className="text-[9px] font-semibold sm:text-xs">Upload Photo</span>
                         </span>
                       )}
                       <input
                         type="file"
                         accept="image/jpeg,image/png,image/webp"
-                        onChange={(event) => handleUpload(event, "back")}
+                        onChange={(event) => {
+                          setActiveCover("back");
+                          handleUpload(event, "back");
+                        }}
                         className="sr-only"
                       />
                     </label>
-                    <span
-                      className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold"
-                      style={{ color: selectedTemplate.textColor }}
-                    >
-                      {backCoverText}
-                    </span>
-                    <span
-                      className="absolute bottom-7 z-20 text-center text-[7px] font-semibold tracking-widest"
-                      style={{ color: selectedTemplate.textColor }}
-                    >
-                      DWARKADHISH
-                      <br />
-                      PAPER PRODUCTS
-                    </span>
+                    <div className="relative z-20 mt-auto pt-3 text-center text-[7px] font-semibold tracking-widest sm:text-[9px]" style={{ color: selectedTemplate.textColor }}>
+                      DWARKADHISH<br />PAPER PRODUCTS
+                    </div>
                   </div>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveCover("front")}
-                  aria-pressed={activeCover === "front"}
-                  className={`rounded-xl p-2 text-left transition ${activeCover === "front" ? "bg-white ring-2 ring-[#D71920]" : "bg-white/50 hover:bg-white"}`}
-                >
-                  <span className="mb-2 block text-center text-[10px] font-bold uppercase tracking-wider text-[#6E6966]">
-                    Front cover
-                  </span>
+
+                  <div className="relative z-30 w-[10px] shrink-0 bg-gradient-to-r from-[#6f6255] via-[#e6ddd0] to-[#746759] shadow-[0_0_9px_rgba(0,0,0,0.28)] sm:w-[14px]">
+                    <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-black/20" />
+                  </div>
+
                   <div
-                    className="relative mx-auto flex aspect-[0.69] w-full max-w-[175px] items-center justify-center overflow-hidden rounded-r-lg border-l-[8px] border-[#242222] shadow-[8px_8px_0_0_#c7bdb0,12px_12px_18px_rgba(0,0,0,0.12)]"
-                    style={{ backgroundColor: coverColor }}
+                    className={`relative flex min-w-0 flex-1 flex-col items-center overflow-hidden px-2 pb-5 pt-5 transition-shadow sm:px-4 sm:pt-7 ${activeCover === "front" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
+                    style={{
+                      backgroundColor: coverColor,
+                      backgroundImage: "linear-gradient(270deg, rgba(0,0,0,0.07), transparent 12%, transparent 96%, rgba(0,0,0,0.04))",
+                      aspectRatio: "0.72 / 1",
+                    }}
                   >
-                    <div className="absolute inset-2 rounded-sm border border-[#D6B65D]/80" />
-                    <label className="absolute left-[13%] top-[29%] z-10 flex aspect-[1.18/1] w-[74%] cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-[#bdb7b1] bg-white/90">
+                    <span className="pointer-events-none absolute inset-2 border border-[#D6B65D]/70 sm:inset-3" />
+                    <p className="relative z-20 mb-3 max-w-full break-words text-center text-[10px] font-extrabold sm:mb-5 sm:text-sm" style={{ color: selectedTemplate.textColor }}>
+                      {coverText || selectedTemplate.text}
+                    </p>
+                    <label className="relative z-10 flex aspect-[1.05/1] w-[88%] cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 sm:w-[82%]">
                       {uploadedImage ? (
                         <img
                           src={uploadedImage}
@@ -297,39 +305,31 @@ export default function CustomizeBookPage() {
                           style={{ transform: `scale(${frontZoom})` }}
                         />
                       ) : (
-                        <span className="flex flex-col items-center gap-2 text-[#77716E]">
-                          <span className="text-3xl leading-none">↑</span>
-                          <span className="text-[10px] font-semibold">
-                            Upload Photo
-                          </span>
+                        <span className="flex flex-col items-center gap-1 text-[#77716E] sm:gap-2">
+                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
+                          <span className="text-[9px] font-semibold sm:text-xs">Upload Photo</span>
                         </span>
                       )}
                       <input
                         type="file"
                         accept="image/jpeg,image/png,image/webp"
-                        onChange={(event) => handleUpload(event, "front")}
+                        onChange={(event) => {
+                          setActiveCover("front");
+                          handleUpload(event, "front");
+                        }}
                         className="sr-only"
                       />
                     </label>
-                    <span
-                      className="relative z-20 max-w-full break-words px-2 text-center text-sm font-extrabold"
-                      style={{ color: selectedTemplate.textColor }}
-                    >
-                      {coverText || selectedTemplate.text}
-                    </span>
-                    <span
-                      className="absolute bottom-7 z-20 text-center text-[7px] font-semibold tracking-widest"
-                      style={{ color: selectedTemplate.textColor }}
-                    >
-                      DWARKADHISH
-                      <br />
-                      PAPER PRODUCTS
-                    </span>
+                    <div className="relative z-20 mt-auto pt-3 text-center text-[7px] font-semibold tracking-widest sm:text-[9px]" style={{ color: selectedTemplate.textColor }}>
+                      DWARKADHISH<br />PAPER PRODUCTS
+                    </div>
                   </div>
-                </button>
+                </div>
+                <div className="pointer-events-none absolute -bottom-2 left-[3%] right-[3%] h-3 rounded-b-full bg-[#a99b8a]/70 blur-[2px]" />
               </div>
-              <p className="mt-5 text-center text-[11px] text-[#77716E]">
-                Select either cover to customise its colour, text and artwork.
+
+              <p className="mt-5 text-center text-[11px] leading-5 text-[#77716E]">
+                Both covers are shown as one open notebook. Choose Front or Back above, then upload and adjust that page.
               </p>
             </div>
           </section>
