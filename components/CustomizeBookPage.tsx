@@ -64,7 +64,9 @@ export default function CustomizeBookPage() {
   const [coverColor, setCoverColor] = useState("#F7F7F5");
   const [coverText, setCoverText] = useState("A4 NOTEBOOK");
   const [backCoverColor, setBackCoverColor] = useState("#F7F7F5");
-  const [backCoverText, setBackCoverText] = useState("DWARKADHISH PAPER PRODUCTS");
+  const [backCoverText, setBackCoverText] = useState(
+    "DWARKADHISH PAPER PRODUCTS",
+  );
   const [backUploadedImage, setBackUploadedImage] = useState<string | null>(
     null,
   );
@@ -263,7 +265,9 @@ export default function CustomizeBookPage() {
                         <div className="pointer-events-none absolute inset-0 z-[1]">
                           <div className="absolute -left-8 -top-8 h-20 w-20 rotate-45 bg-[#9F1D2D]" />
                           <div className="absolute -bottom-8 -right-8 h-20 w-20 rotate-45 bg-[#9F1D2D]" />
-                          <div className="absolute bottom-4 left-4 text-[7px] font-bold tracking-[0.18em] text-[#17233C] sm:bottom-7 sm:left-7 sm:text-[9px]">A4 NOTEBOOK</div>
+                          <div className="absolute bottom-4 left-4 text-[7px] font-bold tracking-[0.18em] text-[#17233C] sm:bottom-7 sm:left-7 sm:text-[9px]">
+                            A4 NOTEBOOK
+                          </div>
                         </div>
                       </>
                     )}
@@ -338,13 +342,23 @@ export default function CustomizeBookPage() {
                       <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
                         <div className="absolute -right-10 -top-10 h-24 w-24 rotate-45 bg-[#9F1D2D]" />
                         <div className="absolute -bottom-10 -left-10 h-24 w-24 rotate-45 bg-[#9F1D2D]" />
-                        <svg viewBox="0 0 240 170" className="absolute bottom-8 right-1 h-[48%] w-[88%] text-[#17233C] sm:bottom-12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <svg
+                          viewBox="0 0 240 170"
+                          className="absolute bottom-8 right-1 h-[48%] w-[88%] text-[#17233C] sm:bottom-12"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                        >
                           <path d="M20 145h200M35 145V78l24-18 24 18v67M83 145V54l36-27 36 27v91M155 145V78l24-18 24 18v67" />
                           <path d="M48 85h22M96 66h46M96 83h46M96 100h46M96 117h46M45 101h28M45 117h28M165 85h28M165 101h28M165 117h28" />
                           <path d="M110 145v-25h18v25M112 54v-9h14v9" />
                           <path d="M18 145l101-105 103 105" opacity=".35" />
                         </svg>
-                        <div className="absolute bottom-[54%] left-1/2 -translate-x-1/2 text-center text-[8px] font-extrabold tracking-[0.2em] text-[#17233C] sm:text-[11px]">DWARKADHISH<br/>PAPER PRODUCTS</div>
+                        <div className="absolute bottom-[54%] left-1/2 -translate-x-1/2 text-center text-[8px] font-extrabold tracking-[0.2em] text-[#17233C] sm:text-[11px]">
+                          DWARKADHISH
+                          <br />
+                          PAPER PRODUCTS
+                        </div>
                         <div className="absolute left-5 top-[40%] h-px w-10 bg-[#9F1D2D] sm:left-8 sm:w-14" />
                       </div>
                     )}
