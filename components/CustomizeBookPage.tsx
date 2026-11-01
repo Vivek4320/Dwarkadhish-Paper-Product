@@ -214,7 +214,8 @@ export default function CustomizeBookPage() {
               <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-bold">Live open-book preview</p>
-                  <p className="mt-1 text-[10px] text-[#77716E]">
+                  <p className="mt-1 text-[10px] text-[#77716E]">Adjust from 30% (smaller) to 250% (zoomed in). Default size is 100%.</p>
+                <p className="mt-1 text-[10px] text-[#77716E]">
                     A single notebook opened flat on a table
                   </p>
                 </div>
@@ -530,7 +531,7 @@ export default function CustomizeBookPage() {
                 <input
                   id="photo-zoom"
                   type="range"
-                  min="1"
+                  min="0.3"
                   max="2.5"
                   step="0.05"
                   value={activeCover === "front" ? frontZoom : backZoom}
