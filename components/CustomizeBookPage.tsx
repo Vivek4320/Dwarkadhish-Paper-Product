@@ -9,8 +9,8 @@ const templates = [
   {
     id: "1",
     name: "Template 1",
-    image: "/Templates/Template-1.png",
-    overlay: "/Templates/Template.png",
+    image: "/Templates/Tepmplate.png",
+    overlay: "/Templates/Tepmplate.png",
     spine: { start: 47.1, end: 52.8 },
     color: "#FFFFFF",
     text: "",
