@@ -11,10 +11,10 @@ type Props = {
 };
 
 const WIDTH = 1200;
-const HEIGHT = 440;
+const HEIGHT = 830;
 const PHOTO_AREAS = {
-  back: { left: 58, top: 72, width: 470, height: 292 },
-  front: { left: 672, top: 72, width: 470, height: 292 },
+  back: { left: 70, top: 185, width: 455, height: 455 },
+  front: { left: 675, top: 185, width: 455, height: 455 },
 };
 
 export default function BookSpreadEditor({
@@ -105,9 +105,7 @@ export default function BookSpreadEditor({
         "Front cover photo",
       );
       if (!disposed && canvas) {
-        canvas.setActiveObject(
-          canvas.getObjects().at(-1) ?? canvas.getObjects()[0],
-        );
+        canvas.discardActiveObject();
         canvas.requestRenderAll();
       }
     }
