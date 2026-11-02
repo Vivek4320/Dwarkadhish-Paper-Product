@@ -188,9 +188,14 @@ export default function CustomizeBookPage() {
     setCoverText("");
     setBackCoverColor("#FFFFFF");
     setBackCoverText("");
-    setFrontTextColor("#FFFFFF"); setBackTextColor("#FFFFFF");
-    setFrontBold(true); setBackBold(true); setFrontItalic(false); setBackItalic(false);
-    setFrontTextPosition({ x: 75, y: 48 }); setBackTextPosition({ x: 23, y: 48 });
+    setFrontTextColor("#FFFFFF");
+    setBackTextColor("#FFFFFF");
+    setFrontBold(true);
+    setBackBold(true);
+    setFrontItalic(false);
+    setBackItalic(false);
+    setFrontTextPosition({ x: 75, y: 48 });
+    setBackTextPosition({ x: 23, y: 48 });
     setBackUploadedImage(null);
     setFrontZoom(1);
     setBackZoom(1);
@@ -216,8 +221,14 @@ export default function CustomizeBookPage() {
       backCoverColor,
       backCoverText,
       backUploadedImage,
-      frontTextColor, backTextColor, frontBold, backBold, frontItalic, backItalic,
-      frontTextPosition, backTextPosition,
+      frontTextColor,
+      backTextColor,
+      frontBold,
+      backBold,
+      frontItalic,
+      backItalic,
+      frontTextPosition,
+      backTextPosition,
       frontZoom,
       backZoom,
       pages,
@@ -316,11 +327,29 @@ export default function CustomizeBookPage() {
                     const rect = event.currentTarget.getBoundingClientRect();
                     const px = ((event.clientX - rect.left) / rect.width) * 100;
                     const py = ((event.clientY - rect.top) / rect.height) * 100;
-                    if (dragSide.current === "front") setFrontTextPosition({ x: Math.min(96, Math.max(selectedTemplate.spine.end + 3, px)), y: Math.min(94, Math.max(6, py)) });
-                    else setBackTextPosition({ x: Math.min(selectedTemplate.spine.start - 3, Math.max(4, px)), y: Math.min(94, Math.max(6, py)) });
+                    if (dragSide.current === "front")
+                      setFrontTextPosition({
+                        x: Math.min(
+                          96,
+                          Math.max(selectedTemplate.spine.end + 3, px),
+                        ),
+                        y: Math.min(94, Math.max(6, py)),
+                      });
+                    else
+                      setBackTextPosition({
+                        x: Math.min(
+                          selectedTemplate.spine.start - 3,
+                          Math.max(4, px),
+                        ),
+                        y: Math.min(94, Math.max(6, py)),
+                      });
                   }}
-                  onPointerUp={() => { dragSide.current = null; }}
-                  onPointerCancel={() => { dragSide.current = null; }}
+                  onPointerUp={() => {
+                    dragSide.current = null;
+                  }}
+                  onPointerCancel={() => {
+                    dragSide.current = null;
+                  }}
                 >
                   <div
                     className={`pointer-events-none relative z-40 min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
@@ -358,8 +387,46 @@ export default function CustomizeBookPage() {
                     }}
                   />
 
-                  {backCoverText && <span onPointerDown={(event) => { event.preventDefault(); dragSide.current = "back"; }} className={"absolute z-[24] max-w-[38%] -translate-x-1/2 -translate-y-1/2 cursor-move touch-none select-none break-words text-center text-sm sm:text-xl " + (backBold ? "font-extrabold " : "font-medium ") + (backItalic ? "italic" : "")} style={{ left: backTextPosition.x + "%", top: backTextPosition.y + "%", color: backTextColor }}>{backCoverText}</span>}
-                  {coverText && <span onPointerDown={(event) => { event.preventDefault(); dragSide.current = "front"; }} className={"absolute z-[24] max-w-[38%] -translate-x-1/2 -translate-y-1/2 cursor-move touch-none select-none break-words text-center text-sm sm:text-xl " + (frontBold ? "font-extrabold " : "font-medium ") + (frontItalic ? "italic" : "")} style={{ left: frontTextPosition.x + "%", top: frontTextPosition.y + "%", color: frontTextColor }}>{coverText}</span>}
+                  {backCoverText && (
+                    <span
+                      onPointerDown={(event) => {
+                        event.preventDefault();
+                        dragSide.current = "back";
+                      }}
+                      className={
+                        "absolute z-[24] max-w-[38%] -translate-x-1/2 -translate-y-1/2 cursor-move touch-none select-none break-words text-center text-sm sm:text-xl " +
+                        (backBold ? "font-extrabold " : "font-medium ") +
+                        (backItalic ? "italic" : "")
+                      }
+                      style={{
+                        left: backTextPosition.x + "%",
+                        top: backTextPosition.y + "%",
+                        color: backTextColor,
+                      }}
+                    >
+                      {backCoverText}
+                    </span>
+                  )}
+                  {coverText && (
+                    <span
+                      onPointerDown={(event) => {
+                        event.preventDefault();
+                        dragSide.current = "front";
+                      }}
+                      className={
+                        "absolute z-[24] max-w-[38%] -translate-x-1/2 -translate-y-1/2 cursor-move touch-none select-none break-words text-center text-sm sm:text-xl " +
+                        (frontBold ? "font-extrabold " : "font-medium ") +
+                        (frontItalic ? "italic" : "")
+                      }
+                      style={{
+                        left: frontTextPosition.x + "%",
+                        top: frontTextPosition.y + "%",
+                        color: frontTextColor,
+                      }}
+                    >
+                      {coverText}
+                    </span>
+                  )}
 
                   {/* Template artwork above the photos: transparent centre. */}
                   <img
@@ -499,15 +566,79 @@ export default function CustomizeBookPage() {
                 className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm outline-none transition focus:border-[#D71920]"
               />
               <div className="mt-4 rounded-lg border border-[#E9E3DD] bg-[#FDFBF9] p-4">
-                <p className="text-xs font-bold text-[#514B47]">Text styling &amp; placement</p>
-                <p className="mt-1 text-[10px] text-[#77716E]">Choose a text colour and style, then drag the text directly on the book preview.</p>
+                <p className="text-xs font-bold text-[#514B47]">
+                  Text styling &amp; placement
+                </p>
+                <p className="mt-1 text-[10px] text-[#77716E]">
+                  Choose a text colour and style, then drag the text directly on
+                  the book preview.
+                </p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <button type="button" onClick={() => activeCover === "front" ? setFrontBold(v => !v) : setBackBold(v => !v)} className={"rounded-md border px-3 py-2 text-xs font-bold " + ((activeCover === "front" ? frontBold : backBold) ? "border-[#D71920] bg-[#FFF0F0] text-[#D71920]" : "border-[#E9E3DD]")}>B Bold</button>
-                  <button type="button" onClick={() => activeCover === "front" ? setFrontItalic(v => !v) : setBackItalic(v => !v)} className={"rounded-md border px-3 py-2 text-xs italic " + ((activeCover === "front" ? frontItalic : backItalic) ? "border-[#D71920] bg-[#FFF0F0] text-[#D71920]" : "border-[#E9E3DD]")}>I Italic</button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      activeCover === "front"
+                        ? setFrontBold((v) => !v)
+                        : setBackBold((v) => !v)
+                    }
+                    className={
+                      "rounded-md border px-3 py-2 text-xs font-bold " +
+                      ((activeCover === "front" ? frontBold : backBold)
+                        ? "border-[#D71920] bg-[#FFF0F0] text-[#D71920]"
+                        : "border-[#E9E3DD]")
+                    }
+                  >
+                    B Bold
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      activeCover === "front"
+                        ? setFrontItalic((v) => !v)
+                        : setBackItalic((v) => !v)
+                    }
+                    className={
+                      "rounded-md border px-3 py-2 text-xs italic " +
+                      ((activeCover === "front" ? frontItalic : backItalic)
+                        ? "border-[#D71920] bg-[#FFF0F0] text-[#D71920]"
+                        : "border-[#E9E3DD]")
+                    }
+                  >
+                    I Italic
+                  </button>
                 </div>
-                <p className="mt-4 text-[11px] font-medium text-[#514B47]">Text colour</p>
+                <p className="mt-4 text-[11px] font-medium text-[#514B47]">
+                  Text colour
+                </p>
                 <div className="mt-2 flex flex-wrap items-center gap-3">
-                  {["#D20D13", "#F7E8C8", "#B90E16", "#20395F", "#282828", "#F4F0E8"].map(color => <button key={color} type="button" aria-label={"Set text colour " + color} onClick={() => activeCover === "front" ? setFrontTextColor(color) : setBackTextColor(color)} className={"h-8 w-8 rounded-full border-2 " + ((activeCover === "front" ? frontTextColor : backTextColor) === color ? "border-[#D71920] ring-2 ring-[#D71920]/20" : "border-white shadow")} style={{ backgroundColor: color }} />)}
+                  {[
+                    "#D20D13",
+                    "#F7E8C8",
+                    "#B90E16",
+                    "#20395F",
+                    "#282828",
+                    "#F4F0E8",
+                  ].map((color) => (
+                    <button
+                      key={color}
+                      type="button"
+                      aria-label={"Set text colour " + color}
+                      onClick={() =>
+                        activeCover === "front"
+                          ? setFrontTextColor(color)
+                          : setBackTextColor(color)
+                      }
+                      className={
+                        "h-8 w-8 rounded-full border-2 " +
+                        ((activeCover === "front"
+                          ? frontTextColor
+                          : backTextColor) === color
+                          ? "border-[#D71920] ring-2 ring-[#D71920]/20"
+                          : "border-white shadow")
+                      }
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
                 </div>
               </div>
 
