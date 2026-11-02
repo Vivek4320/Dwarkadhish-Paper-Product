@@ -327,24 +327,17 @@ export default function CustomizeBookPage() {
                   onPointerMove={(event) => {
                     if (!dragSide.current) return;
                     const rect = event.currentTarget.getBoundingClientRect();
-                    const px = ((event.clientX - rect.left) / rect.width) * 100;
-                    const py = ((event.clientY - rect.top) / rect.height) * 100;
-                    if (dragSide.current === "front")
-                      setFrontTextPosition({
-                        x: Math.min(
-                          96,
-                          Math.max(selectedTemplate.spine.end + 3, px),
-                        ),
-                        y: Math.min(94, Math.max(6, py)),
-                      });
-                    else
-                      setBackTextPosition({
-                        x: Math.min(
-                          selectedTemplate.spine.start - 3,
-                          Math.max(4, px),
-                        ),
-                        y: Math.min(94, Math.max(6, py)),
-                      });
+                    const py = Math.min(94, Math.max(6, ((event.clientY - rect.top) / rect.height) * 100));
+                    if (dragSide.current === "front") {
+                      const left = rect.left + rect.width * selectedTemplate.spine.end / 100;
+                      const width = rect.width * (100 - selectedTemplate.spine.end) / 100;
+                      const x = ((event.clientX - left) / width) * 100;
+                      setFrontTextPosition({ x: Math.min(94, Math.max(6, x)), y: py });
+                    } else {
+                      const width = rect.width * selectedTemplate.spine.start / 100;
+                      const x = (event.clientX - rect.left) / width * 100;
+                      setBackTextPosition({ x: Math.min(94, Math.max(6, x)), y: py });
+                    }
                   }}
                   onPointerUp={() => {
                     dragSide.current = null;
@@ -390,46 +383,50 @@ export default function CustomizeBookPage() {
                   />
 
                   {backCoverText && (
-                    <span
-                      onPointerDown={(event) => {
-                        event.preventDefault();
-                        dragSide.current = "back";
-                      }}
-                      className={
-                        "absolute z-[24] max-w-[38%] -translate-x-1/2 -translate-y-1/2 cursor-move touch-none select-none break-words text-center text-sm sm:text-xl " +
-                        (backBold ? "font-extrabold " : "font-medium ") +
-                        (backItalic ? "italic" : "")
-                      }
-                      style={{
-                        left: backTextPosition.x + "%",
-                        top: backTextPosition.y + "%",
-                        color: backTextColor,
-                        fontSize: backTextSize + "px",
-                      }}
-                    >
-                      {backCoverText}
-                    </span>
+                    <div className="pointer-events-none absolute inset-y-0 left-0 z-[24] overflow-hidden" style={{ width: selectedTemplate.spine.start + "%" }}>
+                      <span
+                        onPointerDown={(event) => {
+                          event.preventDefault();
+                          dragSide.current = "back";
+                        }}
+                        className={
+                          "pointer-events-auto absolute max-w-[88%] -translate-x-1/2 -translate-y-1/2 cursor-move touch-none select-none break-words text-center " +
+                          (backBold ? "font-extrabold " : "font-medium ") +
+                          (backItalic ? "italic" : "")
+                        }
+                        style={{
+                          left: backTextPosition.x + "%",
+                          top: backTextPosition.y + "%",
+                          color: backTextColor,
+                          fontSize: backTextSize + "px",
+                        }}
+                      >
+                        {backCoverText}
+                      </span>
+                    </div>
                   )}
                   {coverText && (
-                    <span
-                      onPointerDown={(event) => {
-                        event.preventDefault();
-                        dragSide.current = "front";
-                      }}
-                      className={
-                        "absolute z-[24] max-w-[38%] -translate-x-1/2 -translate-y-1/2 cursor-move touch-none select-none break-words text-center text-sm sm:text-xl " +
-                        (frontBold ? "font-extrabold " : "font-medium ") +
-                        (frontItalic ? "italic" : "")
-                      }
-                      style={{
-                        left: frontTextPosition.x + "%",
-                        top: frontTextPosition.y + "%",
-                        color: frontTextColor,
-                        fontSize: frontTextSize + "px",
-                      }}
-                    >
-                      {coverText}
-                    </span>
+                    <div className="pointer-events-none absolute inset-y-0 z-[24] overflow-hidden" style={{ left: selectedTemplate.spine.end + "%", width: (100 - selectedTemplate.spine.end) + "%" }}>
+                      <span
+                        onPointerDown={(event) => {
+                          event.preventDefault();
+                          dragSide.current = "front";
+                        }}
+                        className={
+                          "pointer-events-auto absolute max-w-[88%] -translate-x-1/2 -translate-y-1/2 cursor-move touch-none select-none break-words text-center " +
+                          (frontBold ? "font-extrabold " : "font-medium ") +
+                          (frontItalic ? "italic" : "")
+                        }
+                        style={{
+                          left: frontTextPosition.x + "%",
+                          top: frontTextPosition.y + "%",
+                          color: frontTextColor,
+                          fontSize: frontTextSize + "px",
+                        }}
+                      >
+                        {coverText}
+                      </span>
+                    </div>
                   )}
 
                   {/* Template artwork above the photos: transparent centre. */}
