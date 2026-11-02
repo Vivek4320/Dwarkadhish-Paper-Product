@@ -98,9 +98,16 @@ export default function BookSpreadEditor({
       }
 
       await addPhoto(backImage, PHOTO_AREAS.back, backZoom, "Back cover photo");
-      await addPhoto(frontImage, PHOTO_AREAS.front, frontZoom, "Front cover photo");
+      await addPhoto(
+        frontImage,
+        PHOTO_AREAS.front,
+        frontZoom,
+        "Front cover photo",
+      );
       if (!disposed && canvas) {
-        canvas.setActiveObject(canvas.getObjects().at(-1) ?? canvas.getObjects()[0]);
+        canvas.setActiveObject(
+          canvas.getObjects().at(-1) ?? canvas.getObjects()[0],
+        );
         canvas.requestRenderAll();
       }
     }
@@ -121,7 +128,8 @@ export default function BookSpreadEditor({
         className="block h-auto w-full touch-pan-y"
       />
       <p className="px-2 py-2 text-center text-[10px] text-[#77716E]">
-        Select a photo to move or resize it. Template artwork stays in the background.
+        Select a photo to move or resize it. Template artwork stays in the
+        background.
       </p>
     </div>
   );
