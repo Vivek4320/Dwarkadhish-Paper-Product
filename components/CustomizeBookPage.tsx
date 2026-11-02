@@ -54,9 +54,7 @@ export default function CustomizeBookPage() {
   const [coverColor, setCoverColor] = useState("#FFFFFF");
   const [coverText, setCoverText] = useState("");
   const [backCoverColor, setBackCoverColor] = useState("#F7F7F5");
-  const [backCoverText, setBackCoverText] = useState(
-    "DWARKADHISH PAPER PRODUCTS",
-  );
+  const [backCoverText, setBackCoverText] = useState("");
   const [backUploadedImage, setBackUploadedImage] = useState<string | null>(
     null,
   );
@@ -291,14 +289,7 @@ export default function CustomizeBookPage() {
                         className="sr-only"
                       />
                     </label>
-                    <div
-                      className="relative z-20 mt-auto pt-3 text-center text-[7px] font-semibold tracking-widest sm:text-[9px]"
-                      style={{ color: selectedTemplate.textColor }}
-                    >
-                      DWARKADHISH
-                      <br />
-                      PAPER PRODUCTS
-                    </div>
+
                   </div>
 
                   <div className="relative z-30 w-[10px] shrink-0 bg-gradient-to-r from-black/20 via-white/35 to-black/20 shadow-[0_0_9px_rgba(0,0,0,0.28)] sm:w-[14px]">
@@ -356,14 +347,7 @@ export default function CustomizeBookPage() {
                         className="sr-only"
                       />
                     </label>
-                    <div
-                      className="relative z-20 mt-auto pt-3 text-center text-[7px] font-semibold tracking-widest sm:text-[9px]"
-                      style={{ color: selectedTemplate.textColor }}
-                    >
-                      DWARKADHISH
-                      <br />
-                      PAPER PRODUCTS
-                    </div>
+
                   </div>
                 </div>
                 <div className="pointer-events-none absolute -bottom-2 left-[3%] right-[3%] h-3 rounded-b-full bg-[#a99b8a]/70 blur-[2px]" />
