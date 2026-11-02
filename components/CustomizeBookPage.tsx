@@ -10,6 +10,12 @@ const templates = [
     id: "1",
     name: "Template 1",
     image: "/Templates/Template-1.png",
+    photoArea: {
+      top: 16.4,
+      height: 61.9,
+      back: { left: 4.5, width: 40.2 },
+      front: { left: 55.3, width: 40.2 },
+    },
     color: "#FFFFFF",
     text: "",
     textColor: "#202020",
@@ -18,6 +24,12 @@ const templates = [
     id: "2",
     name: "Template 2",
     image: "/Templates/Template-2.png",
+    photoArea: {
+      top: 24.6,
+      height: 57.3,
+      back: { left: 4.5, width: 41.0 },
+      front: { left: 54.3, width: 41.2 },
+    },
     color: "#FFFFFF",
     text: "",
     textColor: "#202020",
@@ -26,6 +38,12 @@ const templates = [
     id: "3",
     name: "Template 3",
     image: "/Templates/Template-3.png",
+    photoArea: {
+      top: 21.0,
+      height: 54.9,
+      back: { left: 4.5, width: 40.8 },
+      front: { left: 54.4, width: 41.1 },
+    },
     color: "#FFFFFF",
     text: "",
     textColor: "#202020",
@@ -34,6 +52,12 @@ const templates = [
     id: "4",
     name: "Template 4",
     image: "/Templates/Template-4.png",
+    photoArea: {
+      top: 13.7,
+      height: 69.7,
+      back: { left: 4.5, width: 41.3 },
+      front: { left: 54.8, width: 40.7 },
+    },
     color: "#FFFFFF",
     text: "",
     textColor: "#202020",
@@ -47,6 +71,58 @@ const pageOptions = [
   { pages: 144, price: 72 },
   { pages: 104, price: 48 },
 ];
+
+type PhotoSlotProps = {
+  area: { top: number; height: number; left: number; width: number };
+  src: string | null;
+  zoom: number;
+  side: "front" | "back";
+  onPick: (event: ChangeEvent<HTMLInputElement>) => void;
+};
+
+/**
+ * The safe photo window for one cover. Its position is measured per template
+ * (the empty centre between the top and bottom artwork), and it clips the
+ * photo so zooming in can never spill over the template design.
+ */
+function PhotoSlot({ area, src, zoom, side, onPick }: PhotoSlotProps) {
+  const label = side === "front" ? "front" : "back";
+  return (
+    <div
+      className="absolute z-10 overflow-hidden"
+      style={{
+        top: `${area.top}%`,
+        height: `${area.height}%`,
+        left: `${area.left}%`,
+        width: `${area.width}%`,
+      }}
+    >
+      {src ? (
+        <img
+          src={src}
+          alt={`${label} cover photo`}
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+          style={{ transform: `scale(${zoom})` }}
+        />
+      ) : (
+        <label className="absolute inset-0 flex cursor-pointer items-center justify-center">
+          <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
+            <span className="text-2xl leading-none sm:text-3xl">↑</span>
+            <span className="text-[9px] font-semibold sm:text-xs">
+              Upload {label} cover photo
+            </span>
+          </span>
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={onPick}
+            className="sr-only"
+          />
+        </label>
+      )}
+    </div>
+  );
+}
 
 export default function CustomizeBookPage() {
   const router = useRouter();
@@ -242,35 +318,6 @@ export default function CustomizeBookPage() {
                   <div
                     className={`relative min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
                   >
-                    {backUploadedImage && (
-                      <img
-                        src={backUploadedImage}
-                        alt="Back cover photo"
-                        className="pointer-events-none absolute left-[12%] top-[18%] z-10 h-[64%] w-[76%] object-cover"
-                        style={{ transform: `scale(${backZoom})` }}
-                      />
-                    )}
-                    {!backUploadedImage && (
-                      <label className="absolute inset-0 z-20 flex cursor-pointer items-center justify-center">
-                        <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
-                          <span className="text-2xl leading-none sm:text-3xl">
-                            ↑
-                          </span>
-                          <span className="text-[9px] font-semibold sm:text-xs">
-                            Upload back cover photo
-                          </span>
-                        </span>
-                        <input
-                          type="file"
-                          accept="image/jpeg,image/png,image/webp"
-                          onChange={(event) => {
-                            setActiveCover("back");
-                            handleUpload(event, "back");
-                          }}
-                          className="sr-only"
-                        />
-                      </label>
-                    )}
                   </div>
 
                   <div className="relative z-30 w-[10px] shrink-0 bg-gradient-to-r from-[#6f6255] via-[#e6ddd0] to-[#746759] shadow-[0_0_9px_rgba(0,0,0,0.28)] sm:w-[14px]">
@@ -280,36 +327,36 @@ export default function CustomizeBookPage() {
                   <div
                     className={`relative min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "front" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
                   >
-                    {uploadedImage && (
-                      <img
-                        src={uploadedImage}
-                        alt="Front cover photo"
-                        className="pointer-events-none absolute left-[12%] top-[18%] z-10 h-[64%] w-[76%] object-cover"
-                        style={{ transform: `scale(${frontZoom})` }}
-                      />
-                    )}
-                    {!uploadedImage && (
-                      <label className="absolute inset-0 z-20 flex cursor-pointer items-center justify-center">
-                        <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
-                          <span className="text-2xl leading-none sm:text-3xl">
-                            ↑
-                          </span>
-                          <span className="text-[9px] font-semibold sm:text-xs">
-                            Upload front cover photo
-                          </span>
-                        </span>
-                        <input
-                          type="file"
-                          accept="image/jpeg,image/png,image/webp"
-                          onChange={(event) => {
-                            setActiveCover("front");
-                            handleUpload(event, "front");
-                          }}
-                          className="sr-only"
-                        />
-                      </label>
-                    )}
                   </div>
+
+                  <PhotoSlot
+                    side="back"
+                    area={{
+                      top: selectedTemplate.photoArea.top,
+                      height: selectedTemplate.photoArea.height,
+                      ...selectedTemplate.photoArea.back,
+                    }}
+                    src={backUploadedImage}
+                    zoom={backZoom}
+                    onPick={(event) => {
+                      setActiveCover("back");
+                      handleUpload(event, "back");
+                    }}
+                  />
+                  <PhotoSlot
+                    side="front"
+                    area={{
+                      top: selectedTemplate.photoArea.top,
+                      height: selectedTemplate.photoArea.height,
+                      ...selectedTemplate.photoArea.front,
+                    }}
+                    src={uploadedImage}
+                    zoom={frontZoom}
+                    onPick={(event) => {
+                      setActiveCover("front");
+                      handleUpload(event, "front");
+                    }}
+                  />
                 </div>
                 <div className="pointer-events-none absolute -bottom-2 left-[3%] right-[3%] h-3 rounded-b-full bg-[#a99b8a]/70 blur-[2px]" />
               </div>
