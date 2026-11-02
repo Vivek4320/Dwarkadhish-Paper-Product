@@ -229,7 +229,8 @@ export default function CheckoutPage() {
                     <img
                       src={item.uploadedImage}
                       alt="Custom cover artwork"
-                      className="absolute inset-2 h-16 w-[calc(100%-1rem)] object-contain"
+                      className="absolute inset-0 h-full w-full object-cover"
+                      style={{ transform: `scale(${item.frontZoom || 1})` }}
                     />
                   )}
                   <span
