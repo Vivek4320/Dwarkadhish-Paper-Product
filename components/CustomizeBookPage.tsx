@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import BookSpreadEditor from "./BookSpreadEditor";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useMemo, useState } from "react";
 
@@ -230,13 +229,81 @@ export default function CustomizeBookPage() {
               </div>
 
               <div className="relative mx-auto w-full max-w-[680px] rounded-md bg-[#c9beb0] p-[7px] shadow-[0_18px_35px_rgba(55,42,30,0.18)]">
-                <BookSpreadEditor
-                  templateImage={selectedTemplate.image}
-                  backImage={backUploadedImage}
-                  frontImage={uploadedImage}
-                  backZoom={backZoom}
-                  frontZoom={frontZoom}
-                />
+                <div
+                  className="relative flex overflow-hidden rounded-[3px]"
+                  style={{
+                    aspectRatio: "1.44 / 1",
+                    backgroundImage: `url("${selectedTemplate.image}")`,
+                    backgroundSize: "100% 100%",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                >
+                  <div
+                    className={`relative min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
+                  >
+                    {backUploadedImage && (
+                      <img
+                        src={backUploadedImage}
+                        alt="Back cover photo"
+                        className="pointer-events-none absolute left-[12%] top-[18%] z-10 h-[64%] w-[76%] object-cover"
+                        style={{ transform: `scale(${backZoom})` }}
+                      />
+                    )}
+                    {!backUploadedImage && (
+                      <label className="absolute inset-0 z-20 flex cursor-pointer items-center justify-center">
+                        <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
+                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
+                          <span className="text-[9px] font-semibold sm:text-xs">Upload back cover photo</span>
+                        </span>
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp"
+                          onChange={(event) => {
+                            setActiveCover("back");
+                            handleUpload(event, "back");
+                          }}
+                          className="sr-only"
+                        />
+                      </label>
+                    )}
+                  </div>
+
+                  <div className="relative z-30 w-[10px] shrink-0 bg-gradient-to-r from-[#6f6255] via-[#e6ddd0] to-[#746759] shadow-[0_0_9px_rgba(0,0,0,0.28)] sm:w-[14px]">
+                    <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-black/20" />
+                  </div>
+
+                  <div
+                    className={`relative min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "front" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
+                  >
+                    {uploadedImage && (
+                      <img
+                        src={uploadedImage}
+                        alt="Front cover photo"
+                        className="pointer-events-none absolute left-[12%] top-[18%] z-10 h-[64%] w-[76%] object-cover"
+                        style={{ transform: `scale(${frontZoom})` }}
+                      />
+                    )}
+                    {!uploadedImage && (
+                      <label className="absolute inset-0 z-20 flex cursor-pointer items-center justify-center">
+                        <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
+                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
+                          <span className="text-[9px] font-semibold sm:text-xs">Upload front cover photo</span>
+                        </span>
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp"
+                          onChange={(event) => {
+                            setActiveCover("front");
+                            handleUpload(event, "front");
+                          }}
+                          className="sr-only"
+                        />
+                      </label>
+                    )}
+                  </div>
+                </div>
+                <div className="pointer-events-none absolute -bottom-2 left-[3%] right-[3%] h-3 rounded-b-full bg-[#a99b8a]/70 blur-[2px]" />
               </div>
 
               <p className="mt-5 text-center text-[11px] leading-5 text-[#77716E]">
