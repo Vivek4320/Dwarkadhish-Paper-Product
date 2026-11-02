@@ -18,6 +18,16 @@ type CheckoutItem = {
   backUploadedImage?: string | null;
   frontZoom?: number;
   backZoom?: number;
+  frontTextColor?: string;
+  backTextColor?: string;
+  frontBold?: boolean;
+  backBold?: boolean;
+  frontItalic?: boolean;
+  backItalic?: boolean;
+  frontTextPosition?: { x: number; y: number };
+  backTextPosition?: { x: number; y: number };
+  frontTextSize?: number;
+  backTextSize?: number;
 };
 
 const money = (value: number) =>
@@ -443,12 +453,18 @@ export default function CheckoutPage() {
                 className="pointer-events-none absolute right-[3%] top-[3.5%] z-40 h-auto w-[11%]"
               />
               {item.backCoverText && (
-                <span className="pointer-events-none absolute left-[8%] top-[45%] z-40 max-w-[34%] -translate-y-1/2 break-words text-center text-sm font-bold text-[#25211E] sm:text-xl">
+                <span
+                  className={"pointer-events-none absolute z-40 max-w-[38%] -translate-x-1/2 -translate-y-1/2 break-words text-center " + (item.backBold === false ? "font-medium " : "font-extrabold ") + (item.backItalic ? "italic" : "")}
+                  style={{ left: (item.backTextPosition?.x ?? 23) + "%", top: (item.backTextPosition?.y ?? 48) + "%", color: item.backTextColor || "#FFFFFF", fontSize: (item.backTextSize || 24) + "px" }}
+                >
                   {item.backCoverText}
                 </span>
               )}
               {item.coverText && (
-                <span className="pointer-events-none absolute right-[8%] top-[45%]] z-40 max-w-[34%] -translate-y-1/2 break-words text-center text-sm font-bold text-white sm:text-xl">
+                <span
+                  className={"pointer-events-none absolute z-40 max-w-[38%] -translate-x-1/2 -translate-y-1/2 break-words text-center " + (item.frontBold === false ? "font-medium " : "font-extrabold ") + (item.frontItalic ? "italic" : "")}
+                  style={{ left: (item.frontTextPosition?.x ?? 75) + "%", top: (item.frontTextPosition?.y ?? 48) + "%", color: item.frontTextColor || "#FFFFFF", fontSize: (item.frontTextSize || 24) + "px" }}
+                >
                   {item.coverText}
                 </span>
               )}
