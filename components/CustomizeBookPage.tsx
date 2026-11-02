@@ -6,10 +6,38 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useMemo, useState } from "react";
 
 const templates = [
-  { id: "1", name: "Template 1", image: "/Templates/Template-1.png", color: "#FFFFFF", text: "", textColor: "#202020" },
-  { id: "2", name: "Template 2", image: "/Templates/Template-2.png", color: "#FFFFFF", text: "", textColor: "#202020" },
-  { id: "3", name: "Template 3", image: "/Templates/Template-3.png", color: "#FFFFFF", text: "", textColor: "#202020" },
-  { id: "4", name: "Template 4", image: "/Templates/Template-4.png", color: "#FFFFFF", text: "", textColor: "#202020" },
+  {
+    id: "1",
+    name: "Template 1",
+    image: "/Templates/Template-1.png",
+    color: "#FFFFFF",
+    text: "",
+    textColor: "#202020",
+  },
+  {
+    id: "2",
+    name: "Template 2",
+    image: "/Templates/Template-2.png",
+    color: "#FFFFFF",
+    text: "",
+    textColor: "#202020",
+  },
+  {
+    id: "3",
+    name: "Template 3",
+    image: "/Templates/Template-3.png",
+    color: "#FFFFFF",
+    text: "",
+    textColor: "#202020",
+  },
+  {
+    id: "4",
+    name: "Template 4",
+    image: "/Templates/Template-4.png",
+    color: "#FFFFFF",
+    text: "",
+    textColor: "#202020",
+  },
 ] as const;
 
 const pageOptions = [
@@ -214,7 +242,6 @@ export default function CustomizeBookPage() {
                       aspectRatio: "0.72 / 1",
                     }}
                   >
-                    
                     {backUploadedImage && (
                       <>
                         <img
@@ -283,7 +310,6 @@ export default function CustomizeBookPage() {
                       aspectRatio: "0.72 / 1",
                     }}
                   >
-                    
                     {uploadedImage && (
                       <>
                         <img
@@ -360,7 +386,13 @@ export default function CustomizeBookPage() {
                     className={`rounded-lg border p-1.5 transition ${templateId === template.id ? "border-[#DF151D] bg-[#FFFAFA]" : "border-[#E9E3DD] hover:border-[#d7b4a9]"}`}
                   >
                     <span className="relative block h-36 overflow-hidden rounded-md bg-[#F5F2ED]">
-                      <Image src={template.image} alt={template.name} fill sizes="(max-width: 640px) 45vw, 160px" className="object-cover" />
+                      <Image
+                        src={template.image}
+                        alt={template.name}
+                        fill
+                        sizes="(max-width: 640px) 45vw, 160px"
+                        className="object-cover"
+                      />
                     </span>
                     <span
                       className={`mt-2 block text-[10px] ${templateId === template.id ? "font-bold text-[#DF151D]" : "text-[#514B47]"}`}
