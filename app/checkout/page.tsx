@@ -257,7 +257,13 @@ export default function CheckoutPage() {
                   <p className="mt-1 text-xs text-[#77716E]">
                     Quantity: {item.quantity}
                   </p>
-                  <button type="button" onClick={() => setPreviewOpen(true)} className="mt-3 inline-flex min-h-9 items-center justify-center rounded-lg border border-[#D71920] px-3 text-xs font-bold text-[#D71920] transition hover:bg-[#FFF5F5]">View Book Preview</button>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewOpen(true)}
+                    className="mt-3 inline-flex min-h-9 items-center justify-center rounded-lg border border-[#D71920] px-3 text-xs font-bold text-[#D71920] transition hover:bg-[#FFF5F5]"
+                  >
+                    View Book Preview
+                  </button>
                   <p className="mt-3 text-sm font-bold">
                     {money(item.unitPrice)}{" "}
                     <span className="text-[10px] font-normal text-[#8A817A]">
@@ -352,23 +358,104 @@ export default function CheckoutPage() {
       </div>
 
       {previewOpen && item && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-3 sm:p-6" role="dialog" aria-modal="true" aria-label="Your customised notebook preview" onClick={() => setPreviewOpen(false)}>
-          <div className="relative w-full max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-3 sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Your customised notebook preview"
+          onClick={() => setPreviewOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-6"
+            onClick={(event) => event.stopPropagation()}
+          >
             <div className="mb-4 flex items-center justify-between gap-3">
-              <div><h2 className="text-lg font-bold">Your book preview</h2><p className="mt-1 text-xs text-[#77716E]">Front and back cover · Open notebook view</p></div>
-              <button type="button" onClick={() => setPreviewOpen(false)} aria-label="Close preview" className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F2ED] text-xl">×</button>
+              <div>
+                <h2 className="text-lg font-bold">Your book preview</h2>
+                <p className="mt-1 text-xs text-[#77716E]">
+                  Front and back cover · Open notebook view
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPreviewOpen(false)}
+                aria-label="Close preview"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F2ED] text-xl"
+              >
+                ×
+              </button>
             </div>
-            <div className="relative mx-auto w-full overflow-hidden rounded-md bg-[#c9beb0] shadow-xl" style={{ aspectRatio: "1.44 / 1", backgroundImage: "url(/Templates/Template-" + (item.templateId || "1") + ".png)", backgroundSize: "100% 100%", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
-              {item.backUploadedImage && <img src={item.backUploadedImage} alt="Back cover artwork" className="pointer-events-none absolute inset-y-0 left-0 z-10 h-full object-cover" style={{ width: "47.1%", transform: "scale(" + (item.backZoom || 1) + ")" }} />}
-              {item.uploadedImage && <img src={item.uploadedImage} alt="Front cover artwork" className="pointer-events-none absolute inset-y-0 right-0 z-10 h-full object-cover" style={{ width: "47.2%", transform: "scale(" + (item.frontZoom || 1) + ")" }} />}
+            <div
+              className="relative mx-auto w-full overflow-hidden rounded-md bg-[#c9beb0] shadow-xl"
+              style={{
+                aspectRatio: "1.44 / 1",
+                backgroundImage:
+                  "url(/Templates/Template-" +
+                  (item.templateId || "1") +
+                  ".png)",
+                backgroundSize: "100% 100%",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            >
+              {item.backUploadedImage && (
+                <img
+                  src={item.backUploadedImage}
+                  alt="Back cover artwork"
+                  className="pointer-events-none absolute inset-y-0 left-0 z-10 h-full object-cover"
+                  style={{
+                    width: "47.1%",
+                    transform: "scale(" + (item.backZoom || 1) + ")",
+                  }}
+                />
+              )}
+              {item.uploadedImage && (
+                <img
+                  src={item.uploadedImage}
+                  alt="Front cover artwork"
+                  className="pointer-events-none absolute inset-y-0 right-0 z-10 h-full object-cover"
+                  style={{
+                    width: "47.2%",
+                    transform: "scale(" + (item.frontZoom || 1) + ")",
+                  }}
+                />
+              )}
               <div className="pointer-events-none absolute inset-y-0 left-[47.1%] z-30 w-[5.7%] bg-gradient-to-r from-[#6f6255] via-[#e6ddd0] to-[#746759] shadow-lg" />
-              <img src={"/Templates/Template-" + (item.templateId || "1") + "-overlay.png"} alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 z-20 h-full w-full" />
-              <img src="/branding/product-label.png" alt="Notebook product details" className="pointer-events-none absolute bottom-[3%] left-[1.5%] z-40 h-auto w-[44%]" />
-              <img src="/branding/warrior-logo.png" alt="Warrior logo" className="pointer-events-none absolute right-[3%] top-[3.5%] z-40 h-auto w-[11%]" />
-              {item.backCoverText && <span className="pointer-events-none absolute left-[8%] top-[45%] z-40 max-w-[34%] -translate-y-1/2 break-words text-center text-sm font-bold text-[#25211E] sm:text-xl">{item.backCoverText}</span>}
-              {item.coverText && <span className="pointer-events-none absolute right-[8%] top-[45%]] z-40 max-w-[34%] -translate-y-1/2 break-words text-center text-sm font-bold text-white sm:text-xl">{item.coverText}</span>}
+              <img
+                src={
+                  "/Templates/Template-" +
+                  (item.templateId || "1") +
+                  "-overlay.png"
+                }
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-20 h-full w-full"
+              />
+              <img
+                src="/branding/product-label.png"
+                alt="Notebook product details"
+                className="pointer-events-none absolute bottom-[3%] left-[1.5%] z-40 h-auto w-[44%]"
+              />
+              <img
+                src="/branding/warrior-logo.png"
+                alt="Warrior logo"
+                className="pointer-events-none absolute right-[3%] top-[3.5%] z-40 h-auto w-[11%]"
+              />
+              {item.backCoverText && (
+                <span className="pointer-events-none absolute left-[8%] top-[45%] z-40 max-w-[34%] -translate-y-1/2 break-words text-center text-sm font-bold text-[#25211E] sm:text-xl">
+                  {item.backCoverText}
+                </span>
+              )}
+              {item.coverText && (
+                <span className="pointer-events-none absolute right-[8%] top-[45%]] z-40 max-w-[34%] -translate-y-1/2 break-words text-center text-sm font-bold text-white sm:text-xl">
+                  {item.coverText}
+                </span>
+              )}
             </div>
-            <p className="mt-4 text-center text-[11px] leading-5 text-[#77716E]">This preview shows your selected template with uploaded front and back cover artwork.</p>
+            <p className="mt-4 text-center text-[11px] leading-5 text-[#77716E]">
+              This preview shows your selected template with uploaded front and
+              back cover artwork.
+            </p>
           </div>
         </div>
       )}
