@@ -327,16 +327,32 @@ export default function CustomizeBookPage() {
                   onPointerMove={(event) => {
                     if (!dragSide.current) return;
                     const rect = event.currentTarget.getBoundingClientRect();
-                    const py = Math.min(94, Math.max(6, ((event.clientY - rect.top) / rect.height) * 100));
+                    const py = Math.min(
+                      94,
+                      Math.max(
+                        6,
+                        ((event.clientY - rect.top) / rect.height) * 100,
+                      ),
+                    );
                     if (dragSide.current === "front") {
-                      const left = rect.left + rect.width * selectedTemplate.spine.end / 100;
-                      const width = rect.width * (100 - selectedTemplate.spine.end) / 100;
+                      const left =
+                        rect.left +
+                        (rect.width * selectedTemplate.spine.end) / 100;
+                      const width =
+                        (rect.width * (100 - selectedTemplate.spine.end)) / 100;
                       const x = ((event.clientX - left) / width) * 100;
-                      setFrontTextPosition({ x: Math.min(94, Math.max(6, x)), y: py });
+                      setFrontTextPosition({
+                        x: Math.min(94, Math.max(6, x)),
+                        y: py,
+                      });
                     } else {
-                      const width = rect.width * selectedTemplate.spine.start / 100;
-                      const x = (event.clientX - rect.left) / width * 100;
-                      setBackTextPosition({ x: Math.min(94, Math.max(6, x)), y: py });
+                      const width =
+                        (rect.width * selectedTemplate.spine.start) / 100;
+                      const x = ((event.clientX - rect.left) / width) * 100;
+                      setBackTextPosition({
+                        x: Math.min(94, Math.max(6, x)),
+                        y: py,
+                      });
                     }
                   }}
                   onPointerUp={() => {
@@ -383,7 +399,10 @@ export default function CustomizeBookPage() {
                   />
 
                   {backCoverText && (
-                    <div className="pointer-events-none absolute inset-y-0 left-0 z-[24] overflow-hidden" style={{ width: selectedTemplate.spine.start + "%" }}>
+                    <div
+                      className="pointer-events-none absolute inset-y-0 left-0 z-[24] overflow-hidden"
+                      style={{ width: selectedTemplate.spine.start + "%" }}
+                    >
                       <span
                         onPointerDown={(event) => {
                           event.preventDefault();
@@ -406,7 +425,13 @@ export default function CustomizeBookPage() {
                     </div>
                   )}
                   {coverText && (
-                    <div className="pointer-events-none absolute inset-y-0 z-[24] overflow-hidden" style={{ left: selectedTemplate.spine.end + "%", width: (100 - selectedTemplate.spine.end) + "%" }}>
+                    <div
+                      className="pointer-events-none absolute inset-y-0 z-[24] overflow-hidden"
+                      style={{
+                        left: selectedTemplate.spine.end + "%",
+                        width: 100 - selectedTemplate.spine.end + "%",
+                      }}
+                    >
                       <span
                         onPointerDown={(event) => {
                           event.preventDefault();
