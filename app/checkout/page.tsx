@@ -453,42 +453,30 @@ export default function CheckoutPage() {
                 className="pointer-events-none absolute right-[3%] top-[3.5%] z-40 h-auto w-[11%]"
               />
               {item.backCoverText && (
-                <span
-                  className={
-                    "pointer-events-none absolute z-40 max-w-[38%] -translate-x-1/2 -translate-y-1/2 break-words text-center " +
-                    (item.backBold === false
-                      ? "font-medium "
-                      : "font-extrabold ") +
-                    (item.backItalic ? "italic" : "")
-                  }
-                  style={{
-                    left: (item.backTextPosition?.x ?? 23) + "%",
-                    top: (item.backTextPosition?.y ?? 48) + "%",
-                    color: item.backTextColor || "#FFFFFF",
-                    fontSize: (item.backTextSize || 24) + "px",
-                  }}
+                <div
+                  className="pointer-events-none absolute inset-y-0 left-0 z-40 overflow-hidden"
+                  style={{ width: (item.templateId === "2" ? 48 : item.templateId === "3" ? 47.8 : item.templateId === "4" ? 48.4 : 47.1) + "%" }}
                 >
-                  {item.backCoverText}
-                </span>
+                  <span
+                    className={"pointer-events-auto absolute max-w-[88%] -translate-x-1/2 -translate-y-1/2 break-words text-center " + (item.backBold === false ? "font-medium " : "font-extrabold ") + (item.backItalic ? "italic" : "")}
+                    style={{ left: (item.backTextPosition?.x ?? 23) + "%", top: (item.backTextPosition?.y ?? 48) + "%", color: item.backTextColor || "#FFFFFF", fontSize: (item.backTextSize || 24) + "px" }}
+                  >
+                    {item.backCoverText}
+                  </span>
+                </div>
               )}
               {item.coverText && (
-                <span
-                  className={
-                    "pointer-events-none absolute z-40 max-w-[38%] -translate-x-1/2 -translate-y-1/2 break-words text-center " +
-                    (item.frontBold === false
-                      ? "font-medium "
-                      : "font-extrabold ") +
-                    (item.frontItalic ? "italic" : "")
-                  }
-                  style={{
-                    left: (item.frontTextPosition?.x ?? 75) + "%",
-                    top: (item.frontTextPosition?.y ?? 48) + "%",
-                    color: item.frontTextColor || "#FFFFFF",
-                    fontSize: (item.frontTextSize || 24) + "px",
-                  }}
+                <div
+                  className="pointer-events-none absolute inset-y-0 z-40 overflow-hidden"
+                  style={{ left: (item.templateId === "2" ? 51.8 : item.templateId === "3" ? 51.9 : item.templateId === "4" ? 52.3 : 52.8) + "%", width: (100 - (item.templateId === "2" ? 51.8 : item.templateId === "3" ? 51.9 : item.templateId === "4" ? 52.3 : 52.8)) + "%" }}
                 >
-                  {item.coverText}
-                </span>
+                  <span
+                    className={"pointer-events-auto absolute max-w-[88%] -translate-x-1/2 -translate-y-1/2 break-words text-center " + (item.frontBold === false ? "font-medium " : "font-extrabold ") + (item.frontItalic ? "italic" : "")}
+                    style={{ left: (item.frontTextPosition?.x ?? 75) + "%", top: (item.frontTextPosition?.y ?? 48) + "%", color: item.frontTextColor || "#FFFFFF", fontSize: (item.frontTextSize || 24) + "px" }}
+                  >
+                    {item.coverText}
+                  </span>
+                </div>
               )}
             </div>
             <p className="mt-4 text-center text-[11px] leading-5 text-[#77716E]">
