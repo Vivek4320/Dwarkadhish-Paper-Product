@@ -454,16 +454,38 @@ export default function CheckoutPage() {
               />
               {item.backCoverText && (
                 <span
-                  className={"pointer-events-none absolute z-40 max-w-[38%] -translate-x-1/2 -translate-y-1/2 break-words text-center " + (item.backBold === false ? "font-medium " : "font-extrabold ") + (item.backItalic ? "italic" : "")}
-                  style={{ left: (item.backTextPosition?.x ?? 23) + "%", top: (item.backTextPosition?.y ?? 48) + "%", color: item.backTextColor || "#FFFFFF", fontSize: (item.backTextSize || 24) + "px" }}
+                  className={
+                    "pointer-events-none absolute z-40 max-w-[38%] -translate-x-1/2 -translate-y-1/2 break-words text-center " +
+                    (item.backBold === false
+                      ? "font-medium "
+                      : "font-extrabold ") +
+                    (item.backItalic ? "italic" : "")
+                  }
+                  style={{
+                    left: (item.backTextPosition?.x ?? 23) + "%",
+                    top: (item.backTextPosition?.y ?? 48) + "%",
+                    color: item.backTextColor || "#FFFFFF",
+                    fontSize: (item.backTextSize || 24) + "px",
+                  }}
                 >
                   {item.backCoverText}
                 </span>
               )}
               {item.coverText && (
                 <span
-                  className={"pointer-events-none absolute z-40 max-w-[38%] -translate-x-1/2 -translate-y-1/2 break-words text-center " + (item.frontBold === false ? "font-medium " : "font-extrabold ") + (item.frontItalic ? "italic" : "")}
-                  style={{ left: (item.frontTextPosition?.x ?? 75) + "%", top: (item.frontTextPosition?.y ?? 48) + "%", color: item.frontTextColor || "#FFFFFF", fontSize: (item.frontTextSize || 24) + "px" }}
+                  className={
+                    "pointer-events-none absolute z-40 max-w-[38%] -translate-x-1/2 -translate-y-1/2 break-words text-center " +
+                    (item.frontBold === false
+                      ? "font-medium "
+                      : "font-extrabold ") +
+                    (item.frontItalic ? "italic" : "")
+                  }
+                  style={{
+                    left: (item.frontTextPosition?.x ?? 75) + "%",
+                    top: (item.frontTextPosition?.y ?? 48) + "%",
+                    color: item.frontTextColor || "#FFFFFF",
+                    fontSize: (item.frontTextSize || 24) + "px",
+                  }}
                 >
                   {item.coverText}
                 </span>
