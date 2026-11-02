@@ -253,8 +253,12 @@ export default function CustomizeBookPage() {
                     {!backUploadedImage && (
                       <label className="absolute inset-0 z-20 flex cursor-pointer items-center justify-center">
                         <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
-                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
-                          <span className="text-[9px] font-semibold sm:text-xs">Upload back cover photo</span>
+                          <span className="text-2xl leading-none sm:text-3xl">
+                            ↑
+                          </span>
+                          <span className="text-[9px] font-semibold sm:text-xs">
+                            Upload back cover photo
+                          </span>
                         </span>
                         <input
                           type="file"
@@ -287,8 +291,12 @@ export default function CustomizeBookPage() {
                     {!uploadedImage && (
                       <label className="absolute inset-0 z-20 flex cursor-pointer items-center justify-center">
                         <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-dashed border-[#bdb7b1] bg-white/90 px-4 py-5 text-[#77716E] sm:px-8 sm:py-8">
-                          <span className="text-2xl leading-none sm:text-3xl">↑</span>
-                          <span className="text-[9px] font-semibold sm:text-xs">Upload front cover photo</span>
+                          <span className="text-2xl leading-none sm:text-3xl">
+                            ↑
+                          </span>
+                          <span className="text-[9px] font-semibold sm:text-xs">
+                            Upload front cover photo
+                          </span>
                         </span>
                         <input
                           type="file"
