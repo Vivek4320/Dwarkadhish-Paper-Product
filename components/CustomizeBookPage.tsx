@@ -48,6 +48,9 @@ const templates = [
   },
 ] as const;
 
+/** Width of the product label on the back cover, in % of the open spread. */
+const LABEL_WIDTH = 44;
+
 const pageOptions = [
   { pages: 200, price: 90 },
   { pages: 184, price: 84 },
@@ -337,6 +340,23 @@ export default function CustomizeBookPage() {
                     alt=""
                     aria-hidden="true"
                     className="pointer-events-none absolute inset-0 z-20 h-full w-full"
+                  />
+
+                  {/* Fixed branding on every template (may sit over the art). */}
+                  <img
+                    src="/branding/product-label.png"
+                    alt="Type of ruling, size, pages and M.R.P."
+                    className="pointer-events-none absolute z-[25] h-auto"
+                    style={{
+                      width: `${LABEL_WIDTH}%`,
+                      left: `${(selectedTemplate.spine.start - LABEL_WIDTH) / 2}%`,
+                      bottom: "3%",
+                    }}
+                  />
+                  <img
+                    src="/branding/warrior-logo.png"
+                    alt="Warrior"
+                    className="pointer-events-none absolute right-[3%] top-[3.5%] z-[25] h-auto w-[11%]"
                   />
                 </div>
                 <div className="pointer-events-none absolute -bottom-2 left-[3%] right-[3%] h-3 rounded-b-full bg-[#a99b8a]/70 blur-[2px]" />
