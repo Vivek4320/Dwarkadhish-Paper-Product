@@ -289,7 +289,6 @@ export default function CustomizeBookPage() {
                         className="sr-only"
                       />
                     </label>
-
                   </div>
 
                   <div className="relative z-30 w-[10px] shrink-0 bg-gradient-to-r from-black/20 via-white/35 to-black/20 shadow-[0_0_9px_rgba(0,0,0,0.28)] sm:w-[14px]">
@@ -347,7 +346,6 @@ export default function CustomizeBookPage() {
                         className="sr-only"
                       />
                     </label>
-
                   </div>
                 </div>
                 <div className="pointer-events-none absolute -bottom-2 left-[3%] right-[3%] h-3 rounded-b-full bg-[#a99b8a]/70 blur-[2px]" />
