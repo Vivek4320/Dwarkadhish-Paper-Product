@@ -237,8 +237,9 @@ export default function CustomizeBookPage() {
                     style={{
                       backgroundColor: backCoverColor,
                       backgroundImage: `url("${selectedTemplate.image}")`,
-                      backgroundSize: "100% 100%",
-                      backgroundPosition: "center",
+                      backgroundSize: "200% 100%",
+                      backgroundPosition: "left center",
+                      backgroundRepeat: "no-repeat",
                       aspectRatio: "0.72 / 1",
                     }}
                   >
@@ -305,8 +306,9 @@ export default function CustomizeBookPage() {
                     style={{
                       backgroundColor: coverColor,
                       backgroundImage: `url("${selectedTemplate.image}")`,
-                      backgroundSize: "100% 100%",
-                      backgroundPosition: "center",
+                      backgroundSize: "200% 100%",
+                      backgroundPosition: "right center",
+                      backgroundRepeat: "no-repeat",
                       aspectRatio: "0.72 / 1",
                     }}
                   >
