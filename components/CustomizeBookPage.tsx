@@ -231,15 +231,19 @@ export default function CustomizeBookPage() {
               </div>
 
               <div className="relative mx-auto w-full max-w-[680px] rounded-md bg-[#c9beb0] p-[7px] shadow-[0_18px_35px_rgba(55,42,30,0.18)]">
-                <div className="relative flex overflow-hidden rounded-[3px]">
+                <div
+                  className="relative flex overflow-hidden rounded-[3px]"
+                  style={{
+                    backgroundImage: `url("${selectedTemplate.image}")`,
+                    backgroundSize: "100% 100%",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                >
                   <div
                     className={`relative flex min-w-0 flex-1 flex-col items-center overflow-hidden border-r border-black/10 px-2 pb-5 pt-5 transition-shadow sm:px-4 sm:pt-7 ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
                     style={{
-                      backgroundColor: backCoverColor,
-                      backgroundImage: `url("${selectedTemplate.image}")`,
-                      backgroundSize: "200% 100%",
-                      backgroundPosition: "left center",
-                      backgroundRepeat: "no-repeat",
+                      backgroundColor: "transparent",
                       aspectRatio: "0.72 / 1",
                     }}
                   >
@@ -297,18 +301,14 @@ export default function CustomizeBookPage() {
                     </div>
                   </div>
 
-                  <div className="relative z-30 w-[10px] shrink-0 bg-gradient-to-r from-[#6f6255] via-[#e6ddd0] to-[#746759] shadow-[0_0_9px_rgba(0,0,0,0.28)] sm:w-[14px]">
+                  <div className="relative z-30 w-[10px] shrink-0 bg-gradient-to-r from-black/20 via-white/35 to-black/20 shadow-[0_0_9px_rgba(0,0,0,0.28)] sm:w-[14px]">
                     <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-black/20" />
                   </div>
 
                   <div
                     className={`relative flex min-w-0 flex-1 flex-col items-center overflow-hidden px-2 pb-5 pt-5 transition-shadow sm:px-4 sm:pt-7 ${activeCover === "front" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
                     style={{
-                      backgroundColor: coverColor,
-                      backgroundImage: `url("${selectedTemplate.image}")`,
-                      backgroundSize: "200% 100%",
-                      backgroundPosition: "right center",
-                      backgroundRepeat: "no-repeat",
+                      backgroundColor: "transparent",
                       aspectRatio: "0.72 / 1",
                     }}
                   >
