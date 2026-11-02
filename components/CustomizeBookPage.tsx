@@ -10,12 +10,8 @@ const templates = [
     id: "1",
     name: "Template 1",
     image: "/Templates/Template-1.png",
-    photoArea: {
-      top: 16.4,
-      height: 61.9,
-      back: { left: 4.5, width: 40.2 },
-      front: { left: 55.3, width: 40.2 },
-    },
+    overlay: "/Templates/Template-1-overlay.png",
+    spine: { start: 47.1, end: 52.8 },
     color: "#FFFFFF",
     text: "",
     textColor: "#202020",
@@ -24,12 +20,8 @@ const templates = [
     id: "2",
     name: "Template 2",
     image: "/Templates/Template-2.png",
-    photoArea: {
-      top: 24.6,
-      height: 57.3,
-      back: { left: 4.5, width: 41.0 },
-      front: { left: 54.3, width: 41.2 },
-    },
+    overlay: "/Templates/Template-2-overlay.png",
+    spine: { start: 48.0, end: 51.8 },
     color: "#FFFFFF",
     text: "",
     textColor: "#202020",
@@ -38,12 +30,8 @@ const templates = [
     id: "3",
     name: "Template 3",
     image: "/Templates/Template-3.png",
-    photoArea: {
-      top: 21.0,
-      height: 54.9,
-      back: { left: 4.5, width: 40.8 },
-      front: { left: 54.4, width: 41.1 },
-    },
+    overlay: "/Templates/Template-3-overlay.png",
+    spine: { start: 47.8, end: 51.9 },
     color: "#FFFFFF",
     text: "",
     textColor: "#202020",
@@ -52,12 +40,8 @@ const templates = [
     id: "4",
     name: "Template 4",
     image: "/Templates/Template-4.png",
-    photoArea: {
-      top: 13.7,
-      height: 69.7,
-      back: { left: 4.5, width: 41.3 },
-      front: { left: 54.8, width: 40.7 },
-    },
+    overlay: "/Templates/Template-4-overlay.png",
+    spine: { start: 48.4, end: 52.3 },
     color: "#FFFFFF",
     text: "",
     textColor: "#202020",
@@ -73,7 +57,8 @@ const pageOptions = [
 ];
 
 type PhotoSlotProps = {
-  area: { top: number; height: number; left: number; width: number };
+  /** Horizontal extent of this cover inside the spread, in % of its width. */
+  bounds: { left: number; width: number };
   src: string | null;
   zoom: number;
   side: "front" | "back";
@@ -81,21 +66,16 @@ type PhotoSlotProps = {
 };
 
 /**
- * The safe photo window for one cover. Its position is measured per template
- * (the empty centre between the top and bottom artwork), and it clips the
- * photo so zooming in can never spill over the template design.
+ * One full cover (back or front). The photo fills the whole cover and is
+ * clipped to it. The template's artwork is drawn above it as a transparent-
+ * centre overlay, so the photo never covers the design at any zoom level.
  */
-function PhotoSlot({ area, src, zoom, side, onPick }: PhotoSlotProps) {
+function PhotoSlot({ bounds, src, zoom, side, onPick }: PhotoSlotProps) {
   const label = side === "front" ? "front" : "back";
   return (
     <div
-      className="absolute z-10 overflow-hidden"
-      style={{
-        top: `${area.top}%`,
-        height: `${area.height}%`,
-        left: `${area.left}%`,
-        width: `${area.width}%`,
-      }}
+      className="absolute inset-y-0 z-10 overflow-hidden"
+      style={{ left: `${bounds.left}%`, width: `${bounds.width}%` }}
     >
       {src ? (
         <img
@@ -279,8 +259,8 @@ export default function CustomizeBookPage() {
                 <div>
                   <p className="text-sm font-bold">Live open-book preview</p>
                   <p className="mt-1 text-[10px] text-[#77716E]">
-                    Adjust from 30% (smaller) to 250% (zoomed in). Default size
-                    is 100%.
+                    Your photo fills the whole cover. Zoom from 100% (default)
+                    up to 250%; the template design always stays on top.
                   </p>
                   <p className="mt-1 text-[10px] text-[#77716E]">
                     A single notebook opened flat on a table
@@ -316,7 +296,7 @@ export default function CustomizeBookPage() {
                   }}
                 >
                   <div
-                    className={`relative min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
+                    className={`pointer-events-none relative z-40 min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
                   ></div>
 
                   <div className="relative z-30 w-[10px] shrink-0 bg-gradient-to-r from-[#6f6255] via-[#e6ddd0] to-[#746759] shadow-[0_0_9px_rgba(0,0,0,0.28)] sm:w-[14px]">
@@ -324,16 +304,12 @@ export default function CustomizeBookPage() {
                   </div>
 
                   <div
-                    className={`relative min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "front" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
+                    className={`pointer-events-none relative z-40 min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "front" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
                   ></div>
 
                   <PhotoSlot
                     side="back"
-                    area={{
-                      top: selectedTemplate.photoArea.top,
-                      height: selectedTemplate.photoArea.height,
-                      ...selectedTemplate.photoArea.back,
-                    }}
+                    bounds={{ left: 0, width: selectedTemplate.spine.start }}
                     src={backUploadedImage}
                     zoom={backZoom}
                     onPick={(event) => {
@@ -343,10 +319,9 @@ export default function CustomizeBookPage() {
                   />
                   <PhotoSlot
                     side="front"
-                    area={{
-                      top: selectedTemplate.photoArea.top,
-                      height: selectedTemplate.photoArea.height,
-                      ...selectedTemplate.photoArea.front,
+                    bounds={{
+                      left: selectedTemplate.spine.end,
+                      width: 100 - selectedTemplate.spine.end,
                     }}
                     src={uploadedImage}
                     zoom={frontZoom}
@@ -354,6 +329,14 @@ export default function CustomizeBookPage() {
                       setActiveCover("front");
                       handleUpload(event, "front");
                     }}
+                  />
+
+                  {/* Template artwork above the photos: transparent centre. */}
+                  <img
+                    src={selectedTemplate.overlay}
+                    alt=""
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 z-20 h-full w-full"
                   />
                 </div>
                 <div className="pointer-events-none absolute -bottom-2 left-[3%] right-[3%] h-3 rounded-b-full bg-[#a99b8a]/70 blur-[2px]" />
@@ -534,7 +517,7 @@ export default function CustomizeBookPage() {
                 <input
                   id="photo-zoom"
                   type="range"
-                  min="0.3"
+                  min="1"
                   max="2.5"
                   step="0.05"
                   value={activeCover === "front" ? frontZoom : backZoom}
