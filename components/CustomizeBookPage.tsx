@@ -317,8 +317,7 @@ export default function CustomizeBookPage() {
                 >
                   <div
                     className={`relative min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
-                  >
-                  </div>
+                  ></div>
 
                   <div className="relative z-30 w-[10px] shrink-0 bg-gradient-to-r from-[#6f6255] via-[#e6ddd0] to-[#746759] shadow-[0_0_9px_rgba(0,0,0,0.28)] sm:w-[14px]">
                     <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-black/20" />
@@ -326,8 +325,7 @@ export default function CustomizeBookPage() {
 
                   <div
                     className={`relative min-w-0 flex-1 overflow-hidden transition-shadow ${activeCover === "front" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
-                  >
-                  </div>
+                  ></div>
 
                   <PhotoSlot
                     side="back"
