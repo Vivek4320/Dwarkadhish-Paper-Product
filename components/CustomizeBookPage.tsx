@@ -644,17 +644,46 @@ export default function CustomizeBookPage() {
                     />
                   ))}
                   <label className="flex h-10 cursor-pointer items-center gap-2 rounded-full border border-[#E9E3DD] bg-white px-3 text-xs font-semibold text-[#514B47] shadow-sm transition hover:border-[#D71920]">
-                    <input type="color" aria-label="Choose custom text colour" value={activeCover === "front" ? frontTextColor : backTextColor} onChange={(event) => activeCover === "front" ? setFrontTextColor(event.target.value) : setBackTextColor(event.target.value)} className="h-6 w-6 cursor-pointer rounded-full border-0 bg-transparent p-0" />
+                    <input
+                      type="color"
+                      aria-label="Choose custom text colour"
+                      value={
+                        activeCover === "front" ? frontTextColor : backTextColor
+                      }
+                      onChange={(event) =>
+                        activeCover === "front"
+                          ? setFrontTextColor(event.target.value)
+                          : setBackTextColor(event.target.value)
+                      }
+                      className="h-6 w-6 cursor-pointer rounded-full border-0 bg-transparent p-0"
+                    />
                     <span>Custom colour</span>
                   </label>
                 </div>
               </div>
               <div className="mt-4">
                 <div className="flex items-center justify-between gap-3">
-                  <label className="text-[11px] font-medium text-[#514B47]">Text size</label>
-                  <span className="text-xs font-bold text-[#D71920]">{activeCover === "front" ? frontTextSize : backTextSize}px</span>
+                  <label className="text-[11px] font-medium text-[#514B47]">
+                    Text size
+                  </label>
+                  <span className="text-xs font-bold text-[#D71920]">
+                    {activeCover === "front" ? frontTextSize : backTextSize}px
+                  </span>
                 </div>
-                <input type="range" min="12" max="48" step="1" value={activeCover === "front" ? frontTextSize : backTextSize} onChange={(event) => activeCover === "front" ? setFrontTextSize(Number(event.target.value)) : setBackTextSize(Number(event.target.value))} className="mt-3 w-full accent-[#D71920]" aria-label="Text size" />
+                <input
+                  type="range"
+                  min="12"
+                  max="48"
+                  step="1"
+                  value={activeCover === "front" ? frontTextSize : backTextSize}
+                  onChange={(event) =>
+                    activeCover === "front"
+                      ? setFrontTextSize(Number(event.target.value))
+                      : setBackTextSize(Number(event.target.value))
+                  }
+                  className="mt-3 w-full accent-[#D71920]"
+                  aria-label="Text size"
+                />
               </div>
 
               <div className="mt-5 rounded-lg bg-[#F9F6F2] p-4">
