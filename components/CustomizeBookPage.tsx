@@ -116,6 +116,8 @@ export default function CustomizeBookPage() {
   const [backCoverText, setBackCoverText] = useState("");
   const [frontTextColor, setFrontTextColor] = useState("#FFFFFF");
   const [backTextColor, setBackTextColor] = useState("#FFFFFF");
+  const [frontTextSize, setFrontTextSize] = useState(24);
+  const [backTextSize, setBackTextSize] = useState(24);
   const [frontBold, setFrontBold] = useState(true);
   const [backBold, setBackBold] = useState(true);
   const [frontItalic, setFrontItalic] = useState(false);
@@ -402,6 +404,7 @@ export default function CustomizeBookPage() {
                         left: backTextPosition.x + "%",
                         top: backTextPosition.y + "%",
                         color: backTextColor,
+                        fontSize: backTextSize + "px",
                       }}
                     >
                       {backCoverText}
@@ -422,6 +425,7 @@ export default function CustomizeBookPage() {
                         left: frontTextPosition.x + "%",
                         top: frontTextPosition.y + "%",
                         color: frontTextColor,
+                        fontSize: frontTextSize + "px",
                       }}
                     >
                       {coverText}
@@ -639,56 +643,20 @@ export default function CustomizeBookPage() {
                       style={{ backgroundColor: color }}
                     />
                   ))}
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <p className="text-xs font-medium text-[#514B47]">
-                  Cover colour
-                </p>
-                <div className="mt-3 flex flex-wrap items-center gap-3">
-                  {[
-                    "#D20D13",
-                    "#F7E8C8",
-                    "#B90E16",
-                    "#20395F",
-                    "#282828",
-                    "#F4F0E8",
-                  ].map((color) => (
-                    <button
-                      key={color}
-                      type="button"
-                      aria-label={`Choose cover colour ${color}`}
-                      onClick={() =>
-                        activeCover === "front"
-                          ? setCoverColor(color)
-                          : setBackCoverColor(color)
-                      }
-                      className={`h-8 w-8 rounded-full border-2 ${(activeCover === "front" ? coverColor : backCoverColor).toUpperCase() === color ? "border-[#D71920] ring-2 ring-[#D71920]/20" : "border-white shadow"}`}
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
                   <label className="flex h-10 cursor-pointer items-center gap-2 rounded-full border border-[#E9E3DD] bg-white px-3 text-xs font-semibold text-[#514B47] shadow-sm transition hover:border-[#D71920]">
-                    <input
-                      type="color"
-                      aria-label="Choose custom cover colour"
-                      value={
-                        activeCover === "front" ? coverColor : backCoverColor
-                      }
-                      onChange={(event) =>
-                        activeCover === "front"
-                          ? setCoverColor(event.target.value)
-                          : setBackCoverColor(event.target.value)
-                      }
-                      className="h-6 w-6 cursor-pointer rounded-full border-0 bg-transparent p-0"
-                    />
+                    <input type="color" aria-label="Choose custom text colour" value={activeCover === "front" ? frontTextColor : backTextColor} onChange={(event) => activeCover === "front" ? setFrontTextColor(event.target.value) : setBackTextColor(event.target.value)} className="h-6 w-6 cursor-pointer rounded-full border-0 bg-transparent p-0" />
                     <span>Custom colour</span>
                   </label>
-                  <span className="text-[10px] font-medium text-[#77716E]">
-                    {activeCover === "front" ? coverColor : backCoverColor}
-                  </span>
                 </div>
               </div>
+              <div className="mt-4">
+                <div className="flex items-center justify-between gap-3">
+                  <label className="text-[11px] font-medium text-[#514B47]">Text size</label>
+                  <span className="text-xs font-bold text-[#D71920]">{activeCover === "front" ? frontTextSize : backTextSize}px</span>
+                </div>
+                <input type="range" min="12" max="48" step="1" value={activeCover === "front" ? frontTextSize : backTextSize} onChange={(event) => activeCover === "front" ? setFrontTextSize(Number(event.target.value)) : setBackTextSize(Number(event.target.value))} className="mt-3 w-full accent-[#D71920]" aria-label="Text size" />
+              </div>
+
               <div className="mt-5 rounded-lg bg-[#F9F6F2] p-4">
                 <div className="flex items-center justify-between gap-3">
                   <label
