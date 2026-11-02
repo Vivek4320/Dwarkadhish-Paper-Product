@@ -12,7 +12,8 @@
     "@clerk/nextjs": "^7.9.23",
     "next": "16.4.3",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "fabric": "^6.7.1"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
