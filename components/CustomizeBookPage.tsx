@@ -6,48 +6,10 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useMemo, useState } from "react";
 
 const templates = [
-  {
-    id: "heart",
-    name: "Heart Red",
-    color: "#D20D13",
-    text: "♥",
-    textColor: "#FFFFFF",
-  },
-  {
-    id: "minimal",
-    name: "Minimal",
-    color: "#F7E8C8",
-    text: "dp.",
-    textColor: "#25211E",
-  },
-  {
-    id: "classic",
-    name: "Classic",
-    color: "#B90E16",
-    text: "BOOK",
-    textColor: "#FFFFFF",
-  },
-  {
-    id: "corporate",
-    name: "Corporate",
-    color: "#20395F",
-    text: "DP.",
-    textColor: "#FFFFFF",
-  },
-  {
-    id: "blank",
-    name: "Blank",
-    color: "#FAFAFA",
-    text: "",
-    textColor: "#25211E",
-  },
-  {
-    id: "architecture",
-    name: "Architecture Sketch",
-    color: "#F7F7F5",
-    text: "A4 NOTEBOOK",
-    textColor: "#17233C",
-  },
+  { id: "1", name: "Template 1", image: "/Templates/Template-1.png", color: "#FFFFFF", text: "", textColor: "#202020" },
+  { id: "2", name: "Template 2", image: "/Templates/Template-2.png", color: "#FFFFFF", text: "", textColor: "#202020" },
+  { id: "3", name: "Template 3", image: "/Templates/Template-3.png", color: "#FFFFFF", text: "", textColor: "#202020" },
+  { id: "4", name: "Template 4", image: "/Templates/Template-4.png", color: "#FFFFFF", text: "", textColor: "#202020" },
 ] as const;
 
 const pageOptions = [
@@ -60,9 +22,9 @@ const pageOptions = [
 
 export default function CustomizeBookPage() {
   const router = useRouter();
-  const [templateId, setTemplateId] = useState<string>("architecture");
-  const [coverColor, setCoverColor] = useState("#F7F7F5");
-  const [coverText, setCoverText] = useState("A4 NOTEBOOK");
+  const [templateId, setTemplateId] = useState<string>("1");
+  const [coverColor, setCoverColor] = useState("#FFFFFF");
+  const [coverText, setCoverText] = useState("");
   const [backCoverColor, setBackCoverColor] = useState("#F7F7F5");
   const [backCoverText, setBackCoverText] = useState(
     "DWARKADHISH PAPER PRODUCTS",
@@ -89,16 +51,7 @@ export default function CustomizeBookPage() {
     if (!template) return;
     setTemplateId(id);
     setCoverColor(template.color);
-    const nextText =
-      id === "blank"
-        ? ""
-        : id === "minimal"
-          ? "dp."
-          : id === "classic"
-            ? "BOOK"
-            : id === "corporate"
-              ? "DP."
-              : "YOUR NOTEBOOK";
+    const nextText = template.text;
     if (activeCover === "front") {
       setCoverColor(template.color);
       setCoverText(nextText);
@@ -136,11 +89,11 @@ export default function CustomizeBookPage() {
   }
 
   function resetDesign() {
-    setTemplateId("heart");
+    setTemplateId("1");
     setCoverColor(templates[0].color);
-    setCoverText("YOUR NOTEBOOK");
-    setBackCoverColor("#F7E8C8");
-    setBackCoverText("MADE WITH CARE");
+    setCoverText("");
+    setBackCoverColor("#FFFFFF");
+    setBackCoverText("");
     setBackUploadedImage(null);
     setFrontZoom(1);
     setBackZoom(1);
@@ -148,7 +101,7 @@ export default function CustomizeBookPage() {
     setQuantity(1);
     setPages(200);
     setUploadedImage(null);
-    setMessage("Design reset to the original template.");
+    setMessage("Design reset to Template 1.");
   }
 
   function submitDesign(action: "cart" | "buy") {
@@ -255,22 +208,13 @@ export default function CustomizeBookPage() {
                     className={`relative flex min-w-0 flex-1 flex-col items-center overflow-hidden border-r border-black/10 px-2 pb-5 pt-5 transition-shadow sm:px-4 sm:pt-7 ${activeCover === "back" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
                     style={{
                       backgroundColor: backCoverColor,
-                      backgroundImage:
-                        "linear-gradient(90deg, rgba(0,0,0,0.07), transparent 12%, transparent 96%, rgba(0,0,0,0.04))",
+                      backgroundImage: `url("${selectedTemplate.image}")`,
+                      backgroundSize: "100% 100%",
+                      backgroundPosition: "center",
                       aspectRatio: "0.72 / 1",
                     }}
                   >
-                    {templateId === "architecture" && (
-                      <>
-                        <div className="pointer-events-none absolute inset-0 z-[1]">
-                          <div className="absolute -left-8 -top-8 h-20 w-20 rotate-45 bg-[#9F1D2D]" />
-                          <div className="absolute -bottom-8 -right-8 h-20 w-20 rotate-45 bg-[#9F1D2D]" />
-                          <div className="absolute bottom-4 left-4 text-[7px] font-bold tracking-[0.18em] text-[#17233C] sm:bottom-7 sm:left-7 sm:text-[9px]">
-                            A4 NOTEBOOK
-                          </div>
-                        </div>
-                      </>
-                    )}
+                    
                     {backUploadedImage && (
                       <>
                         <img
@@ -333,35 +277,13 @@ export default function CustomizeBookPage() {
                     className={`relative flex min-w-0 flex-1 flex-col items-center overflow-hidden px-2 pb-5 pt-5 transition-shadow sm:px-4 sm:pt-7 ${activeCover === "front" ? "ring-2 ring-inset ring-[#D71920]" : ""}`}
                     style={{
                       backgroundColor: coverColor,
-                      backgroundImage:
-                        "linear-gradient(270deg, rgba(0,0,0,0.07), transparent 12%, transparent 96%, rgba(0,0,0,0.04))",
+                      backgroundImage: `url("${selectedTemplate.image}")`,
+                      backgroundSize: "100% 100%",
+                      backgroundPosition: "center",
                       aspectRatio: "0.72 / 1",
                     }}
                   >
-                    {templateId === "architecture" && (
-                      <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
-                        <div className="absolute -right-10 -top-10 h-24 w-24 rotate-45 bg-[#9F1D2D]" />
-                        <div className="absolute -bottom-10 -left-10 h-24 w-24 rotate-45 bg-[#9F1D2D]" />
-                        <svg
-                          viewBox="0 0 240 170"
-                          className="absolute bottom-8 right-1 h-[48%] w-[88%] text-[#17233C] sm:bottom-12"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                        >
-                          <path d="M20 145h200M35 145V78l24-18 24 18v67M83 145V54l36-27 36 27v91M155 145V78l24-18 24 18v67" />
-                          <path d="M48 85h22M96 66h46M96 83h46M96 100h46M96 117h46M45 101h28M45 117h28M165 85h28M165 101h28M165 117h28" />
-                          <path d="M110 145v-25h18v25M112 54v-9h14v9" />
-                          <path d="M18 145l101-105 103 105" opacity=".35" />
-                        </svg>
-                        <div className="absolute bottom-[54%] left-1/2 -translate-x-1/2 text-center text-[8px] font-extrabold tracking-[0.2em] text-[#17233C] sm:text-[11px]">
-                          DWARKADHISH
-                          <br />
-                          PAPER PRODUCTS
-                        </div>
-                        <div className="absolute left-5 top-[40%] h-px w-10 bg-[#9F1D2D] sm:left-8 sm:w-14" />
-                      </div>
-                    )}
+                    
                     {uploadedImage && (
                       <>
                         <img
@@ -429,7 +351,7 @@ export default function CustomizeBookPage() {
           <section className="rounded-2xl border border-[#E9E3DD] bg-white p-5 shadow-[0_8px_25px_rgba(0,0,0,0.025)] sm:p-7">
             <div className="border-b border-[#F0ECE8] pb-6">
               <h2 className="text-base font-bold">01. Select Template</h2>
-              <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-5">
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {templates.map((template) => (
                   <button
                     key={template.id}
@@ -437,14 +359,8 @@ export default function CustomizeBookPage() {
                     onClick={() => selectTemplate(template.id)}
                     className={`rounded-lg border p-1.5 transition ${templateId === template.id ? "border-[#DF151D] bg-[#FFFAFA]" : "border-[#E9E3DD] hover:border-[#d7b4a9]"}`}
                   >
-                    <span
-                      className="flex h-20 items-center justify-center rounded-md text-xl font-extrabold"
-                      style={{
-                        backgroundColor: template.color,
-                        color: template.textColor,
-                      }}
-                    >
-                      {template.id === "blank" ? "＋" : template.text}
+                    <span className="relative block h-36 overflow-hidden rounded-md bg-[#F5F2ED]">
+                      <Image src={template.image} alt={template.name} fill sizes="(max-width: 640px) 45vw, 160px" className="object-cover" />
                     </span>
                     <span
                       className={`mt-2 block text-[10px] ${templateId === template.id ? "font-bold text-[#DF151D]" : "text-[#514B47]"}`}
