@@ -4,6 +4,33 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+type RazorpayPaymentResponse = {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+};
+
+type RazorpayOptions = {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  order_id: string;
+  handler: (response: RazorpayPaymentResponse) => Promise<void>;
+  modal: { ondismiss: () => void };
+  theme: { color: string };
+};
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: RazorpayOptions) => {
+      open: () => void;
+      on: (event: "payment.failed", callback: (response: { error?: { description?: string } }) => void) => void;
+    };
+  }
+}
+
 type CheckoutItem = {
   templateName: string;
   coverColor: string;
@@ -39,7 +66,7 @@ const money = (value: number) =>
 
 export default function CheckoutPage() {
   const [item, setItem] = useState<CheckoutItem | null>(null);
-  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);\n  const [paymentLoading, setPaymentLoading] = useState(false);\n  const [paymentMessage, setPaymentMessage] = useState("");
 
   useEffect(() => {
     const saved = sessionStorage.getItem("dwarkadhish-checkout-item");
@@ -51,6 +78,94 @@ export default function CheckoutPage() {
       setItem(null);
     }
   }, []);
+
+  const handlePayment = async () => {
+    if (!item) {
+      setPaymentMessage("Please customise a notebook before placing your order.");
+      return;
+    }
+
+    setPaymentLoading(true);
+    setPaymentMessage("");
+
+    try {
+      const orderResponse = await fetch("/api/razorpay/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pages: item.pages, quantity: item.quantity }),
+      });
+      const orderData = await orderResponse.json();
+
+      if (!orderResponse.ok) {
+        throw new Error(orderData.error || "Unable to create payment order.");
+      }
+
+      if (!window.Razorpay) {
+        await new Promise<void>((resolve, reject) => {
+          const existing = document.querySelector<HTMLScriptElement>(
+            'script[src="https://checkout.razorpay.com/v1/checkout.js"]',
+          );
+          if (existing) {
+            existing.addEventListener("load", () => resolve(), { once: true });
+            existing.addEventListener("error", () => reject(new Error("Razorpay checkout failed to load.")), { once: true });
+            return;
+          }
+          const script = document.createElement("script");
+          script.src = "https://checkout.razorpay.com/v1/checkout.js";
+          script.onload = () => resolve();
+          script.onerror = () => reject(new Error("Razorpay checkout failed to load."));
+          document.body.appendChild(script);
+        });
+      }
+
+      if (!window.Razorpay) {
+        throw new Error("Razorpay checkout is unavailable. Please refresh and try again.");
+      }
+
+      const razorpay = new window.Razorpay({
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "Dwarkadhish Paper Products",
+        description: "Customised notebook order",
+        order_id: orderData.orderId,
+        handler: async (response) => {
+          try {
+            const verifyResponse = await fetch("/api/razorpay/verify-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(response),
+            });
+            const verifyData = await verifyResponse.json();
+            if (!verifyResponse.ok || !verifyData.verified) {
+              throw new Error(verifyData.error || "Payment verification failed.");
+            }
+            setPaymentMessage("Payment successful and verified. Payment ID: " + response.razorpay_payment_id);
+          } catch (error) {
+            setPaymentMessage(error instanceof Error ? error.message : "Payment verification failed. Please contact the store.");
+          } finally {
+            setPaymentLoading(false);
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            setPaymentLoading(false);
+            setPaymentMessage("Payment window closed. No successful payment was confirmed.");
+          },
+        },
+        theme: { color: "#D71920" },
+      });
+
+      razorpay.on("payment.failed", (response) => {
+        setPaymentLoading(false);
+        setPaymentMessage(response.error?.description || "Payment failed. Please try again.");
+      });
+      razorpay.open();
+    } catch (error) {
+      setPaymentLoading(false);
+      setPaymentMessage(error instanceof Error ? error.message : "Unable to start payment.");
+    }
+  };
 
   const subtotal = item?.total ?? 0;
   const shipping = item ? 50 : 0;
@@ -207,13 +322,13 @@ export default function CheckoutPage() {
                 <div>
                   <h2 className="text-base font-bold">Payment method</h2>
                   <p className="mt-1 text-xs text-[#8A817A]">
-                    Payment options will be configured later.
+                    Secure online payment powered by Razorpay (Test Mode).
                   </p>
                 </div>
               </div>
               <div className="rounded-xl border border-dashed border-[#D9CEC5] bg-[#FDFBF9] p-4 text-sm text-[#77716E]">
                 <span className="font-semibold text-[#514B47]">
-                  Payment on confirmation
+                  Pay securely with Razorpay
                 </span>
                 <p className="mt-1 text-xs leading-5">
                   Your preferred payment method can be selected when the payment
@@ -350,10 +465,17 @@ export default function CheckoutPage() {
 
             <button
               type="button"
-              className="min-h-12 w-full rounded-lg bg-[#D71920] px-4 text-sm font-bold text-white transition hover:bg-[#B91620]"
+              onClick={handlePayment}
+              disabled={!item || paymentLoading}
+              className="min-h-12 w-full rounded-lg bg-[#D71920] px-4 text-sm font-bold text-white transition hover:bg-[#B91620] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Place Order · {money(finalAmount)}
+              {paymentLoading ? "Processing..." : `Pay Now · ${money(finalAmount)}`}
             </button>
+            {paymentMessage && (
+              <p role="status" className="mt-3 rounded-lg bg-[#F9F6F2] p-3 text-xs leading-5 text-[#514B47]">
+                {paymentMessage}
+              </p>
+            )}
             <p className="mt-3 text-center text-[10px] leading-5 text-[#8A817A]">
               By continuing, you agree to the store&apos;s Terms &amp;
               Conditions and Privacy Policy.
