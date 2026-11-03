@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useMemo, useRef, useState } from "react";
+import { addToCart, uploadPhoto } from "../lib/cart-client";
+import { prepareImage } from "../lib/image-client";
 
 const templates = [
   {
@@ -132,6 +134,8 @@ export default function CustomizeBookPage() {
   const [pages, setPages] = useState(200);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [message, setMessage] = useState("");
+  const [addedToCart, setAddedToCart] = useState(false);
+  const [cartBusy, setCartBusy] = useState(false);
 
   const selectedTemplate =
     templates.find((item) => item.id === templateId) ?? templates[0];
@@ -219,9 +223,55 @@ export default function CustomizeBookPage() {
     setMessage("Design reset to Template 1.");
   }
 
+  async function saveToCart() {
+    if (cartBusy) return;
+    setCartBusy(true);
+    setAddedToCart(false);
+    setMessage("Adding to cart...");
+    try {
+      const upload = async (image: string | null) =>
+        image ? uploadPhoto(await prepareImage(image)) : null;
+      const [frontPhotoId, backPhotoId] = await Promise.all([
+        upload(uploadedImage),
+        upload(backUploadedImage),
+      ]);
+      await addToCart({
+        templateId,
+        pages,
+        quantity,
+        frontPhotoId,
+        backPhotoId,
+        design: {
+          coverText,
+          backCoverText,
+          frontTextColor,
+          backTextColor,
+          frontBold,
+          backBold,
+          frontItalic,
+          backItalic,
+          frontTextPosition,
+          backTextPosition,
+          frontTextSize,
+          backTextSize,
+          frontZoom,
+          backZoom,
+        },
+      });
+      setMessage("Added to your cart.");
+      setAddedToCart(true);
+    } catch (error) {
+      setMessage(
+        error instanceof Error ? error.message : "Could not add to cart.",
+      );
+    } finally {
+      setCartBusy(false);
+    }
+  }
+
   function submitDesign(action: "cart" | "buy") {
     if (action === "cart") {
-      setMessage("Cart functionality will be connected later.");
+      void saveToCart();
       return;
     }
 
@@ -242,6 +292,8 @@ export default function CustomizeBookPage() {
       backItalic,
       frontTextPosition,
       backTextPosition,
+      frontTextSize,
+      backTextSize,
       frontZoom,
       backZoom,
       pages,
@@ -837,9 +889,10 @@ export default function CustomizeBookPage() {
                 <button
                   type="button"
                   onClick={() => submitDesign("cart")}
+                  disabled={cartBusy}
                   className="min-h-12 rounded-lg border border-[#DF151D] bg-[#FFF5F5] px-4 text-xs font-bold text-[#DF151D] transition hover:bg-[#ffe8e8]"
                 >
-                  ＋ Add to Cart
+                  {cartBusy ? "Adding..." : "＋ Add to Cart"}
                 </button>
                 <button
                   type="button"
@@ -855,6 +908,14 @@ export default function CustomizeBookPage() {
                   className="mt-4 rounded-lg border border-[#ead8bd] bg-[#fffaf1] p-3 text-xs leading-5 text-[#514B47]"
                 >
                   {message}
+                  {addedToCart && (
+                    <>
+                      {" "}
+                      <Link href="/cart" className="font-bold text-[#DF151D]">
+                        View cart →
+                      </Link>
+                    </>
+                  )}
                 </p>
               )}
               <p className="mt-4 text-[10px] leading-5 text-[#77716E]">

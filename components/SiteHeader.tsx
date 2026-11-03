@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { UserButton } from "@clerk/nextjs";
+import CartLink from "./CartLink";
 import { navItems } from "./site-data";
 
 type SiteHeaderProps = {
@@ -56,15 +57,18 @@ export default function SiteHeader({
               </a>
             ))}
           </nav>
-          {isSignedIn ? (
-            <div className="header-profile" aria-label="Your account">
-              <UserButton />
-            </div>
-          ) : (
-            <button className="header-cta" onClick={handleAccountAction}>
-              {accountLabel} <span>↗</span>
-            </button>
-          )}
+          <div className="header-actions">
+            <CartLink isSignedIn={isSignedIn} />
+            {isSignedIn ? (
+              <div className="header-profile" aria-label="Your account">
+                <UserButton />
+              </div>
+            ) : (
+              <button className="header-cta" onClick={handleAccountAction}>
+                {accountLabel} <span>↗</span>
+              </button>
+            )}
+          </div>
           <button
             className="mobile-menu-button"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
