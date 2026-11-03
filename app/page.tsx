@@ -27,9 +27,9 @@ export default function HomePage() {
       />
       <HomeCarousel />
       <BenefitsStrip />
+      <OurClients />
       <HomeProductsSection />
       <CustomizeSection />
-      <OurClients />
       <SiteFooter />
       <MobileBottomNav />
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
