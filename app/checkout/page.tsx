@@ -92,6 +92,12 @@ export default function CheckoutPage() {
       return;
     }
 
+    const detailsForm = document.getElementById("checkout-details") as HTMLFormElement | null;
+    if (!detailsForm || !detailsForm.reportValidity()) {
+      setPaymentMessage("Please complete all required contact and delivery details before placing your order.");
+      return;
+    }
+
     setPaymentLoading(true);
     setPaymentMessage("");
 
@@ -246,7 +252,7 @@ export default function CheckoutPage() {
         </div>
 
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_390px]">
-          <section className="space-y-6">
+          <form id="checkout-details" className="space-y-6">
             <div className="rounded-2xl border border-[#E9E3DD] bg-white p-5 shadow-sm sm:p-7">
               <div className="mb-6 flex items-center gap-3">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#FFF0F0] text-sm font-bold text-[#D71920]">
@@ -264,6 +270,9 @@ export default function CheckoutPage() {
                   Full name
                   <input
                     type="text"
+                    required
+                    minLength={2}
+                    autoComplete="name"
                     placeholder="Enter your full name"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
@@ -272,6 +281,8 @@ export default function CheckoutPage() {
                   Email address
                   <input
                     type="email"
+                    required
+                    autoComplete="email"
                     placeholder="you@example.com"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
@@ -280,6 +291,10 @@ export default function CheckoutPage() {
                   Phone number
                   <input
                     type="tel"
+                    required
+                    autoComplete="tel"
+                    pattern="[+]?[0-9() -]{10,15}"
+                    title="Enter a valid phone number."
                     placeholder="+91 00000 00000"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
@@ -304,6 +319,9 @@ export default function CheckoutPage() {
                   Address
                   <textarea
                     rows={3}
+                    required
+                    minLength={8}
+                    autoComplete="street-address"
                     placeholder="House no., street, area"
                     className="mt-2 w-full rounded-lg border border-[#E9E3DD] p-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
@@ -312,6 +330,8 @@ export default function CheckoutPage() {
                   City
                   <input
                     type="text"
+                    required
+                    autoComplete="address-level2"
                     placeholder="City"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
@@ -320,6 +340,8 @@ export default function CheckoutPage() {
                   State
                   <input
                     type="text"
+                    required
+                    autoComplete="address-level1"
                     placeholder="State"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
@@ -328,6 +350,13 @@ export default function CheckoutPage() {
                   PIN code
                   <input
                     type="text"
+                    required
+                    inputMode="numeric"
+                    pattern="[0-9]{6}"
+                    maxLength={6}
+                    minLength={6}
+                    autoComplete="postal-code"
+                    title="Enter a valid 6-digit PIN code."
                     placeholder="PIN code"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
@@ -336,7 +365,9 @@ export default function CheckoutPage() {
                   Country
                   <input
                     type="text"
+                    required
                     defaultValue="India"
+                    autoComplete="country-name"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
                 </label>
@@ -365,7 +396,7 @@ export default function CheckoutPage() {
                 </p>
               </div>
             </div>
-          </section>
+          </form>
 
           <aside className="rounded-2xl border border-[#E9E3DD] bg-white p-5 shadow-sm sm:p-6 lg:sticky lg:top-6">
             <h2 className="text-lg font-bold">Order summary</h2>
