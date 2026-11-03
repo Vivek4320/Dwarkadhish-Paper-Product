@@ -140,17 +140,33 @@ export default function CustomizeBookPage() {
   const [cartBusy, setCartBusy] = useState(false);
 
   if (!isLoaded) {
-    return <main className="flex min-h-screen items-center justify-center text-sm text-[#77716E]">Checking your account...</main>;
+    return (
+      <main className="flex min-h-screen items-center justify-center text-sm text-[#77716E]">
+        Checking your account...
+      </main>
+    );
   }
 
   if (!isSignedIn) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#F7F5F1] px-4 py-12">
         <section className="w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-lg sm:p-8">
-          <h1 className="text-2xl font-bold text-[#211F1F]">Login to customise your book</h1>
-          <p className="mt-2 text-sm leading-6 text-[#77716E]">Please sign in to design your notebook, save it to your cart and track your orders.</p>
-          <div className="mt-6 flex justify-center"><SignIn routing="hash" /></div>
-          <Link href="/" className="mt-5 inline-block text-xs font-semibold text-[#D71920]">← Back to Home</Link>
+          <h1 className="text-2xl font-bold text-[#211F1F]">
+            Login to customise your book
+          </h1>
+          <p className="mt-2 text-sm leading-6 text-[#77716E]">
+            Please sign in to design your notebook, save it to your cart and
+            track your orders.
+          </p>
+          <div className="mt-6 flex justify-center">
+            <SignIn routing="hash" />
+          </div>
+          <Link
+            href="/"
+            className="mt-5 inline-block text-xs font-semibold text-[#D71920]"
+          >
+            ← Back to Home
+          </Link>
         </section>
       </main>
     );
