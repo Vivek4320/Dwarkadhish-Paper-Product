@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 
-export const runtime = "nodejs";
-
 const PAGE_PRICES: Record<number, number> = {
   200: 90,
   184: 84,
