@@ -445,7 +445,18 @@ export default function CheckoutPage() {
               <img
                 src="/branding/product-label.png"
                 alt="Notebook product details"
-                className="pointer-events-none absolute bottom-[3%] left-[1.5%] z-40 h-auto w-[44%]"
+                className="pointer-events-none absolute bottom-[3%] left-0 z-40 h-auto"
+                style={{
+                  // full back-cover width: left edge of the page to the spine
+                  width:
+                    (item.templateId === "2"
+                      ? 48
+                      : item.templateId === "3"
+                        ? 47.8
+                        : item.templateId === "4"
+                          ? 48.4
+                          : 47.1) + "%",
+                }}
               />
               <img
                 src="/branding/warrior-logo.png"

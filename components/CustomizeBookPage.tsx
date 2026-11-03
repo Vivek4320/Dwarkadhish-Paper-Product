@@ -48,9 +48,6 @@ const templates = [
   },
 ] as const;
 
-/** Width of the product label on the back cover, in % of the open spread. */
-const LABEL_WIDTH = 44;
-
 const pageOptions = [
   { pages: 200, price: 90 },
   { pages: 184, price: 84 },
@@ -468,8 +465,8 @@ export default function CustomizeBookPage() {
                     alt="Type of ruling, size, pages and M.R.P."
                     className="pointer-events-none absolute z-[25] h-auto"
                     style={{
-                      width: `${LABEL_WIDTH}%`,
-                      left: `${(selectedTemplate.spine.start - LABEL_WIDTH) / 2}%`,
+                      width: `${selectedTemplate.spine.start}%`,
+                      left: 0,
                       bottom: "3%",
                     }}
                   />
