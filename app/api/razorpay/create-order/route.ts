@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import Razorpay from "razorpay";
 
 export const runtime = "nodejs";
 
@@ -35,15 +34,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid notebook quantity." }, { status: 400 });
     }
 
-    // Never trust the browser's displayed total: calculate the payable amount here.
+    // Recalculate the amount on the server; never trust the browser's total.
     const amount = (PAGE_PRICES[pages] * quantity + SHIPPING_FEE) * 100;
-    const razorpay = new Razorpay({ key_id: keyId, key_secret: keySecret });
-    const order = await razorpay.orders.create({
-      amount,
-      currency: "INR",
-      receipt: `dwp_${Date.now()}`,
-      notes: { pages: String(pages), quantity: String(quantity) },
+    const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
+    const response = await fetch("https://api.razorpay.com/v1/orders", {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount,
+        currency: "INR",
+        receipt: `dwp_${Date.now()}`,
+        notes: { pages: String(pages), quantity: String(quantity) },
+      }),
+      cache: "no-store",
     });
+    const order = await response.json();
+
+    if (!response.ok) {
+      console.error("Razorpay order creation failed:", order);
+      return NextResponse.json({ error: "Razorpay could not create the order." }, { status: 502 });
+    }
 
     return NextResponse.json({
       orderId: order.id,
