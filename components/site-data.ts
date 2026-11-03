@@ -51,3 +51,22 @@ export const features = [
   ["03", "Set page details", "Ruled · Plain · Grid"],
   ["04", "Save or enquire", "Keep your design"],
 ];
+
+/**
+ * Clients shown in the home page "Our Clients" carousel.
+ *
+ * These are PLACEHOLDERS. To use a real client, replace the entry with its
+ * name and (optionally) a logo file placed in /public/clients, e.g.
+ *   { name: "Acme Stationers", logo: "/clients/acme.png" }
+ * Without a logo, a monogram badge is shown instead.
+ */
+export const clients: { name: string; logo?: string }[] = [
+  { name: "Client 1" },
+  { name: "Client 2" },
+  { name: "Client 3" },
+  { name: "Client 4" },
+  { name: "Client 5" },
+  { name: "Client 6" },
+  { name: "Client 7" },
+  { name: "Client 8" },
+];

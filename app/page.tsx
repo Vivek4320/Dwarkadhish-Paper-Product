@@ -6,6 +6,7 @@ import HomeCarousel from "../components/HomeCarousel";
 import BenefitsStrip from "../components/BenefitsStrip";
 import HomeProductsSection from "../components/HomeProductsSection";
 import CustomizeSection from "../components/CustomizeSection";
+import OurClients from "../components/OurClients";
 import SiteFooter from "../components/SiteFooter";
 import MobileBottomNav from "../components/MobileBottomNav";
 import LoginModal from "../components/LoginModal";
@@ -28,6 +29,7 @@ export default function HomePage() {
       <BenefitsStrip />
       <HomeProductsSection />
       <CustomizeSection />
+      <OurClients />
       <SiteFooter />
       <MobileBottomNav />
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
