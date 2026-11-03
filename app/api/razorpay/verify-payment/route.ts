@@ -9,11 +9,20 @@ export async function POST(request: Request) {
     const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
     if (!keyId || !keySecret) {
-      return NextResponse.json({ error: "Razorpay keys are not configured." }, { status: 500 });
+      return NextResponse.json(
+        { error: "Razorpay keys are not configured." },
+        { status: 500 },
+      );
     }
 
     if (!keyId.startsWith("rzp_test_")) {
-      return NextResponse.json({ error: "This integration is configured for Razorpay Test Mode keys only." }, { status: 400 });
+      return NextResponse.json(
+        {
+          error:
+            "This integration is configured for Razorpay Test Mode keys only.",
+        },
+        { status: 400 },
+      );
     }
 
     const body = await request.json();
@@ -29,7 +38,10 @@ export async function POST(request: Request) {
       typeof signature !== "string" ||
       !/^[a-fA-F0-9]{64}$/.test(signature)
     ) {
-      return NextResponse.json({ error: "Invalid payment verification details." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid payment verification details." },
+        { status: 400 },
+      );
     }
 
     const expected = createHmac("sha256", keySecret)
@@ -42,7 +54,10 @@ export async function POST(request: Request) {
       expectedBuffer.length !== receivedBuffer.length ||
       !timingSafeEqual(expectedBuffer, receivedBuffer)
     ) {
-      return NextResponse.json({ error: "Payment signature is invalid." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Payment signature is invalid." },
+        { status: 400 },
+      );
     }
 
     const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
@@ -59,7 +74,10 @@ export async function POST(request: Request) {
     ]);
 
     if (!orderResponse.ok || !paymentResponse.ok) {
-      return NextResponse.json({ error: "Unable to confirm payment with Razorpay." }, { status: 502 });
+      return NextResponse.json(
+        { error: "Unable to confirm payment with Razorpay." },
+        { status: 502 },
+      );
     }
 
     const [order, payment] = await Promise.all([
@@ -72,7 +90,10 @@ export async function POST(request: Request) {
       payment.amount !== order.amount ||
       payment.currency !== order.currency
     ) {
-      return NextResponse.json({ error: "Payment details do not match the order." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Payment details do not match the order." },
+        { status: 400 },
+      );
     }
 
     let confirmedPayment = payment;
@@ -94,7 +115,10 @@ export async function POST(request: Request) {
 
       if (!captureResponse.ok) {
         console.error("Razorpay capture failed:", await captureResponse.text());
-        return NextResponse.json({ error: "Payment is authorised but could not be captured." }, { status: 409 });
+        return NextResponse.json(
+          { error: "Payment is authorised but could not be captured." },
+          { status: 409 },
+        );
       }
       confirmedPayment = await captureResponse.json();
     }
@@ -115,6 +139,9 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Razorpay verify-payment error:", error);
-    return NextResponse.json({ error: "Could not verify Razorpay payment." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Could not verify Razorpay payment." },
+      { status: 500 },
+    );
   }
 }

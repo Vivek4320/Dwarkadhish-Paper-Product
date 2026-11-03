@@ -26,7 +26,10 @@ declare global {
   interface Window {
     Razorpay?: new (options: RazorpayOptions) => {
       open: () => void;
-      on: (event: "payment.failed", callback: (response: { error?: { description?: string } }) => void) => void;
+      on: (
+        event: "payment.failed",
+        callback: (response: { error?: { description?: string } }) => void,
+      ) => void;
     };
   }
 }
@@ -83,7 +86,9 @@ export default function CheckoutPage() {
 
   const handlePayment = async () => {
     if (!item) {
-      setPaymentMessage("Please customise a notebook before placing your order.");
+      setPaymentMessage(
+        "Please customise a notebook before placing your order.",
+      );
       return;
     }
 
@@ -109,19 +114,26 @@ export default function CheckoutPage() {
           );
           if (existing) {
             existing.addEventListener("load", () => resolve(), { once: true });
-            existing.addEventListener("error", () => reject(new Error("Razorpay checkout failed to load.")), { once: true });
+            existing.addEventListener(
+              "error",
+              () => reject(new Error("Razorpay checkout failed to load.")),
+              { once: true },
+            );
             return;
           }
           const script = document.createElement("script");
           script.src = "https://checkout.razorpay.com/v1/checkout.js";
           script.onload = () => resolve();
-          script.onerror = () => reject(new Error("Razorpay checkout failed to load."));
+          script.onerror = () =>
+            reject(new Error("Razorpay checkout failed to load."));
           document.body.appendChild(script);
         });
       }
 
       if (!window.Razorpay) {
-        throw new Error("Razorpay checkout is unavailable. Please refresh and try again.");
+        throw new Error(
+          "Razorpay checkout is unavailable. Please refresh and try again.",
+        );
       }
 
       const razorpay = new window.Razorpay({
@@ -140,11 +152,20 @@ export default function CheckoutPage() {
             });
             const verifyData = await verifyResponse.json();
             if (!verifyResponse.ok || !verifyData.verified) {
-              throw new Error(verifyData.error || "Payment verification failed.");
+              throw new Error(
+                verifyData.error || "Payment verification failed.",
+              );
             }
-            setPaymentMessage("Payment successful and verified. Payment ID: " + response.razorpay_payment_id);
+            setPaymentMessage(
+              "Payment successful and verified. Payment ID: " +
+                response.razorpay_payment_id,
+            );
           } catch (error) {
-            setPaymentMessage(error instanceof Error ? error.message : "Payment verification failed. Please contact the store.");
+            setPaymentMessage(
+              error instanceof Error
+                ? error.message
+                : "Payment verification failed. Please contact the store.",
+            );
           } finally {
             setPaymentLoading(false);
           }
@@ -152,7 +173,9 @@ export default function CheckoutPage() {
         modal: {
           ondismiss: () => {
             setPaymentLoading(false);
-            setPaymentMessage("Payment window closed. No successful payment was confirmed.");
+            setPaymentMessage(
+              "Payment window closed. No successful payment was confirmed.",
+            );
           },
         },
         theme: { color: "#D71920" },
@@ -160,12 +183,16 @@ export default function CheckoutPage() {
 
       razorpay.on("payment.failed", (response) => {
         setPaymentLoading(false);
-        setPaymentMessage(response.error?.description || "Payment failed. Please try again.");
+        setPaymentMessage(
+          response.error?.description || "Payment failed. Please try again.",
+        );
       });
       razorpay.open();
     } catch (error) {
       setPaymentLoading(false);
-      setPaymentMessage(error instanceof Error ? error.message : "Unable to start payment.");
+      setPaymentMessage(
+        error instanceof Error ? error.message : "Unable to start payment.",
+      );
     }
   };
 
@@ -333,7 +360,8 @@ export default function CheckoutPage() {
                   Pay securely with Razorpay
                 </span>
                 <p className="mt-1 text-xs leading-5">
-                  Complete payment in the secure Razorpay checkout window. Test Mode does not deduct real money.
+                  Complete payment in the secure Razorpay checkout window. Test
+                  Mode does not deduct real money.
                 </p>
               </div>
             </div>
@@ -470,10 +498,15 @@ export default function CheckoutPage() {
               disabled={!item || paymentLoading}
               className="min-h-12 w-full rounded-lg bg-[#D71920] px-4 text-sm font-bold text-white transition hover:bg-[#B91620] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {paymentLoading ? "Processing..." : `Pay Now · ${money(finalAmount)}`}
+              {paymentLoading
+                ? "Processing..."
+                : `Pay Now · ${money(finalAmount)}`}
             </button>
             {paymentMessage && (
-              <p role="status" className="mt-3 rounded-lg bg-[#F9F6F2] p-3 text-xs leading-5 text-[#514B47]">
+              <p
+                role="status"
+                className="mt-3 rounded-lg bg-[#F9F6F2] p-3 text-xs leading-5 text-[#514B47]"
+              >
                 {paymentMessage}
               </p>
             )}
