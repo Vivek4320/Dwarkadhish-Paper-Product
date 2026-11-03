@@ -52,9 +52,21 @@ function BookPreview({ item }: { item: OrderItem }) {
     ? item.templateId
     : "1";
   const backWidth =
-    templateId === "2" ? 48 : templateId === "3" ? 47.8 : templateId === "4" ? 48.4 : 47.1;
+    templateId === "2"
+      ? 48
+      : templateId === "3"
+        ? 47.8
+        : templateId === "4"
+          ? 48.4
+          : 47.1;
   const frontLeft =
-    templateId === "2" ? 51.8 : templateId === "3" ? 51.9 : templateId === "4" ? 52.3 : 52.8;
+    templateId === "2"
+      ? 51.8
+      : templateId === "3"
+        ? 51.9
+        : templateId === "4"
+          ? 52.3
+          : 52.8;
 
   return (
     <div
@@ -72,7 +84,10 @@ function BookPreview({ item }: { item: OrderItem }) {
           src={item.backUploadedImage}
           alt="Your back cover design"
           className="pointer-events-none absolute inset-y-0 left-0 z-10 h-full object-cover"
-          style={{ width: backWidth + "%", transform: `scale(${item.backZoom || 1})` }}
+          style={{
+            width: backWidth + "%",
+            transform: `scale(${item.backZoom || 1})`,
+          }}
         />
       )}
       {item.uploadedImage && (
@@ -187,7 +202,10 @@ export default function OrdersPage() {
       {loading ? (
         <p className="mt-8 text-sm text-[#77716E]">Loading your orders...</p>
       ) : error ? (
-        <p role="alert" className="mt-8 rounded-xl bg-red-50 p-4 text-sm text-red-700">
+        <p
+          role="alert"
+          className="mt-8 rounded-xl bg-red-50 p-4 text-sm text-red-700"
+        >
           {error}
         </p>
       ) : orders.length === 0 ? (
@@ -222,7 +240,8 @@ export default function OrdersPage() {
                   {new Date(o.created_at).toLocaleString("en-IN")}
                 </p>
                 <p className="mt-3 text-sm text-[#514B47]">
-                  {o.item.pages} pages <span className="px-1">·</span> Quantity: {o.item.quantity}
+                  {o.item.pages} pages <span className="px-1">·</span> Quantity:{" "}
+                  {o.item.quantity}
                 </p>
                 <div className="mt-3 flex items-center justify-between gap-3 text-sm">
                   <span className="text-[#77716E]">
