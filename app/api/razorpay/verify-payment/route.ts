@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import Razorpay from "razorpay";
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 export const runtime = "nodejs";
@@ -20,8 +19,11 @@ export async function POST(request: Request) {
 
     if (
       typeof orderId !== "string" ||
+      !/^order_[A-Za-z0-9]+$/.test(orderId) ||
       typeof paymentId !== "string" ||
-      typeof signature !== "string"
+      !/^pay_[A-Za-z0-9]+$/.test(paymentId) ||
+      typeof signature !== "string" ||
+      !/^[a-fA-F0-9]{64}$/.test(signature)
     ) {
       return NextResponse.json({ error: "Invalid payment verification details." }, { status: 400 });
     }
@@ -39,10 +41,26 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Payment signature is invalid." }, { status: 400 });
     }
 
-    const razorpay = new Razorpay({ key_id: keyId, key_secret: keySecret });
+    const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
+    const headers = { Authorization: `Basic ${auth}` };
+    const [orderResponse, paymentResponse] = await Promise.all([
+      fetch(`https://api.razorpay.com/v1/orders/${orderId}`, {
+        headers,
+        cache: "no-store",
+      }),
+      fetch(`https://api.razorpay.com/v1/payments/${paymentId}`, {
+        headers,
+        cache: "no-store",
+      }),
+    ]);
+
+    if (!orderResponse.ok || !paymentResponse.ok) {
+      return NextResponse.json({ error: "Unable to confirm payment with Razorpay." }, { status: 502 });
+    }
+
     const [order, payment] = await Promise.all([
-      razorpay.orders.fetch(orderId),
-      razorpay.payments.fetch(paymentId),
+      orderResponse.json(),
+      paymentResponse.json(),
     ]);
 
     if (
