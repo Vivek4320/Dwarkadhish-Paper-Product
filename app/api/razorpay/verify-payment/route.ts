@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { createHmac, timingSafeEqual } from "node:crypto";
 
-export const runtime = "nodejs";
-
 export async function POST(request: Request) {
   try {
     const keyId = process.env.RAZORPAY_KEY_ID;
