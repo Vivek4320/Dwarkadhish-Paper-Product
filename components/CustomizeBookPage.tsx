@@ -179,6 +179,20 @@ export default function CustomizeBookPage() {
       setMessage(`${side === "front" ? "Front" : "Back"} cover image added.`);
     };
     reader.readAsDataURL(file);
+    // Clear the input so picking the same file again (e.g. after removing it)
+    // still fires a change event.
+    event.target.value = "";
+  }
+
+  function removeImage(side: "front" | "back") {
+    if (side === "front") {
+      setUploadedImage(null);
+      setFrontZoom(1);
+    } else {
+      setBackUploadedImage(null);
+      setBackZoom(1);
+    }
+    setMessage(`${side === "front" ? "Front" : "Back"} cover image removed.`);
   }
 
   function resetDesign() {
@@ -543,13 +557,15 @@ export default function CustomizeBookPage() {
                   className="sr-only"
                 />
               </label>
-              {uploadedImage && (
+              {(activeCover === "front"
+                ? uploadedImage
+                : backUploadedImage) && (
                 <button
                   type="button"
-                  onClick={() => setUploadedImage(null)}
+                  onClick={() => removeImage(activeCover)}
                   className="mt-2 text-xs font-semibold text-[#D71920]"
                 >
-                  Remove uploaded image
+                  Remove uploaded image ({activeCover} cover)
                 </button>
               )}
             </div>
