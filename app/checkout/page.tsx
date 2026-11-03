@@ -333,8 +333,7 @@ export default function CheckoutPage() {
                   Pay securely with Razorpay
                 </span>
                 <p className="mt-1 text-xs leading-5">
-                  Your preferred payment method can be selected when the payment
-                  flow is connected.
+                  Complete payment in the secure Razorpay checkout window. Test Mode does not deduct real money.
                 </p>
               </div>
             </div>
