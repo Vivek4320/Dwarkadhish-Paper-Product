@@ -67,8 +67,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
-    const headers = { Authorization: `Basic ${auth}` };
+    const razorpayAuth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
+    const headers = { Authorization: `Basic ${razorpayAuth}` };
     const [orderResponse, paymentResponse] = await Promise.all([
       fetch(`https://api.razorpay.com/v1/orders/${orderId}`, {
         headers,
