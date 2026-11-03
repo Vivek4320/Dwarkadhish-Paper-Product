@@ -12,6 +12,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Razorpay keys are not configured." }, { status: 500 });
     }
 
+    if (!keyId.startsWith("rzp_test_")) {
+      return NextResponse.json({ error: "This integration is configured for Razorpay Test Mode keys only." }, { status: 400 });
+    }
+
     const body = await request.json();
     const orderId = body.razorpay_order_id;
     const paymentId = body.razorpay_payment_id;
