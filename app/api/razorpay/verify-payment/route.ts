@@ -71,19 +71,43 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Payment details do not match the order." }, { status: 400 });
     }
 
-    if (payment.status !== "captured") {
+    let confirmedPayment = payment;
+
+    // Capture an authorised payment server-side when the account uses manual capture.
+    if (confirmedPayment.status === "authorized") {
+      const captureResponse = await fetch(
+        `https://api.razorpay.com/v1/payments/${paymentId}/capture`,
+        {
+          method: "POST",
+          headers: { ...headers, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: confirmedPayment.amount,
+            currency: confirmedPayment.currency,
+          }),
+          cache: "no-store",
+        },
+      );
+
+      if (!captureResponse.ok) {
+        console.error("Razorpay capture failed:", await captureResponse.text());
+        return NextResponse.json({ error: "Payment is authorised but could not be captured." }, { status: 409 });
+      }
+      confirmedPayment = await captureResponse.json();
+    }
+
+    if (confirmedPayment.status !== "captured") {
       return NextResponse.json(
-        { error: "Payment is not captured yet. Check Razorpay capture settings and retry." },
+        { error: "Payment has not been captured by Razorpay." },
         { status: 409 },
       );
     }
 
     return NextResponse.json({
       verified: true,
-      paymentId: payment.id,
+      paymentId: confirmedPayment.id,
       orderId: order.id,
-      amount: payment.amount,
-      currency: payment.currency,
+      amount: confirmedPayment.amount,
+      currency: confirmedPayment.currency,
     });
   } catch (error) {
     console.error("Razorpay verify-payment error:", error);
