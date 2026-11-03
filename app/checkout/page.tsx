@@ -155,10 +155,16 @@ export default function CheckoutPage() {
         order_id: orderData.orderId,
         handler: async (response) => {
           try {
+            const checkoutForm = document.getElementById("checkout-details") as HTMLFormElement;
+            const customer = Object.fromEntries(new FormData(checkoutForm).entries());
             const verifyResponse = await fetch("/api/razorpay/verify-payment", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(response),
+              body: JSON.stringify({
+                ...response,
+                customer,
+                item: { templateName: item.templateName, templateId: item.templateId || "1", pages: item.pages, quantity: item.quantity, unitPrice: item.unitPrice, total: item.total, coverText: item.coverText, backCoverText: item.backCoverText || "" },
+              }),
             });
             const verifyData = await verifyResponse.json();
             if (!verifyResponse.ok || !verifyData.verified) {
@@ -277,7 +283,7 @@ export default function CheckoutPage() {
                     required
                     minLength={2}
                     autoComplete="name"
-                    placeholder="Enter your full name"
+                    name="fullName" placeholder="Enter your full name"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
                 </label>
@@ -287,7 +293,7 @@ export default function CheckoutPage() {
                     type="email"
                     required
                     autoComplete="email"
-                    placeholder="you@example.com"
+                    name="email" placeholder="you@example.com"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
                 </label>
@@ -299,7 +305,7 @@ export default function CheckoutPage() {
                     autoComplete="tel"
                     pattern="[+]?[0-9() -]{10,15}"
                     title="Enter a valid phone number."
-                    placeholder="+91 00000 00000"
+                    name="phone" placeholder="+91 00000 00000"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
                 </label>
@@ -326,7 +332,7 @@ export default function CheckoutPage() {
                     required
                     minLength={8}
                     autoComplete="street-address"
-                    placeholder="House no., street, area"
+                    name="address" placeholder="House no., street, area"
                     className="mt-2 w-full rounded-lg border border-[#E9E3DD] p-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
                 </label>
@@ -336,7 +342,7 @@ export default function CheckoutPage() {
                     type="text"
                     required
                     autoComplete="address-level2"
-                    placeholder="City"
+                    name="city" placeholder="City"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
                 </label>
@@ -346,7 +352,7 @@ export default function CheckoutPage() {
                     type="text"
                     required
                     autoComplete="address-level1"
-                    placeholder="State"
+                    name="state" placeholder="State"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
                 </label>
@@ -361,7 +367,7 @@ export default function CheckoutPage() {
                     minLength={6}
                     autoComplete="postal-code"
                     title="Enter a valid 6-digit PIN code."
-                    placeholder="PIN code"
+                    name="pinCode" placeholder="PIN code"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
                 </label>
@@ -371,7 +377,7 @@ export default function CheckoutPage() {
                     type="text"
                     required
                     defaultValue="India"
-                    autoComplete="country-name"
+                    name="country" autoComplete="country-name"
                     className="mt-2 h-11 w-full rounded-lg border border-[#E9E3DD] px-3 text-sm font-normal outline-none focus:border-[#D71920]"
                   />
                 </label>
