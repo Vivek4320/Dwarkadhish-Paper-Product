@@ -31,4 +31,19 @@ CREATE TABLE IF NOT EXISTS cart_items (
   updated_at      timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS cart_items_owner_idx ON cart_items (owner, created_at);
+
+CREATE TABLE IF NOT EXISTS customer_orders (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  owner text NOT NULL,
+  razorpay_order_id text NOT NULL UNIQUE,
+  razorpay_payment_id text NOT NULL UNIQUE,
+  amount_paise integer NOT NULL,
+  currency text NOT NULL DEFAULT 'INR',
+  customer jsonb NOT NULL,
+  item jsonb NOT NULL,
+  status text NOT NULL DEFAULT 'paid',
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS customer_orders_owner_idx ON customer_orders (owner, created_at DESC);
+
 `;
