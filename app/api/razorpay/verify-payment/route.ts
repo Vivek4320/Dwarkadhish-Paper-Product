@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
+import { query } from "../../../../lib/db";
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 export async function POST(request: Request) {
@@ -22,6 +24,9 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
+
+    const { userId } = await auth();
+    if (!userId) return NextResponse.json({ error: "Please sign in before placing an order." }, { status: 401 });
 
     const body = await request.json();
     const orderId = body.razorpay_order_id;
@@ -128,12 +133,25 @@ export async function POST(request: Request) {
       );
     }
 
+    const customer = body.customer;
+    const item = body.item;
+    const requiredFields = ["fullName", "email", "phone", "address", "city", "state", "pinCode", "country"];
+    if (!customer || requiredFields.some((key) => typeof customer[key] !== "string" || !customer[key].trim()) || !item || !Number.isInteger(item.quantity) || !Number.isInteger(item.pages)) {
+      return NextResponse.json({ error: "Customer or notebook details are incomplete." }, { status: 400 });
+    }
+
+    const saved = await query(
+      "INSERT INTO customer_orders (owner, razorpay_order_id, razorpay_payment_id, amount_paise, currency, customer, item) VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7::jsonb) ON CONFLICT (razorpay_order_id) DO UPDATE SET razorpay_payment_id = EXCLUDED.razorpay_payment_id RETURNING id",
+      ["user:" + userId, order.id, confirmedPayment.id, confirmedPayment.amount, confirmedPayment.currency, JSON.stringify(customer), JSON.stringify(item)]
+    );
+
     return NextResponse.json({
       verified: true,
       paymentId: confirmedPayment.id,
       orderId: order.id,
       amount: confirmedPayment.amount,
       currency: confirmedPayment.currency,
+      savedOrderId: saved.rows[0].id,
     });
   } catch (error) {
     console.error("Razorpay verify-payment error:", error);
