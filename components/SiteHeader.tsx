@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 import CartLink from "./CartLink";
 import { navItems } from "./site-data";
 
@@ -58,7 +59,17 @@ export default function SiteHeader({
             ))}
           </nav>
           <div className="header-actions">
-            <CartLink isSignedIn={isSignedIn} />
+            {isSignedIn && (
+              <>
+                <CartLink isSignedIn={isSignedIn} />
+                <Link href="/orders" className="header-cart" aria-label="Order history" title="My Orders">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M6 3h12v18l-6-3-6 3z" />
+                    <path d="M9 8h6M9 12h6" />
+                  </svg>
+                </Link>
+              </>
+            )}
             {isSignedIn ? (
               <div className="header-profile" aria-label="Your account">
                 <UserButton />
