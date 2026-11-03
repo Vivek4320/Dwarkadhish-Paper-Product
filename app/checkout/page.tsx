@@ -92,9 +92,13 @@ export default function CheckoutPage() {
       return;
     }
 
-    const detailsForm = document.getElementById("checkout-details") as HTMLFormElement | null;
+    const detailsForm = document.getElementById(
+      "checkout-details",
+    ) as HTMLFormElement | null;
     if (!detailsForm || !detailsForm.reportValidity()) {
-      setPaymentMessage("Please complete all required contact and delivery details before placing your order.");
+      setPaymentMessage(
+        "Please complete all required contact and delivery details before placing your order.",
+      );
       return;
     }
 
