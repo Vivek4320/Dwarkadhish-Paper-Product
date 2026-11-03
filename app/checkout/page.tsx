@@ -66,7 +66,9 @@ const money = (value: number) =>
 
 export default function CheckoutPage() {
   const [item, setItem] = useState<CheckoutItem | null>(null);
-  const [previewOpen, setPreviewOpen] = useState(false);\n  const [paymentLoading, setPaymentLoading] = useState(false);\n  const [paymentMessage, setPaymentMessage] = useState("");
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+  const [paymentMessage, setPaymentMessage] = useState("");
 
   useEffect(() => {
     const saved = sessionStorage.getItem("dwarkadhish-checkout-item");
