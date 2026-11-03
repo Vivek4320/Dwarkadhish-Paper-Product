@@ -23,6 +23,10 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!keyId.startsWith("rzp_test_")) {
+      return NextResponse.json({ error: "This integration is configured for Razorpay Test Mode keys only." }, { status: 400 });
+    }
+
     const body = await request.json();
     const pages = Number(body.pages);
     const quantity = Number(body.quantity);
