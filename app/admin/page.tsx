@@ -5,7 +5,12 @@ import { query } from "../../lib/db";
 import AdminDashboard from "../../components/AdminDashboard";
 
 type Customer = { fullName?: string; email?: string; phone?: string };
-type Item = { templateName?: string; templateId?: string; quantity?: number; pages?: number };
+type Item = {
+  templateName?: string;
+  templateId?: string;
+  quantity?: number;
+  pages?: number;
+};
 type OrderRow = {
   id: string;
   amount_paise: number;
@@ -38,13 +43,25 @@ export default async function AdminPage() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#f7f7f7] px-5">
         <section className="max-w-md rounded-2xl border border-[#eee] bg-white p-8 text-center shadow-sm">
-          <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-rose-50 text-xl text-[#df151d]">!</div>
-          <h1 className="mt-4 text-xl font-bold text-[#171717]">Admin access required</h1>
+          <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-rose-50 text-xl text-[#df151d]">
+            !
+          </div>
+          <h1 className="mt-4 text-xl font-bold text-[#171717]">
+            Admin access required
+          </h1>
           <p className="mt-2 text-sm leading-6 text-[#777]">
-            This account is not listed in ADMIN_USER_IDS. Add this Clerk User ID to your environment variables to grant dashboard access.
+            This account is not listed in ADMIN_USER_IDS. Add this Clerk User ID
+            to your environment variables to grant dashboard access.
           </p>
-          <code className="mt-3 block break-all rounded-lg bg-[#f7f7f7] p-3 text-xs text-[#333]">{userId}</code>
-          <Link href="/" className="mt-6 inline-flex rounded-lg bg-[#df151d] px-5 py-3 text-sm font-semibold text-white">Back to Store</Link>
+          <code className="mt-3 block break-all rounded-lg bg-[#f7f7f7] p-3 text-xs text-[#333]">
+            {userId}
+          </code>
+          <Link
+            href="/"
+            className="mt-6 inline-flex rounded-lg bg-[#df151d] px-5 py-3 text-sm font-semibold text-white"
+          >
+            Back to Store
+          </Link>
         </section>
       </main>
     );
@@ -98,7 +115,10 @@ export default async function AdminPage() {
       date.setDate(today.getDate() - (29 - index));
       const key = date.toISOString().slice(0, 10);
       return {
-        label: date.toLocaleDateString("en-IN", { day: "2-digit", month: "short" }),
+        label: date.toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "short",
+        }),
         amount: amountsByDay.get(key) || 0,
       };
     });
