@@ -10,7 +10,10 @@ export async function GET(request: Request) {
     if (!secretKey || !publishableKey) {
       console.error("Clerk server keys are missing for the orders API.");
       return NextResponse.json(
-        { error: "Authentication service is not configured. Please contact the site administrator." },
+        {
+          error:
+            "Authentication service is not configured. Please contact the site administrator.",
+        },
         { status: 503, headers: { "Cache-Control": "no-store" } },
       );
     }
@@ -56,7 +59,10 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("Order history error:", error);
     return NextResponse.json(
-      { error: "Unable to load order history. Check server authentication and database configuration." },
+      {
+        error:
+          "Unable to load order history. Check server authentication and database configuration.",
+      },
       { status: 500, headers: { "Cache-Control": "no-store" } },
     );
   }
