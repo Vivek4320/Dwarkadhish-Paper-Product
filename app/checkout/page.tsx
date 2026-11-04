@@ -177,7 +177,9 @@ export default function CheckoutPage() {
             );
             const sessionToken = await getToken({ skipCache: true });
             if (!sessionToken) {
-              throw new Error("Your payment is complete, but your login session could not be verified. Please sign in again and contact the store with your Razorpay payment ID.");
+              throw new Error(
+                "Your payment is complete, but your login session could not be verified. Please sign in again and contact the store with your Razorpay payment ID.",
+              );
             }
             const verifyResponse = await fetch("/api/razorpay/verify-payment", {
               method: "POST",
