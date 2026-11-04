@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { SignIn, useUser } from "@clerk/nextjs";
-import { ChangeEvent, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { addToCart, uploadPhoto } from "../lib/cart-client";
 import { prepareImage } from "../lib/image-client";
 
@@ -176,7 +176,7 @@ export default function CustomizeBookPage() {
     templates.find((item) => item.id === templateId) ?? templates[0];
   const unitPrice =
     pageOptions.find((item) => item.pages === pages)?.price ?? 90;
-  const total = useMemo(() => unitPrice * quantity, [unitPrice, quantity]);
+  const total = unitPrice * quantity;
 
   function selectTemplate(id: string) {
     const template = templates.find((item) => item.id === id);
