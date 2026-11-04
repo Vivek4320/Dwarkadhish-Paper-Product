@@ -132,14 +132,48 @@ ${order.item.uploadedImage ? '<image x="' + frontX + '" width="' + frontW + '" h
 <image x="1260" y="35" width="145" height="100" preserveAspectRatio="xMidYMin meet" xlink:href="${logo}"/>
 ${text(order.item.backCoverText, "back")}${text(order.item.coverText, "front")}
 </svg>`;
-      const url = URL.createObjectURL(
-        new Blob([svg], { type: "image/svg+xml;charset=utf-8" }),
-      );
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "Dwarkadhish-Order-" + order.id.slice(0, 8) + ".svg";
-      a.click();
-      URL.revokeObjectURL(url);
+      // Convert the composed SVG into a standard PNG so it can be
+      // previewed and shared directly in WhatsApp and other messaging apps.
+      const svgBlob = new Blob([svg], {
+        type: "image/svg+xml;charset=utf-8",
+      });
+      const svgUrl = URL.createObjectURL(svgBlob);
+      try {
+        const image = new window.Image();
+        await new Promise<void>((resolve, reject) => {
+          image.onload = () => resolve();
+          image.onerror = () =>
+            reject(new Error("Could not render the notebook preview."));
+          image.src = svgUrl;
+        });
+
+        const canvas = document.createElement("canvas");
+        canvas.width = 1440;
+        canvas.height = 1000;
+        const context = canvas.getContext("2d");
+        if (!context) throw new Error("PNG export is not supported in this browser.");
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        const pngBlob = await new Promise<Blob>((resolve, reject) => {
+          canvas.toBlob(
+            (blob) =>
+              blob
+                ? resolve(blob)
+                : reject(new Error("Could not create the PNG file.")),
+            "image/png",
+          );
+        });
+        const pngUrl = URL.createObjectURL(pngBlob);
+        const a = document.createElement("a");
+        a.href = pngUrl;
+        a.download = "Dwarkadhish-Order-" + order.id.slice(0, 8) + ".png";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.setTimeout(() => URL.revokeObjectURL(pngUrl), 1000);
+      } finally {
+        URL.revokeObjectURL(svgUrl);
+      }
     } catch (error) {
       window.alert(
         error instanceof Error ? error.message : "Design export failed.",
@@ -155,7 +189,7 @@ ${text(order.item.backCoverText, "back")}${text(order.item.coverText, "front")}
       disabled={busy}
       className="whitespace-nowrap rounded-lg border border-[#d71920] px-3 py-2 text-[10px] font-bold text-[#d71920] hover:bg-[#fff2f2] disabled:opacity-50"
     >
-      {busy ? "Preparing..." : "Download SVG"}
+      {busy ? "Preparing..." : "Download PNG"}
     </button>
   );
 }
