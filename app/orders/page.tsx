@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { SignIn, useUser } from "@clerk/nextjs";
+import { SignIn, useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 
 type OrderItem = {
@@ -151,27 +151,57 @@ function BookPreview({ item }: { item: OrderItem }) {
 }
 
 export default function OrdersPage() {
-  const { isLoaded, isSignedIn } = useUser();
+  const { isLoaded, isSignedIn, getToken } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!isLoaded || !isSignedIn) {
-      setLoading(false);
-      return;
+    let cancelled = false;
+
+    async function loadOrders() {
+      if (!isLoaded) return;
+      if (!isSignedIn) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        // Send the active Clerk session explicitly so the API can authenticate
+        // the request even when the browser does not attach its session cookie.
+        const token = await getToken();
+        if (!token) {
+          throw new Error("Your session could not be verified. Please refresh and sign in again.");
+        }
+
+        const response = await fetch("/api/orders", {
+          cache: "no-store",
+          credentials: "same-origin",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Unable to load orders.");
+        }
+        if (!cancelled) setOrders(data.orders || []);
+      } catch (loadError) {
+        if (!cancelled) {
+          setError(
+            loadError instanceof Error
+              ? loadError.message
+              : "Unable to load orders.",
+          );
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
-    fetch("/api/orders", { cache: "no-store" })
-      .then(async (r) => {
-        const d = await r.json();
-        if (!r.ok) throw new Error(d.error || "Unable to load orders.");
-        setOrders(d.orders || []);
-      })
-      .catch((e) =>
-        setError(e instanceof Error ? e.message : "Unable to load orders."),
-      )
-      .finally(() => setLoading(false));
-  }, [isLoaded, isSignedIn]);
+
+    void loadOrders();
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoaded, isSignedIn, getToken]);
 
   if (!isLoaded)
     return (
