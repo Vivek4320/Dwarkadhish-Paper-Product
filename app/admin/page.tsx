@@ -2,21 +2,17 @@ import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { query } from "../../lib/db";
+import { products } from "../../components/site-data";
 import AdminDashboard from "../../components/AdminDashboard";
 
+type Customer = { fullName?: string; email?: string; phone?: string };
+type Item = { templateName?: string; templateId?: string; quantity?: number; pages?: number };
 type OrderRow = {
   id: string;
   amount_paise: number;
   currency: string;
-  customer: { fullName?: string; email?: string; phone?: string } | string;
-  item:
-    | {
-        templateName?: string;
-        templateId?: string;
-        quantity?: number;
-        pages?: number;
-      }
-    | string;
+  customer: Customer | string;
+  item: Item | string;
   status: string;
   created_at: string;
 };
@@ -43,89 +39,85 @@ export default async function AdminPage() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#f7f7f7] px-5">
         <section className="max-w-md rounded-2xl border border-[#eee] bg-white p-8 text-center shadow-sm">
-          <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-rose-50 text-xl text-[#df151d]">
-            !
-          </div>
-          <h1 className="mt-4 text-xl font-bold text-[#171717]">
-            Admin access required
-          </h1>
+          <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-rose-50 text-xl text-[#df151d]">!</div>
+          <h1 className="mt-4 text-xl font-bold text-[#171717]">Admin access required</h1>
           <p className="mt-2 text-sm leading-6 text-[#777]">
-            This account is not listed in ADMIN_USER_IDS. Add your Clerk User ID
-            to the environment variables to grant dashboard access.
+            This account is not listed in ADMIN_USER_IDS. Add your Clerk User ID to the environment variables to grant dashboard access.
           </p>
-          <Link
-            href="/"
-            className="mt-6 inline-flex rounded-lg bg-[#df151d] px-5 py-3 text-sm font-semibold text-white"
-          >
-            Back to Store
-          </Link>
+          <Link href="/" className="mt-6 inline-flex rounded-lg bg-[#df151d] px-5 py-3 text-sm font-semibold text-white">Back to Store</Link>
         </section>
       </main>
     );
   }
 
   let orders: OrderRow[] = [];
+  let totalOrders = 0;
+  let totalRevenue = 0;
+  let customerCount = 0;
+  let weeklySales: { label: string; amount: number }[] = [];
   let databaseError = false;
+
   try {
-    const result = await query(
-      "SELECT id, amount_paise, currency, customer, item, status, created_at FROM customer_orders ORDER BY created_at DESC LIMIT 100",
-    );
-    orders = result.rows.map((row) => ({
+    const [summary, recent, sales] = await Promise.all([
+      query(
+        `SELECT COUNT(*)::int AS total_orders,
+                COALESCE(SUM(amount_paise), 0)::bigint AS total_revenue,
+                COUNT(DISTINCT COALESCE(NULLIF(LOWER(customer->>'email'), ''), NULLIF(customer->>'phone', ''), id::text))::int AS customer_count
+         FROM customer_orders`,
+      ),
+      query(
+        "SELECT id, amount_paise, currency, customer, item, status, created_at FROM customer_orders ORDER BY created_at DESC LIMIT 100",
+      ),
+      query(
+        `SELECT created_at::date AS day, COALESCE(SUM(amount_paise), 0)::bigint AS amount
+         FROM customer_orders
+         WHERE created_at >= CURRENT_DATE - INTERVAL '29 days'
+         GROUP BY created_at::date
+         ORDER BY day ASC`,
+      ),
+    ]);
+
+    totalOrders = Number(summary.rows[0]?.total_orders || 0);
+    totalRevenue = Number(summary.rows[0]?.total_revenue || 0);
+    customerCount = Number(summary.rows[0]?.customer_count || 0);
+    orders = recent.rows.map((row) => ({
       ...row,
-      customer: parseJson(row.customer),
-      item: parseJson(row.item),
+      customer: parseJson<Customer>(row.customer),
+      item: parseJson<Item>(row.item),
     })) as OrderRow[];
+
+    const amountsByDay = new Map<string, number>(
+      sales.rows.map((row) => [
+        new Date(row.day).toISOString().slice(0, 10),
+        Number(row.amount || 0),
+      ]),
+    );
+    const today = new Date();
+    weeklySales = Array.from({ length: 30 }, (_, index) => {
+      const date = new Date(today);
+      date.setDate(today.getDate() - (29 - index));
+      const key = date.toISOString().slice(0, 10);
+      return {
+        label: date.toLocaleDateString("en-IN", { day: "2-digit", month: "short" }),
+        amount: amountsByDay.get(key) || 0,
+      };
+    });
   } catch (error) {
     databaseError = true;
-    console.error("Admin dashboard order query failed:", error);
+    console.error("Admin dashboard data query failed:", error);
   }
-
-  const allCustomers = new Set(
-    orders.map((order) => {
-      const customer = parseJson(order.customer);
-      return (
-        customer.email?.toLowerCase() ||
-        customer.phone ||
-        customer.fullName ||
-        order.id
-      );
-    }),
-  );
-
-  const today = new Date();
-  const weeklySales = Array.from({ length: 7 }, (_, index) => {
-    const date = new Date(today);
-    date.setDate(today.getDate() - (6 - index));
-    const key = date.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-    });
-    const amount = orders.reduce((sum, order) => {
-      const created = new Date(order.created_at);
-      return created.toDateString() === date.toDateString()
-        ? sum + Number(order.amount_paise || 0)
-        : sum;
-    }, 0);
-    return { label: key, amount };
-  });
-
-  const productCount = 4;
-  const totalRevenue = orders.reduce(
-    (sum, order) => sum + Number(order.amount_paise || 0),
-    0,
-  );
 
   return (
     <AdminDashboard
       orders={orders.map((order) => ({
         ...order,
-        customer: parseJson(order.customer),
-        item: parseJson(order.item),
+        customer: parseJson<Customer>(order.customer),
+        item: parseJson<Item>(order.item),
       }))}
-      totalOrders={orders.length}
+      totalOrders={totalOrders}
       totalRevenue={totalRevenue}
-      customerCount={allCustomers.size}
-      productCount={productCount}
+      customerCount={customerCount}
+      productCount={products.length}
       weeklySales={weeklySales}
       databaseError={databaseError}
     />
