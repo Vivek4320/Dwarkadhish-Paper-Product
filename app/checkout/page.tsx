@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 
 type RazorpayPaymentResponse = {
   razorpay_payment_id: string;
@@ -70,6 +71,7 @@ const money = (value: number) =>
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const { getToken } = useAuth();
   const [item, setItem] = useState<CheckoutItem | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
@@ -173,9 +175,17 @@ export default function CheckoutPage() {
             const customer = Object.fromEntries(
               new FormData(checkoutForm).entries(),
             );
+            const sessionToken = await getToken({ skipCache: true });
+            if (!sessionToken) {
+              throw new Error("Your payment is complete, but your login session could not be verified. Please sign in again and contact the store with your Razorpay payment ID.");
+            }
             const verifyResponse = await fetch("/api/razorpay/verify-payment", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionToken}`,
+              },
               body: JSON.stringify({
                 ...response,
                 customer,
