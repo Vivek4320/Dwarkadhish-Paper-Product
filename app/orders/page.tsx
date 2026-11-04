@@ -110,6 +110,17 @@ function BookPreview({ item }: { item: OrderItem }) {
         sizes="(max-width: 640px) 42vw, 180px"
         className="pointer-events-none z-30"
       />
+      <img
+        src="/branding/product-label.png"
+        alt="Dwarkadhish Paper Products notebook details"
+        className="pointer-events-none absolute bottom-[3%] left-0 z-40 h-auto"
+        style={{ width: backWidth + "%" }}
+      />
+      <img
+        src="/branding/warrior-logo.png"
+        alt="Notebook brand logo"
+        className="pointer-events-none absolute right-[3%] top-[3.5%] z-40 h-auto w-[11%]"
+      />
       {item.backCoverText && (
         <div
           className="pointer-events-none absolute inset-y-0 left-0 z-40 overflow-hidden"
