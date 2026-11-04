@@ -151,7 +151,8 @@ ${text(order.item.backCoverText, "back")}${text(order.item.coverText, "front")}
         canvas.width = 1440;
         canvas.height = 1000;
         const context = canvas.getContext("2d");
-        if (!context) throw new Error("PNG export is not supported in this browser.");
+        if (!context)
+          throw new Error("PNG export is not supported in this browser.");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
         const pngBlob = await new Promise<Blob>((resolve, reject) => {
