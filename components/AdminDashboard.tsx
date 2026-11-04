@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 type DashboardOrder = {
   id: string;
@@ -65,6 +65,7 @@ export default function AdminDashboard({
   const [search, setSearch] = useState("");
   const [range, setRange] = useState("7");
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
   const filteredOrders = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -193,7 +194,7 @@ export default function AdminDashboard({
           </div>
           <div className="flex shrink-0 items-center gap-3 border-l border-[#eee] pl-3">
             <span className="hidden text-xs text-[#777] sm:inline">Admin</span>
-            <UserButton />
+            <button onClick={async () => { await fetch("/api/admin/logout", { method: "POST" }); router.replace("/admin/login"); router.refresh(); }} className="rounded-lg border border-[#e5e5e5] px-3 py-2 text-xs font-semibold text-[#444] hover:bg-[#f7f7f7]">Logout</button>
           </div>
         </header>
 
