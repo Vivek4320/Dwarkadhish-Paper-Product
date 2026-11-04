@@ -24,9 +24,17 @@ type DesignOrder = {
 };
 
 const escapeXml = (value: string) =>
-  value.replace(/[&<>"']/g, (c) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;",
-  })[c] || c);
+  value.replace(
+    /[&<>"']/g,
+    (c) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&apos;",
+      })[c] || c,
+  );
 
 async function toDataUrl(path: string) {
   const response = await fetch(path);
@@ -34,18 +42,34 @@ async function toDataUrl(path: string) {
   const blob = await response.blob();
   return await new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = () => typeof reader.result === "string" ? resolve(reader.result) : reject(new Error("Image conversion failed."));
+    reader.onload = () =>
+      typeof reader.result === "string"
+        ? resolve(reader.result)
+        : reject(new Error("Image conversion failed."));
     reader.onerror = () => reject(new Error("Image conversion failed."));
     reader.readAsDataURL(blob);
   });
 }
 
-export default function AdminOrderDesignDownload({ order }: { order: DesignOrder }) {
+export default function AdminOrderDesignDownload({
+  order,
+}: {
+  order: DesignOrder;
+}) {
   const [busy, setBusy] = useState<"svg" | "pdf" | null>(null);
 
   async function buildSvg() {
-    const id = ["1", "2", "3", "4"].includes(order.item.templateId || "") ? order.item.templateId! : "1";
-    const [start, end] = ({ "1": [47.1, 52.8], "2": [48, 51.8], "3": [47.8, 51.9], "4": [48.4, 52.3] } as Record<string, number[]>)[id];
+    const id = ["1", "2", "3", "4"].includes(order.item.templateId || "")
+      ? order.item.templateId!
+      : "1";
+    const [start, end] = (
+      {
+        "1": [47.1, 52.8],
+        "2": [48, 51.8],
+        "3": [47.8, 51.9],
+        "4": [48.4, 52.3],
+      } as Record<string, number[]>
+    )[id];
     const [base, overlay, label, logo] = await Promise.all([
       toDataUrl("/Templates/Template-" + id + ".png"),
       toDataUrl("/Templates/Template-" + id + "-overlay.png"),
@@ -58,14 +82,40 @@ export default function AdminOrderDesignDownload({ order }: { order: DesignOrder
     const makeText = (value: string | undefined, side: "front" | "back") => {
       if (!value) return "";
       const front = side === "front";
-      const pos = front ? order.item.frontTextPosition : order.item.backTextPosition;
-      const x = front ? frontX + ((pos?.x ?? 75) / 100) * frontW : ((pos?.x ?? 23) / 100) * backW;
+      const pos = front
+        ? order.item.frontTextPosition
+        : order.item.backTextPosition;
+      const x = front
+        ? frontX + ((pos?.x ?? 75) / 100) * frontW
+        : ((pos?.x ?? 23) / 100) * backW;
       const y = ((pos?.y ?? 48) / 100) * 1000;
-      const color = front ? order.item.frontTextColor || "#fff" : order.item.backTextColor || "#fff";
-      const size = (front ? order.item.frontTextSize : order.item.backTextSize) || 24;
-      const bold = (front ? order.item.frontBold : order.item.backBold) !== false;
-      const italic = (front ? order.item.frontItalic : order.item.backItalic) ? "italic" : "normal";
-      return '<text x="' + x + '" y="' + y + '" text-anchor="middle" dominant-baseline="middle" fill="' + escapeXml(color) + '" font-family="Arial,sans-serif" font-size="' + size * 2.2 + '" font-weight="' + (bold ? 800 : 500) + '" font-style="' + italic + '">' + escapeXml(value) + "</text>";
+      const color = front
+        ? order.item.frontTextColor || "#fff"
+        : order.item.backTextColor || "#fff";
+      const size =
+        (front ? order.item.frontTextSize : order.item.backTextSize) || 24;
+      const bold =
+        (front ? order.item.frontBold : order.item.backBold) !== false;
+      const italic = (front ? order.item.frontItalic : order.item.backItalic)
+        ? "italic"
+        : "normal";
+      return (
+        '<text x="' +
+        x +
+        '" y="' +
+        y +
+        '" text-anchor="middle" dominant-baseline="middle" fill="' +
+        escapeXml(color) +
+        '" font-family="Arial,sans-serif" font-size="' +
+        size * 2.2 +
+        '" font-weight="' +
+        (bold ? 800 : 500) +
+        '" font-style="' +
+        italic +
+        '">' +
+        escapeXml(value) +
+        "</text>"
+      );
     };
 
     return `<?xml version="1.0" encoding="UTF-8"?>
@@ -87,15 +137,24 @@ export default function AdminOrderDesignDownload({ order }: { order: DesignOrder
     setBusy("svg");
     try {
       const svg = await buildSvg();
-      const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
+      const url = URL.createObjectURL(
+        new Blob([svg], { type: "image/svg+xml;charset=utf-8" }),
+      );
       const a = document.createElement("a");
       a.href = url;
-      a.download = "Dwarkadhish-Order-" + order.id.slice(0, 8) + "-Editable.svg";
-      document.body.appendChild(a); a.click(); a.remove();
+      a.download =
+        "Dwarkadhish-Order-" + order.id.slice(0, 8) + "-Editable.svg";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
       window.setTimeout(() => URL.revokeObjectURL(url), 1500);
     } catch (error) {
-      window.alert(error instanceof Error ? error.message : "SVG export failed.");
-    } finally { setBusy(null); }
+      window.alert(
+        error instanceof Error ? error.message : "SVG export failed.",
+      );
+    } finally {
+      setBusy(null);
+    }
   }
 
   async function savePdf() {
@@ -103,21 +162,38 @@ export default function AdminOrderDesignDownload({ order }: { order: DesignOrder
     try {
       const svg = await buildSvg();
       const printWindow = window.open("", "_blank");
-      if (!printWindow) throw new Error("Please allow pop-ups to create the PDF.");
+      if (!printWindow)
+        throw new Error("Please allow pop-ups to create the PDF.");
       printWindow.document.open();
-      printWindow.document.write(`<!doctype html><html><head><title>Dwarkadhish Order ${escapeXml(order.id)}</title><style>@page{size:landscape;margin:0}html,body{margin:0;width:100%;height:100%}svg{width:100vw;height:100vh;object-fit:contain} .hint{font:14px Arial;padding:12px;text-align:center}@media print{.hint{display:none}}</style></head><body><div class="hint">In the print dialog, choose “Save as PDF”.</div>${svg}<script>window.addEventListener('load',()=>setTimeout(()=>window.print(),400));</script></body></html>`);
+      printWindow.document.write(
+        `<!doctype html><html><head><title>Dwarkadhish Order ${escapeXml(order.id)}</title><style>@page{size:landscape;margin:0}html,body{margin:0;width:100%;height:100%}svg{width:100vw;height:100vh;object-fit:contain} .hint{font:14px Arial;padding:12px;text-align:center}@media print{.hint{display:none}}</style></head><body><div class="hint">In the print dialog, choose “Save as PDF”.</div>${svg}<script>window.addEventListener('load',()=>setTimeout(()=>window.print(),400));</script></body></html>`,
+      );
       printWindow.document.close();
     } catch (error) {
-      window.alert(error instanceof Error ? error.message : "PDF export failed.");
-    } finally { setBusy(null); }
+      window.alert(
+        error instanceof Error ? error.message : "PDF export failed.",
+      );
+    } finally {
+      setBusy(null);
+    }
   }
 
   return (
     <div className="flex flex-wrap gap-2">
-      <button type="button" onClick={() => void downloadSvg()} disabled={busy !== null} className="whitespace-nowrap rounded-lg border border-[#d71920] px-3 py-2 text-[10px] font-bold text-[#d71920] hover:bg-[#fff2f2] disabled:opacity-50">
+      <button
+        type="button"
+        onClick={() => void downloadSvg()}
+        disabled={busy !== null}
+        className="whitespace-nowrap rounded-lg border border-[#d71920] px-3 py-2 text-[10px] font-bold text-[#d71920] hover:bg-[#fff2f2] disabled:opacity-50"
+      >
         {busy === "svg" ? "Preparing..." : "Download Editable SVG"}
       </button>
-      <button type="button" onClick={() => void savePdf()} disabled={busy !== null} className="whitespace-nowrap rounded-lg bg-[#d71920] px-3 py-2 text-[10px] font-bold text-white hover:bg-[#b9151b] disabled:opacity-50">
+      <button
+        type="button"
+        onClick={() => void savePdf()}
+        disabled={busy !== null}
+        className="whitespace-nowrap rounded-lg bg-[#d71920] px-3 py-2 text-[10px] font-bold text-white hover:bg-[#b9151b] disabled:opacity-50"
+      >
         {busy === "pdf" ? "Preparing..." : "Save Vector PDF"}
       </button>
     </div>
