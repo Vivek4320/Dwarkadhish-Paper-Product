@@ -2,7 +2,6 @@ import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { query } from "../../lib/db";
-import { products } from "../../components/site-data";
 import AdminDashboard from "../../components/AdminDashboard";
 
 type Customer = { fullName?: string; email?: string; phone?: string };
@@ -42,8 +41,9 @@ export default async function AdminPage() {
           <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-rose-50 text-xl text-[#df151d]">!</div>
           <h1 className="mt-4 text-xl font-bold text-[#171717]">Admin access required</h1>
           <p className="mt-2 text-sm leading-6 text-[#777]">
-            This account is not listed in ADMIN_USER_IDS. Add your Clerk User ID to the environment variables to grant dashboard access.
+            This account is not listed in ADMIN_USER_IDS. Add this Clerk User ID to your environment variables to grant dashboard access.
           </p>
+          <code className="mt-3 block break-all rounded-lg bg-[#f7f7f7] p-3 text-xs text-[#333]">{userId}</code>
           <Link href="/" className="mt-6 inline-flex rounded-lg bg-[#df151d] px-5 py-3 text-sm font-semibold text-white">Back to Store</Link>
         </section>
       </main>
@@ -117,7 +117,7 @@ export default async function AdminPage() {
       totalOrders={totalOrders}
       totalRevenue={totalRevenue}
       customerCount={customerCount}
-      productCount={products.length}
+      productCount={8}
       weeklySales={weeklySales}
       databaseError={databaseError}
     />
