@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import AdminOrderDesignDownload from "./AdminOrderDesignDownload";
 
 type DashboardOrder = {
   id: string;
@@ -14,6 +15,22 @@ type DashboardOrder = {
     templateId?: string;
     quantity?: number;
     pages?: number;
+    uploadedImage?: string | null;
+    backUploadedImage?: string | null;
+    coverText?: string;
+    backCoverText?: string;
+    frontTextColor?: string;
+    backTextColor?: string;
+    frontBold?: boolean;
+    backBold?: boolean;
+    frontItalic?: boolean;
+    backItalic?: boolean;
+    frontTextPosition?: { x: number; y: number };
+    backTextPosition?: { x: number; y: number };
+    frontTextSize?: number;
+    backTextSize?: number;
+    frontZoom?: number;
+    backZoom?: number;
   };
   status: string;
   created_at: string;
@@ -367,6 +384,7 @@ export default function AdminDashboard({
                       "Amount",
                       "Status",
                       "Date",
+                      "Design File",
                     ].map((heading) => (
                       <th key={heading} className="px-3 py-3 font-semibold">
                         {heading}
@@ -410,12 +428,15 @@ export default function AdminDashboard({
                       <td className="px-3 py-4 text-[#666]">
                         {dateLabel(order.created_at)}
                       </td>
+                      <td className="px-3 py-4">
+                        <AdminOrderDesignDownload order={order} />
+                      </td>
                     </tr>
                   ))}
                   {filteredOrders.length === 0 && (
                     <tr>
                       <td
-                        colSpan={6}
+                        colSpan={7}
                         className="px-3 py-10 text-center text-[#888]"
                       >
                         {search
