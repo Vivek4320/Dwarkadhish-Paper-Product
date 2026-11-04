@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Suspense } from "react";
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
 import { hasAdminSession } from "../../lib/admin-auth";
@@ -31,7 +31,15 @@ function parseJson<T>(value: T | string): T {
   }
 }
 
-export default async function AdminPage() {
+export default function AdminPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#f7f7f7] text-sm text-[#777]">Loading admin dashboard...</div>}>
+      <AdminDashboardContent />
+    </Suspense>
+  );
+}
+
+async function AdminDashboardContent() {
   await connection();
   if (!(await hasAdminSession())) redirect("/admin/login");
 
