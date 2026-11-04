@@ -194,7 +194,16 @@ export default function AdminDashboard({
           </div>
           <div className="flex shrink-0 items-center gap-3 border-l border-[#eee] pl-3">
             <span className="hidden text-xs text-[#777] sm:inline">Admin</span>
-            <button onClick={async () => { await fetch("/api/admin/logout", { method: "POST" }); router.replace("/admin/login"); router.refresh(); }} className="rounded-lg border border-[#e5e5e5] px-3 py-2 text-xs font-semibold text-[#444] hover:bg-[#f7f7f7]">Logout</button>
+            <button
+              onClick={async () => {
+                await fetch("/api/admin/logout", { method: "POST" });
+                router.replace("/admin/login");
+                router.refresh();
+              }}
+              className="rounded-lg border border-[#e5e5e5] px-3 py-2 text-xs font-semibold text-[#444] hover:bg-[#f7f7f7]"
+            >
+              Logout
+            </button>
           </div>
         </header>
 

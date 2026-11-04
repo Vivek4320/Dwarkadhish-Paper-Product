@@ -4,7 +4,8 @@ const COOKIE_NAME = "dwarkadhish_admin_session";
 const SESSION_SECONDS = 60 * 60 * 12;
 function getSecret() {
   const secret = process.env.ADMIN_SESSION_SECRET;
-  if (!secret || secret.length < 32) throw new Error("ADMIN_SESSION_SECRET must be at least 32 characters.");
+  if (!secret || secret.length < 32)
+    throw new Error("ADMIN_SESSION_SECRET must be at least 32 characters.");
   return secret;
 }
 function sign(value: string) {
@@ -19,20 +20,39 @@ export function credentialsMatch(email: string, password: string) {
     const right = Buffer.from(b);
     return left.length === right.length && timingSafeEqual(left, right);
   };
-  return safeEqual(email.trim().toLowerCase(), expectedEmail.trim().toLowerCase()) && safeEqual(password, expectedPassword);
+  return (
+    safeEqual(email.trim().toLowerCase(), expectedEmail.trim().toLowerCase()) &&
+    safeEqual(password, expectedPassword)
+  );
 }
 export async function createAdminSession() {
   const expiresAt = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
   const value = String(expiresAt);
   const store = await cookies();
-  store.set(COOKIE_NAME, value + "." + sign(value), { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict", path: "/", maxAge: SESSION_SECONDS });
+  store.set(COOKIE_NAME, value + "." + sign(value), {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: SESSION_SECONDS,
+  });
 }
 export async function clearAdminSession() {
   const store = await cookies();
-  store.set(COOKIE_NAME, "", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict", path: "/", maxAge: 0 });
+  store.set(COOKIE_NAME, "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 0,
+  });
 }
 export async function hasAdminSession() {
-  if (!process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_SESSION_SECRET.length < 32) return false;
+  if (
+    !process.env.ADMIN_SESSION_SECRET ||
+    process.env.ADMIN_SESSION_SECRET.length < 32
+  )
+    return false;
   const store = await cookies();
   const raw = store.get(COOKIE_NAME)?.value || "";
   const [expiresAt, signature] = raw.split(".");
@@ -40,6 +60,7 @@ export async function hasAdminSession() {
   const expected = sign(expiresAt);
   const left = Buffer.from(signature);
   const right = Buffer.from(expected);
-  if (left.length !== right.length || !timingSafeEqual(left, right)) return false;
+  if (left.length !== right.length || !timingSafeEqual(left, right))
+    return false;
   return Number(expiresAt) > Math.floor(Date.now() / 1000);
 }
