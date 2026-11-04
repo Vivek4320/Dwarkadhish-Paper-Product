@@ -155,6 +155,7 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [previewOrder, setPreviewOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -279,7 +280,7 @@ export default function OrdersPage() {
                   {o.item.pages} pages <span className="px-1">·</span> Quantity:{" "}
                   {o.item.quantity}
                 </p>
-                <div className="mt-3 flex items-center justify-between gap-3 text-sm">
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm">
                   <span className="text-[#77716E]">
                     Customer: {o.customer?.fullName || "Customer"}
                   </span>
@@ -287,9 +288,64 @@ export default function OrdersPage() {
                     {money(o.amount_paise, o.currency)}
                   </strong>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setPreviewOrder(o)}
+                  className="mt-4 inline-flex items-center gap-2 rounded-lg border border-[#D71920] px-4 py-2 text-xs font-bold text-[#D71920] transition hover:bg-[#D71920] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#D71920]/30"
+                  aria-label={`Preview design for order ${o.id}`}
+                >
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
+                    <circle cx="12" cy="12" r="2.5" />
+                  </svg>
+                  Preview Design
+                </button>
               </div>
             </article>
           ))}
+        </div>
+      )}
+
+      {previewOrder && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="order-preview-title"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setPreviewOrder(null);
+          }}
+        >
+          <section className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl sm:p-7">
+            <button
+              type="button"
+              onClick={() => setPreviewOrder(null)}
+              className="absolute right-4 top-4 rounded-full p-2 text-[#514B47] transition hover:bg-[#F4F0EC]"
+              aria-label="Close preview"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m6 6 12 12M18 6 6 18" />
+              </svg>
+            </button>
+            <h2 id="order-preview-title" className="pr-10 text-xl font-bold">Your Notebook Design</h2>
+            <p className="mt-1 text-xs text-[#77716E]">Order #{previewOrder.id}</p>
+            <div className="mt-5">
+              <BookPreview item={previewOrder.item || {}} />
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl bg-[#F8F6F3] p-4 text-sm">
+              <div><span className="text-[#77716E]">Pages</span><p className="mt-1 font-semibold">{previewOrder.item.pages || "—"}</p></div>
+              <div><span className="text-[#77716E]">Quantity</span><p className="mt-1 font-semibold">{previewOrder.item.quantity || "—"}</p></div>
+              <div><span className="text-[#77716E]">Status</span><p className="mt-1 font-semibold capitalize">{previewOrder.status}</p></div>
+              <div><span className="text-[#77716E]">Total</span><p className="mt-1 font-semibold">{money(previewOrder.amount_paise, previewOrder.currency)}</p></div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setPreviewOrder(null)}
+              className="mt-5 w-full rounded-lg bg-[#D71920] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#B9151B]"
+            >
+              Close Preview
+            </button>
+          </section>
         </div>
       )}
     </main>
