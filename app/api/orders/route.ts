@@ -36,7 +36,10 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("Order history error:", error);
     return NextResponse.json(
-      { error: "Unable to load order history. Check server authentication and database configuration." },
+      {
+        error:
+          "Unable to load order history. Check server authentication and database configuration.",
+      },
       { status: 500, headers: { "Cache-Control": "no-store" } },
     );
   }
