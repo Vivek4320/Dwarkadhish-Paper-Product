@@ -23,6 +23,7 @@ export async function GET(request: Request) {
     const requestState = await clerk.authenticateRequest(request, {
       secretKey,
       publishableKey,
+      clockSkewInMs: 15_000,
     });
 
     if (!requestState.isAuthenticated) {
