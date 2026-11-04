@@ -171,7 +171,9 @@ export default function OrdersPage() {
         // the request even when the browser does not attach its session cookie.
         const token = await getToken();
         if (!token) {
-          throw new Error("Your session could not be verified. Please refresh and sign in again.");
+          throw new Error(
+            "Your session could not be verified. Please refresh and sign in again.",
+          );
         }
 
         const response = await fetch("/api/orders", {
