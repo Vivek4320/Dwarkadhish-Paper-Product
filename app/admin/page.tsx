@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { connection } from "next/server";
 import { redirect } from "next/navigation";
 import { hasAdminSession } from "../../lib/admin-auth";
 import { query } from "../../lib/db";
@@ -31,6 +32,7 @@ function parseJson<T>(value: T | string): T {
 }
 
 export default async function AdminPage() {
+  await connection();
   if (!(await hasAdminSession())) redirect("/admin/login");
 
   let orders: OrderRow[] = [];
