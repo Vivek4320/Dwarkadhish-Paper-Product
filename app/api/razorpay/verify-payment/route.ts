@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 import { query } from "../../../../lib/db";
 import { createHmac, timingSafeEqual } from "node:crypto";
 
@@ -25,12 +25,43 @@ export async function POST(request: Request) {
       );
     }
 
-    const { userId } = await auth();
-    if (!userId)
+    const secretKey = process.env.CLERK_SECRET_KEY;
+    const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+    if (!secretKey || !publishableKey) {
+      console.error("Clerk server keys are missing for payment verification.");
       return NextResponse.json(
-        { error: "Please sign in before placing an order." },
+        { error: "Authentication service is not configured." },
+        { status: 503 },
+      );
+    }
+
+    const clerk = await clerkClient();
+    const requestState = await clerk.authenticateRequest(request, {
+      secretKey,
+      publishableKey,
+      clockSkewInMs: 15_000,
+    });
+    if (!requestState.isAuthenticated) {
+      console.warn("Payment verification Clerk authentication rejected:", {
+        reason: requestState.reason,
+        message: requestState.message,
+        tokenType: requestState.tokenType,
+        hasAuthorization: request.headers.has("authorization"),
+        hasSessionCookie: request.headers.has("cookie"),
+      });
+      return NextResponse.json(
+        { error: "Please sign in. Your session could not be verified." },
         { status: 401 },
       );
+    }
+
+    const { userId } = requestState.toAuth();
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Please sign in. Your session could not be verified." },
+        { status: 401 },
+      );
+    }
 
     const body = await request.json();
     const orderId = body.razorpay_order_id;
