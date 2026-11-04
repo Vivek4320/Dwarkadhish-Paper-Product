@@ -216,7 +216,9 @@ export default function CheckoutPage() {
             sessionStorage.removeItem("dwarkadhish-checkout-item");
             setPaymentMessage("");
             setSuccessOrderId(String(verifyData.orderId || orderData.orderId));
-            setSuccessPaymentId(String(verifyData.paymentId || response.razorpay_payment_id));
+            setSuccessPaymentId(
+              String(verifyData.paymentId || response.razorpay_payment_id),
+            );
           } catch (error) {
             setPaymentMessage(
               error instanceof Error
@@ -804,24 +806,47 @@ export default function CheckoutPage() {
           <section className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white px-6 py-9 text-center shadow-2xl sm:px-9">
             <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-[#D71920] via-[#E7B84B] to-[#D71920]" />
             <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#EAF8EF]">
-              <svg viewBox="0 0 52 52" className="h-12 w-12" fill="none" aria-hidden="true">
-                <path d="M14 27.5 22 35l17-19" stroke="#16803D" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                viewBox="0 0 52 52"
+                className="h-12 w-12"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M14 27.5 22 35l17-19"
+                  stroke="#16803D"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
             <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.22em] text-[#B78B35]">
               Dwarkadhish Paper Products
             </p>
-            <h2 id="order-success-title" className="mt-2 text-2xl font-extrabold text-[#211F1F] sm:text-3xl">
+            <h2
+              id="order-success-title"
+              className="mt-2 text-2xl font-extrabold text-[#211F1F] sm:text-3xl"
+            >
               Order Confirmed!
             </h2>
             <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#77716E]">
-              Your payment has been verified successfully. Thank you for placing your order.
+              Your payment has been verified successfully. Thank you for placing
+              your order.
             </p>
             <div className="mt-6 rounded-2xl border border-[#E9E3DD] bg-[#FBF9F6] p-4 text-left">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-[#8A817A]">Razorpay Order ID</p>
-              <p className="mt-1 break-all text-xs font-bold text-[#211F1F]">{successOrderId}</p>
-              <p className="mt-3 text-[10px] font-semibold uppercase tracking-wider text-[#8A817A]">Payment ID</p>
-              <p className="mt-1 break-all text-xs font-bold text-[#211F1F]">{successPaymentId}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-[#8A817A]">
+                Razorpay Order ID
+              </p>
+              <p className="mt-1 break-all text-xs font-bold text-[#211F1F]">
+                {successOrderId}
+              </p>
+              <p className="mt-3 text-[10px] font-semibold uppercase tracking-wider text-[#8A817A]">
+                Payment ID
+              </p>
+              <p className="mt-1 break-all text-xs font-bold text-[#211F1F]">
+                {successPaymentId}
+              </p>
             </div>
             <p className="mt-5 text-xs font-medium text-[#77716E]">
               Redirecting you to My Orders...

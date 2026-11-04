@@ -174,7 +174,10 @@ export default function OrdersPage() {
         try {
           token = await getToken({ skipCache: true });
         } catch (tokenError) {
-          console.warn("Could not retrieve a Clerk token; trying the session cookie.", tokenError);
+          console.warn(
+            "Could not retrieve a Clerk token; trying the session cookie.",
+            tokenError,
+          );
         }
 
         const response = await fetch("/api/orders", {
