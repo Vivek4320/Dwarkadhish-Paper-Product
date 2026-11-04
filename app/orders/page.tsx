@@ -167,19 +167,20 @@ export default function OrdersPage() {
       }
 
       try {
-        // Send the active Clerk session explicitly so the API can authenticate
-        // the request even when the browser does not attach its session cookie.
-        const token = await getToken();
-        if (!token) {
-          throw new Error(
-            "Your session could not be verified. Please refresh and sign in again.",
-          );
+        // Prefer an explicit Clerk token, but also allow the same-origin
+        // Clerk session cookie to authenticate the request when token retrieval
+        // is temporarily unavailable in the browser.
+        let token: string | null = null;
+        try {
+          token = await getToken({ skipCache: true });
+        } catch (tokenError) {
+          console.warn("Could not retrieve a Clerk token; trying the session cookie.", tokenError);
         }
 
         const response = await fetch("/api/orders", {
           cache: "no-store",
-          credentials: "same-origin",
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         const data = await response.json();
         if (!response.ok) {
