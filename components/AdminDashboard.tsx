@@ -102,7 +102,7 @@ export default function AdminDashboard({
     );
   }, [orders]);
 
-  const chartValues = range === "7" ? weeklySales : weeklySales.slice(-30);
+  const chartValues = range === "7" ? weeklySales.slice(-7) : weeklySales;
   const maxSales = Math.max(1, ...chartValues.map((day) => day.amount));
 
   return (
