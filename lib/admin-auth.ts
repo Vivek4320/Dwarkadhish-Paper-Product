@@ -32,6 +32,7 @@ export async function clearAdminSession() {
   store.set(COOKIE_NAME, "", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict", path: "/", maxAge: 0 });
 }
 export async function hasAdminSession() {
+  if (!process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_SESSION_SECRET.length < 32) return false;
   const store = await cookies();
   const raw = store.get(COOKIE_NAME)?.value || "";
   const [expiresAt, signature] = raw.split(".");
