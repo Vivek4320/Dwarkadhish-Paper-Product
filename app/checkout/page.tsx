@@ -360,7 +360,7 @@ export default function CheckoutPage() {
                     type="tel"
                     required
                     autoComplete="tel"
-                    pattern="\\+?[0-9]{10,13}"
+                    pattern="[+]?[0-9 ]{10,15}"
                     title="Enter a valid phone number."
                     name="phone"
                     placeholder="+91 00000 00000"
