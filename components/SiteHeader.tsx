@@ -6,21 +6,14 @@ import CartLink from "./CartLink";
 import { navItems } from "./site-data";
 
 type SiteHeaderProps = {
-  onLogin: () => void;
   isSignedIn: boolean;
   showAnnouncement?: boolean;
 };
 
 export default function SiteHeader({
-  onLogin,
   isSignedIn,
   showAnnouncement = false,
 }: SiteHeaderProps) {
-  const handleAccountAction = () => {
-    if (!isSignedIn) onLogin();
-  };
-
-  const accountLabel = "Get Started";
 
   return (
     <>
@@ -86,9 +79,9 @@ export default function SiteHeader({
                 <UserButton />
               </div>
             ) : (
-              <button className="header-cta" onClick={handleAccountAction}>
-                {accountLabel} <span>↗</span>
-              </button>
+              <Link className="header-cta" href="/sign-in">
+                Get Started <span>↗</span>
+              </Link>
             )}
           </div>
         </div>
