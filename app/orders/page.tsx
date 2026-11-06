@@ -299,29 +299,31 @@ export default function OrdersPage() {
                     {money(o.amount_paise, o.currency)}
                   </strong>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setPreviewOrder(o)}
-                  className="mt-4 inline-flex items-center gap-2 rounded-lg border border-[#D71920] px-4 py-2 text-xs font-bold text-[#D71920] transition hover:bg-[#D71920] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#D71920]/30"
-                  aria-label={`Preview design for order ${o.id}`}
-                >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    className="h-4 w-4"
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewOrder(o)}
+                    className="inline-flex items-center gap-2 rounded-lg border border-[#D71920] px-4 py-2 text-xs font-bold text-[#D71920] transition hover:bg-[#D71920] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#D71920]/30"
+                    aria-label={`Preview design for order ${o.id}`}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"
-                    />
-                    <circle cx="12" cy="12" r="2.5" />
-                  </svg>
-                  Preview Design
-                </button>
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
+                      <circle cx="12" cy="12" r="2.5" />
+                    </svg>
+                    Preview Design
+                  </button>
+                  <a
+                    href="https://www.indiapost.gov.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#D71920] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#B9151B] focus:outline-none focus:ring-2 focus:ring-[#D71920]/30"
+                  >
+                    Track Your Order
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17 17 7M8 7h9v9" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </article>
           ))}
