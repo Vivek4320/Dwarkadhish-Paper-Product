@@ -172,8 +172,9 @@ export default function OrdersPage() {
   useEffect(() => {
     let cancelled = false;
 
-    async function loadOrders() {
+    async function loadOrders(showLoader = true) {
       if (!isLoaded) return;
+      if (showLoader && !cancelled) setLoading(true);
       if (!isSignedIn) {
         setLoading(false);
         return;
@@ -217,8 +218,17 @@ export default function OrdersPage() {
     }
 
     void loadOrders();
+    // If the customer already has My Orders open while admin adds the
+    // consignment number, refresh the order list automatically.
+    const refreshInterval = window.setInterval(() => {
+      void loadOrders(false);
+    }, 15000);
+    const refreshOnFocus = () => void loadOrders(false);
+    window.addEventListener("focus", refreshOnFocus);
     return () => {
       cancelled = true;
+      window.clearInterval(refreshInterval);
+      window.removeEventListener("focus", refreshOnFocus);
     };
   }, [isLoaded, isSignedIn, getToken]);
 
