@@ -343,28 +343,6 @@ export default function OrdersPage() {
                     </svg>
                     Preview Design
                   </button>
-                  <a
-                    href="https://www.indiapost.gov.in/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg bg-[#D71920] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#B9151B] focus:outline-none focus:ring-2 focus:ring-[#D71920]/30"
-                  >
-                    Track Your Order
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      className="h-4 w-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M7 17 17 7M8 7h9v9"
-                      />
-                    </svg>
-                  </a>
                 </div>
               </div>
             </article>
