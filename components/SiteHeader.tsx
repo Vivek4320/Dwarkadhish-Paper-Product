@@ -14,7 +14,6 @@ export default function SiteHeader({
   isSignedIn,
   showAnnouncement = false,
 }: SiteHeaderProps) {
-
   return (
     <>
       {showAnnouncement && (
