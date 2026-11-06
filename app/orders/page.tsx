@@ -302,8 +302,12 @@ export default function OrdersPage() {
                 </div>
                 {o.tracking_number && (
                   <div className="mt-4 rounded-xl border border-[#eadfce] bg-[#fffaf2] p-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-[#806b4d]">India Post Tracking Number</p>
-                    <p className="mt-1 break-all font-mono text-sm font-bold text-[#211F1F]">{o.tracking_number}</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-[#806b4d]">
+                      India Post Tracking Number
+                    </p>
+                    <p className="mt-1 break-all font-mono text-sm font-bold text-[#211F1F]">
+                      {o.tracking_number}
+                    </p>
                     <a
                       href="https://www.indiapost.gov.in/_layouts/15/dop.portal.tracking/trackconsignment.aspx"
                       target="_blank"

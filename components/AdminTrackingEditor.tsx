@@ -23,9 +23,12 @@ export default function AdminTrackingEditor({
         body: JSON.stringify({ orderId, trackingNumber: value }),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Could not save tracking number.");
+      if (!response.ok)
+        throw new Error(data.error || "Could not save tracking number.");
       setValue(data.trackingNumber || "");
-      setMessage(value.trim() ? "Tracking number saved" : "Tracking number removed");
+      setMessage(
+        value.trim() ? "Tracking number saved" : "Tracking number removed",
+      );
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Save failed");
     } finally {
@@ -37,7 +40,9 @@ export default function AdminTrackingEditor({
     <div className="min-w-[190px] space-y-2">
       <input
         value={value}
-        onChange={(event) => setValue(event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""))}
+        onChange={(event) =>
+          setValue(event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""))
+        }
         maxLength={40}
         placeholder="India Post consignment no."
         aria-label={`India Post tracking number for order ${orderId}`}
@@ -51,7 +56,11 @@ export default function AdminTrackingEditor({
       >
         {busy ? "Saving..." : "Save Tracking"}
       </button>
-      {message && <p role="status" className="text-[10px] text-[#666]">{message}</p>}
+      {message && (
+        <p role="status" className="text-[10px] text-[#666]">
+          {message}
+        </p>
+      )}
     </div>
   );
 }

@@ -435,7 +435,10 @@ export default function AdminDashboard({
                         <AdminOrderDesignDownload order={order} />
                       </td>
                       <td className="px-3 py-4">
-                        <AdminTrackingEditor orderId={order.id} initialTrackingNumber={order.tracking_number} />
+                        <AdminTrackingEditor
+                          orderId={order.id}
+                          initialTrackingNumber={order.tracking_number}
+                        />
                       </td>
                     </tr>
                   ))}
