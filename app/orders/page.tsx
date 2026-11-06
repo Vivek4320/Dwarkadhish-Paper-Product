@@ -168,6 +168,7 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [previewOrder, setPreviewOrder] = useState<Order | null>(null);
+  const [copiedTrackingOrder, setCopiedTrackingOrder] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -315,16 +316,34 @@ export default function OrdersPage() {
                     <p className="text-[11px] font-semibold uppercase tracking-wide text-[#806b4d]">
                       India Post Tracking Number
                     </p>
-                    <p className="mt-1 break-all font-mono text-sm font-bold text-[#211F1F]">
-                      {o.tracking_number}
-                    </p>
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                      <p className="break-all font-mono text-sm font-bold text-[#211F1F]">
+                        {o.tracking_number}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(o.tracking_number || "");
+                            setCopiedTrackingOrder(o.id);
+                            window.setTimeout(() => setCopiedTrackingOrder((current) => current === o.id ? null : current), 2000);
+                          } catch {
+                            setError("Could not copy the tracking number. Please copy it manually.");
+                          }
+                        }}
+                        className="inline-flex shrink-0 items-center gap-1 rounded-md border border-[#D71920] px-2.5 py-1.5 text-[10px] font-bold text-[#D71920] transition hover:bg-[#fff0f0]"
+                        aria-label="Copy tracking number"
+                      >
+                        {copiedTrackingOrder === o.id ? "Copied!" : "Copy ID"}
+                      </button>
+                    </div>
                     <a
                       href="https://www.indiapost.gov.in/_layouts/15/dop.portal.tracking/trackconsignment.aspx"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-3 inline-flex items-center gap-2 rounded-lg bg-[#D71920] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#B9151B]"
                     >
-                      Track Parcel on India Post
+                      Track Your Order
                       <span aria-hidden="true">↗</span>
                     </a>
                   </div>
