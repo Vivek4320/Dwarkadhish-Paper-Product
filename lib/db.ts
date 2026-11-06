@@ -57,5 +57,13 @@ export async function query<T extends QueryResultRow = QueryResultRow>(
 ) {
   const pool = getPool();
   await ensureSchema(pool);
+
+  // Keep this idempotent migration outside the cached schema bootstrap.
+  // In Next.js dev, hot reload can retain the old global schema promise after
+  // SCHEMA_SQL changes, leaving an existing customer_orders table unaltered.
+  await pool.query(
+    "ALTER TABLE customer_orders ADD COLUMN IF NOT EXISTS tracking_number text",
+  );
+
   return pool.query<T>(text, params);
 }
