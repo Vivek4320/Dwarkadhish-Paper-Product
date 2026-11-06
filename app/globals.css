@@ -147,8 +147,6 @@ button {
   margin-left: 4px;
 }
 
-.mobile-menu-button,
-.mobile-menu,
 .mobile-bottom-nav {
   display: none;
 }
@@ -988,59 +986,19 @@ button {
     height: 49px;
   }
 
-  .desktop-nav,
-  .header-cta {
+  .desktop-nav {
     display: none;
   }
 
-  .mobile-menu-button {
-    width: 38px;
+  .header-cta {
+    width: auto;
     height: 38px;
-    border: 1px solid #eee8e1;
-    border-radius: 8px;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
+    padding: 0 14px;
+    font-size: 13px;
   }
 
-  .mobile-menu-button span {
-    width: 17px;
-    height: 2px;
-    background: var(--ink);
-    border-radius: 2px;
-  }
-
-  .mobile-menu {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    top: 68px;
-    left: 0;
-    right: 0;
-    padding: 12px 20px 20px;
-    background: #fff;
-    border-top: 1px solid var(--line);
-    box-shadow: 0 15px 24px #211f1f12;
-  }
-
-  .mobile-menu a {
-    padding: 12px 0;
-    border-bottom: 1px solid #f0ece8;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .mobile-menu button {
-    height: 43px;
-    margin-top: 14px;
-    border: 0;
-    border-radius: 7px;
-    background: var(--red);
-    color: #fff;
-    font-weight: 700;
+  .header-actions {
+    gap: 8px;
   }
 
   .hero-section {
@@ -1312,7 +1270,7 @@ button {
     font-weight: 700;
   }
 
-  .site-shell {
+  body:has(.mobile-bottom-nav) {
     padding-bottom: 76px;
   }
 
@@ -2000,5 +1958,57 @@ button {
 @media (max-width: 760px) {
   .header-actions {
     margin-right: 10px;
+  }
+}
+
+/* ---- Link bar on inner pages (hidden on phones; bottom bar is used there) ---- */
+.inner-nav {
+  display: none;
+  border-bottom: 1px solid #eee8e1;
+  background: #fff;
+}
+.inner-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 54px;
+}
+.inner-nav-brand {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #211f1f;
+}
+.inner-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.inner-nav-links a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #211f1f;
+  white-space: nowrap;
+}
+.inner-nav-links a:hover,
+.inner-nav-links a.active {
+  color: #df151d;
+}
+@media (min-width: 761px) {
+  .inner-nav {
+    display: block;
+  }
+}
+@media (min-width: 761px) and (max-width: 1000px) {
+  .inner-nav-brand {
+    display: none;
+  }
+  .inner-nav-links {
+    margin: 0 auto;
   }
 }

@@ -22,7 +22,7 @@ export default function SiteFooter() {
         </div>
         <div className="footer-column">
           <h3>EXPLORE</h3>
-          <a href="#home">Home</a>
+          <a href="/">Home</a>
           <a href="/products">Our Products</a>
           <a href="/customize-book">Customize Book</a>
           <a href="/about">About Us</a>

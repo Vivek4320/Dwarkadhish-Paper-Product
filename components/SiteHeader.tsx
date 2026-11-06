@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import CartLink from "./CartLink";
@@ -17,10 +16,7 @@ export default function SiteHeader({
   isSignedIn,
   showAnnouncement = false,
 }: SiteHeaderProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   const handleAccountAction = () => {
-    setMenuOpen(false);
     if (!isSignedIn) onLogin();
   };
 
@@ -40,9 +36,9 @@ export default function SiteHeader({
       )}
       <header className="site-header">
         <div className="header-inner">
-          <a
+          <Link
             className="brand-placeholder"
-            href="#home"
+            href="/"
             aria-label="Dwarkadhish Paper Products home"
           >
             <img
@@ -50,12 +46,12 @@ export default function SiteHeader({
               alt="Dwarkadhish Paper Products"
               className="brand-logo"
             />
-          </a>
+          </Link>
           <nav className="desktop-nav" aria-label="Main navigation">
             {navItems.map(([label, href]) => (
-              <a key={label} href={href}>
+              <Link key={label} href={href}>
                 {label}
-              </a>
+              </Link>
             ))}
           </nav>
           <div className="header-actions">
@@ -95,34 +91,7 @@ export default function SiteHeader({
               </button>
             )}
           </div>
-          <button
-            className="mobile-menu-button"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
         </div>
-        {menuOpen && (
-          <nav className="mobile-menu" aria-label="Mobile navigation">
-            {navItems.map(([label, href]) => (
-              <a key={label} href={href} onClick={() => setMenuOpen(false)}>
-                {label}
-              </a>
-            ))}
-            {isSignedIn ? (
-              <div className="mobile-account-row">
-                <span>Your account</span>
-                <UserButton />
-              </div>
-            ) : (
-              <button onClick={handleAccountAction}>{accountLabel} ↗</button>
-            )}
-          </nav>
-        )}
       </header>
     </>
   );

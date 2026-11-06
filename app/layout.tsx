@@ -1,6 +1,8 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import InnerPageNav from "../components/InnerPageNav";
+import MobileBottomNav from "../components/MobileBottomNav";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,7 +28,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ClerkProvider>{children}</ClerkProvider>
+        <ClerkProvider>
+          <InnerPageNav />
+          {children}
+          <MobileBottomNav />
+        </ClerkProvider>
       </body>
     </html>
   );

@@ -8,7 +8,6 @@ import HomeProductsSection from "../components/HomeProductsSection";
 import CustomizeSection from "../components/CustomizeSection";
 import OurClients from "../components/OurClients";
 import SiteFooter from "../components/SiteFooter";
-import MobileBottomNav from "../components/MobileBottomNav";
 import LoginModal from "../components/LoginModal";
 
 export default function HomePage() {
@@ -31,7 +30,6 @@ export default function HomePage() {
       <HomeProductsSection />
       <CustomizeSection />
       <SiteFooter />
-      <MobileBottomNav />
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
     </main>
   );

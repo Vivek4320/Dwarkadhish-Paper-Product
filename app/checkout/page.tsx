@@ -47,6 +47,7 @@ type CheckoutItem = {
   total: number;
   templateId?: string;
   backCoverText?: string;
+  backCoverColor?: string;
   backUploadedImage?: string | null;
   frontZoom?: number;
   backZoom?: number;
