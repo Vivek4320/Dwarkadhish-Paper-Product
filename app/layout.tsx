@@ -1,6 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import InnerPageNav from "../components/InnerPageNav";
 import MobileBottomNav from "../components/MobileBottomNav";
 import "./globals.css";
@@ -29,9 +30,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <ClerkProvider>
-          <InnerPageNav />
+          <Suspense fallback={null}>
+            <InnerPageNav />
+          </Suspense>
           {children}
-          <MobileBottomNav />
+          <Suspense fallback={null}>
+            <MobileBottomNav />
+          </Suspense>
         </ClerkProvider>
       </body>
     </html>
