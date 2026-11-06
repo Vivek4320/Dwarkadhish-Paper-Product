@@ -168,7 +168,9 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [previewOrder, setPreviewOrder] = useState<Order | null>(null);
-  const [copiedTrackingOrder, setCopiedTrackingOrder] = useState<string | null>(null);
+  const [copiedTrackingOrder, setCopiedTrackingOrder] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -324,11 +326,21 @@ export default function OrdersPage() {
                         type="button"
                         onClick={async () => {
                           try {
-                            await navigator.clipboard.writeText(o.tracking_number || "");
+                            await navigator.clipboard.writeText(
+                              o.tracking_number || "",
+                            );
                             setCopiedTrackingOrder(o.id);
-                            window.setTimeout(() => setCopiedTrackingOrder((current) => current === o.id ? null : current), 2000);
+                            window.setTimeout(
+                              () =>
+                                setCopiedTrackingOrder((current) =>
+                                  current === o.id ? null : current,
+                                ),
+                              2000,
+                            );
                           } catch {
-                            setError("Could not copy the tracking number. Please copy it manually.");
+                            setError(
+                              "Could not copy the tracking number. Please copy it manually.",
+                            );
                           }
                         }}
                         className="inline-flex shrink-0 items-center gap-1 rounded-md border border-[#D71920] px-2.5 py-1.5 text-[10px] font-bold text-[#D71920] transition hover:bg-[#fff0f0]"
