@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS customer_orders (
   status text NOT NULL DEFAULT 'paid',
   created_at timestamptz NOT NULL DEFAULT now()
 );
+ALTER TABLE customer_orders ADD COLUMN IF NOT EXISTS tracking_number text;
 CREATE INDEX IF NOT EXISTS customer_orders_owner_idx ON customer_orders (owner, created_at DESC);
 
 `;
