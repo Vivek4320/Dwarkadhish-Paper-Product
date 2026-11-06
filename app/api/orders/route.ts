@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     }
 
     const result = await query(
-      "SELECT id, razorpay_order_id, razorpay_payment_id, amount_paise, currency, customer, item, status, created_at FROM customer_orders WHERE owner = $1 ORDER BY created_at DESC",
+      "SELECT id, razorpay_order_id, razorpay_payment_id, amount_paise, currency, customer, item, status, tracking_number, created_at FROM customer_orders WHERE owner = $1 ORDER BY created_at DESC",
       ["user:" + userId],
     );
 
