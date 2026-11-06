@@ -19,6 +19,7 @@ type OrderRow = {
   customer: Customer | string;
   item: Item | string;
   status: string;
+  tracking_number?: string | null;
   created_at: string;
 };
 
@@ -65,7 +66,7 @@ async function AdminDashboardContent() {
          FROM customer_orders`,
       ),
       query(
-        "SELECT id, amount_paise, currency, customer, item, status, created_at FROM customer_orders ORDER BY created_at DESC LIMIT 100",
+        "SELECT id, amount_paise, currency, customer, item, status, tracking_number, created_at FROM customer_orders ORDER BY created_at DESC LIMIT 100",
       ),
       query(
         `SELECT created_at::date AS day, COALESCE(SUM(amount_paise), 0)::bigint AS amount
