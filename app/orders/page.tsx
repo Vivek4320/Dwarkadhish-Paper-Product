@@ -350,7 +350,7 @@ export default function OrdersPage() {
                       </button>
                     </div>
                     <a
-                      href="https://www.indiapost.gov.in/_layouts/15/dop.portal.tracking/trackconsignment.aspx"
+                      href="https://www.indiapost.gov.in/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-3 inline-flex items-center gap-2 rounded-lg bg-[#D71920] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#B9151B]"
