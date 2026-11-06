@@ -1,12 +1,14 @@
 "use client";
 
-import { SignIn } from "@clerk/nextjs";
+import { SignIn, useUser } from "@clerk/nextjs";
+import AuthLoading from "./AuthLoading";
 
 type LoginModalProps = {
   onClose: () => void;
 };
 
 export default function LoginModal({ onClose }: LoginModalProps) {
+  const { isLoaded } = useUser();
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/60 p-4"
@@ -16,7 +18,13 @@ export default function LoginModal({ onClose }: LoginModalProps) {
       }}
     >
       <div role="dialog" aria-modal="true" aria-label="Sign in">
-        <SignIn routing="hash" />
+        {isLoaded ? (
+          <SignIn routing="hash" />
+        ) : (
+          <div className="rounded-2xl bg-white p-8">
+            <AuthLoading label="Loading sign-in..." />
+          </div>
+        )}
       </div>
     </div>
   );

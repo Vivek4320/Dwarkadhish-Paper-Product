@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { SignIn, useUser } from "@clerk/nextjs";
 import { ChangeEvent, useRef, useState } from "react";
+import AuthLoading from "./AuthLoading";
 import { addToCart, uploadPhoto } from "../lib/cart-client";
 import { prepareImage } from "../lib/image-client";
 
@@ -141,8 +142,8 @@ export default function CustomizeBookPage() {
 
   if (!isLoaded) {
     return (
-      <main className="flex min-h-screen items-center justify-center text-sm text-[#77716E]">
-        Checking your account...
+      <main className="flex min-h-screen items-center justify-center px-4">
+        <AuthLoading label="Checking your account..." />
       </main>
     );
   }
