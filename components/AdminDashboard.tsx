@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminOrderDesignDownload from "./AdminOrderDesignDownload";
+import AdminTrackingEditor from "./AdminTrackingEditor";
 
 type DashboardOrder = {
   id: string;
@@ -33,6 +34,7 @@ type DashboardOrder = {
     backZoom?: number;
   };
   status: string;
+  tracking_number?: string | null;
   created_at: string;
 };
 
@@ -385,6 +387,7 @@ export default function AdminDashboard({
                       "Status",
                       "Date",
                       "Design File",
+                      "Shipment Tracking",
                     ].map((heading) => (
                       <th key={heading} className="px-3 py-3 font-semibold">
                         {heading}
@@ -431,12 +434,15 @@ export default function AdminDashboard({
                       <td className="px-3 py-4">
                         <AdminOrderDesignDownload order={order} />
                       </td>
+                      <td className="px-3 py-4">
+                        <AdminTrackingEditor orderId={order.id} initialTrackingNumber={order.tracking_number} />
+                      </td>
                     </tr>
                   ))}
                   {filteredOrders.length === 0 && (
                     <tr>
                       <td
-                        colSpan={7}
+                        colSpan={8}
                         className="px-3 py-10 text-center text-[#888]"
                       >
                         {search
