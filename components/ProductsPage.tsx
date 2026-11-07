@@ -287,7 +287,7 @@ export default function ProductsPage() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search notebooks, ruling, size..."
-              className="w-full bg-transparent text-sm outline-none placeholder:text-[#999]"
+              className="w-mid bg-transparent text-sm outline-none placeholder:text-[#999]"
             />
           </label>
           <label className="products-sort flex h-12 items-center gap-3 rounded-lg border border-[#D5D9D9] bg-white px-4 text-sm">
