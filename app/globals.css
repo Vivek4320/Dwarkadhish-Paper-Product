@@ -2018,3 +2018,93 @@ button {
     margin: 0 auto;
   }
 }
+
+
+/* ---------- Consistent mobile layout across every route ---------- */
+@media (max-width: 760px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    min-width: 0;
+  }
+
+  main {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: clip;
+    padding-bottom: 12px;
+  }
+
+  main *,
+  main *::before,
+  main *::after {
+    min-width: 0;
+  }
+
+  main img,
+  main video,
+  main iframe,
+  main svg {
+    max-width: 100%;
+  }
+
+  main h1 {
+    font-size: clamp(1.65rem, 7vw, 2.25rem);
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+  }
+
+  main h2 {
+    font-size: clamp(1.25rem, 5.5vw, 1.75rem);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  main p,
+  main label,
+  main a,
+  main button,
+  main li {
+    overflow-wrap: anywhere;
+  }
+
+  /* Prevent fixed-width desktop columns from squeezing on phone screens. */
+  main .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Rows of actions/cards can wrap instead of overflowing the viewport. */
+  main .flex:not(.flex-col) {
+    flex-wrap: wrap;
+  }
+
+  main input,
+  main select,
+  main textarea {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  /* Keep horizontal category/filter scrollers intentionally scrollable. */
+  main .overflow-x-auto {
+    flex-wrap: nowrap !important;
+    max-width: 100%;
+  }
+
+  /* Leave the five-item fixed bottom navigation in its compact row. */
+  .mobile-bottom-nav {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .mobile-bottom-nav a {
+    min-width: 0;
+    overflow-wrap: normal;
+  }
+}
