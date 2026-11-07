@@ -2108,54 +2108,129 @@ button {
   }
 }
 
-
 /* Notebook customizer: polished phone layout */
 @media (max-width: 760px) {
-  main.customize-page { padding-bottom: 24px; }
-  .customize-content { padding: 20px 14px 42px; }
-  .customize-content > div:first-of-type { margin-top: 18px; }
+  main.customize-page {
+    padding-bottom: 24px;
+  }
+  .customize-content {
+    padding: 20px 14px 42px;
+  }
+  .customize-content > div:first-of-type {
+    margin-top: 18px;
+  }
   .customize-content > div:first-of-type h1 {
-    font-size: clamp(26px, 7.5vw, 34px); line-height: 1.08; letter-spacing: -0.8px;
+    font-size: clamp(26px, 7.5vw, 34px);
+    line-height: 1.08;
+    letter-spacing: -0.8px;
   }
   .customize-layout {
-    display: flex; flex-direction: column; gap: 16px; margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 22px;
   }
-  .customize-preview-section, .customize-form-card { width: 100%; min-width: 0; }
+  .customize-preview-section,
+  .customize-form-card {
+    width: 100%;
+    min-width: 0;
+  }
   .customize-preview-card {
-    padding: 15px; border: 1px solid #eee5da; border-radius: 17px;
-    box-shadow: 0 5px 18px rgba(40,30,20,.045);
+    padding: 15px;
+    border: 1px solid #eee5da;
+    border-radius: 17px;
+    box-shadow: 0 5px 18px rgba(40, 30, 20, 0.045);
   }
   .customize-preview-card > div:first-child {
-    align-items: flex-start; flex-direction: column; gap: 12px; margin-bottom: 14px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 14px;
   }
-  .customize-preview-card > div:first-child > div:first-child { width: 100%; }
-  .customize-preview-card > div:first-child p:first-child { font-size: 14px; }
-  .customize-preview-card > div:first-child p:not(:first-child) { font-size: 10px; line-height: 1.5; }
+  .customize-preview-card > div:first-child > div:first-child {
+    width: 100%;
+  }
+  .customize-preview-card > div:first-child p:first-child {
+    font-size: 14px;
+  }
+  .customize-preview-card > div:first-child p:not(:first-child) {
+    font-size: 10px;
+    line-height: 1.5;
+  }
   .customize-preview-card > div:first-child > div:last-child {
-    width: 100%; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #eee5da;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid #eee5da;
   }
-  .customize-preview-card > div:first-child > div:last-child button { min-height: 39px; font-size: 12px; }
+  .customize-preview-card > div:first-child > div:last-child button {
+    min-height: 39px;
+    font-size: 12px;
+  }
   .customize-preview-frame {
-    width: 100%; padding: 5px; border-radius: 9px;
-    box-shadow: 0 9px 20px rgba(55,42,30,.13);
+    width: 100%;
+    padding: 5px;
+    border-radius: 9px;
+    box-shadow: 0 9px 20px rgba(55, 42, 30, 0.13);
   }
-  .customize-preview-card > p { margin-top: 12px; font-size: 10px; line-height: 1.55; }
+  .customize-preview-card > p {
+    margin-top: 12px;
+    font-size: 10px;
+    line-height: 1.55;
+  }
   .customize-form-card {
-    padding: 17px 15px; border-radius: 17px; box-shadow: 0 5px 18px rgba(40,30,20,.04);
+    padding: 17px 15px;
+    border-radius: 17px;
+    box-shadow: 0 5px 18px rgba(40, 30, 20, 0.04);
   }
-  .customize-form-card > div { padding-top: 18px; padding-bottom: 18px; }
-  .customize-form-card > div:first-child { padding-top: 0; }
-  .customize-form-card h2 { font-size: 15px; line-height: 1.3; }
-  .customize-template-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
-  .customize-template-grid button { min-width: 0; padding: 5px; border-radius: 11px; }
-  .customize-template-grid button > span:first-child { height: auto; aspect-ratio: .9 / 1; }
-  .customize-template-grid button > span:last-child { padding: 2px 0 3px; font-size: 11px; }
-  .customize-form-card input, .customize-form-card select, .customize-form-card textarea {
-    width: 100%; min-height: 42px; border-radius: 9px;
+  .customize-form-card > div {
+    padding-top: 18px;
+    padding-bottom: 18px;
   }
-  .customize-form-card label { border-radius: 12px; }
-  .customize-form-card button { touch-action: manipulation; }
-  .customize-content > section:last-child { margin-top: 30px; }
-  .customize-content > section:last-child > div { grid-template-columns: minmax(0,1fr); }
-  .customize-page footer { padding: 30px 18px 42px; }
+  .customize-form-card > div:first-child {
+    padding-top: 0;
+  }
+  .customize-form-card h2 {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .customize-template-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .customize-template-grid button {
+    min-width: 0;
+    padding: 5px;
+    border-radius: 11px;
+  }
+  .customize-template-grid button > span:first-child {
+    height: auto;
+    aspect-ratio: 0.9 / 1;
+  }
+  .customize-template-grid button > span:last-child {
+    padding: 2px 0 3px;
+    font-size: 11px;
+  }
+  .customize-form-card input,
+  .customize-form-card select,
+  .customize-form-card textarea {
+    width: 100%;
+    min-height: 42px;
+    border-radius: 9px;
+  }
+  .customize-form-card label {
+    border-radius: 12px;
+  }
+  .customize-form-card button {
+    touch-action: manipulation;
+  }
+  .customize-content > section:last-child {
+    margin-top: 30px;
+  }
+  .customize-content > section:last-child > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .customize-page footer {
+    padding: 30px 18px 42px;
+  }
 }
