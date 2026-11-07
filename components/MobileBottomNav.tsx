@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const items = [
@@ -26,15 +25,16 @@ export default function MobileBottomNav() {
         const active =
           href === "/" ? pathname === "/" : pathname.startsWith(href);
         return (
-          <Link
+          <a
             key={href}
             href={href}
             className={active ? "active" : undefined}
             aria-current={active ? "page" : undefined}
+            aria-label={label}
           >
             <span aria-hidden="true">{icon}</span>
             <small>{label}</small>
-          </Link>
+          </a>
         );
       })}
     </nav>
