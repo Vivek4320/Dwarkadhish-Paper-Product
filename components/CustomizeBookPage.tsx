@@ -345,7 +345,7 @@ export default function CustomizeBookPage() {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-white font-[Arial,Helvetica,sans-serif] text-[#211F1F]">
+    <main className="customize-page min-h-screen overflow-hidden bg-white font-[Arial,Helvetica,sans-serif] text-[#211F1F]">
       <div className="bg-[#211F1F] px-5 py-2 text-[10px] font-semibold tracking-wide text-[#D4A84A] sm:px-10">
         STATIONERY MANUFACTURER · CUSTOM &amp; BULK ORDERS
       </div>
@@ -360,7 +360,7 @@ export default function CustomizeBookPage() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 pb-20 pt-8 sm:px-8 lg:px-10">
+      <div className="customize-content mx-auto max-w-7xl px-5 pb-20 pt-8 sm:px-8 lg:px-10">
         <p className="text-xs text-[#6E6966]">
           <Link href="/" className="hover:text-[#D71920]">
             Home
@@ -381,9 +381,9 @@ export default function CustomizeBookPage() {
           </p>
         </div>
 
-        <div className="mt-9 grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)]">
-          <section className="xl:sticky xl:top-6">
-            <div className="rounded-2xl bg-[#F5F2ED] p-5 sm:p-7">
+        <div className="customize-layout mt-9 grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)]">
+          <section className="customize-preview-section xl:sticky xl:top-6">
+            <div className="customize-preview-card rounded-2xl bg-[#F5F2ED] p-5 sm:p-7">
               <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-bold">Live open-book preview</p>
@@ -413,7 +413,7 @@ export default function CustomizeBookPage() {
                 </div>
               </div>
 
-              <div className="relative mx-auto w-full max-w-[680px] rounded-md bg-[#c9beb0] p-[7px] shadow-[0_18px_35px_rgba(55,42,30,0.18)]">
+              <div className="customize-preview-frame relative mx-auto w-full max-w-[680px] rounded-md bg-[#c9beb0] p-[7px] shadow-[0_18px_35px_rgba(55,42,30,0.18)]">
                 <div
                   className="relative flex overflow-hidden rounded-[3px]"
                   style={{
@@ -588,10 +588,10 @@ export default function CustomizeBookPage() {
             </div>
           </section>
 
-          <section className="rounded-2xl border border-[#E9E3DD] bg-white p-5 shadow-[0_8px_25px_rgba(0,0,0,0.025)] sm:p-7">
+          <section className="customize-form-card rounded-2xl border border-[#E9E3DD] bg-white p-5 shadow-[0_8px_25px_rgba(0,0,0,0.025)] sm:p-7">
             <div className="border-b border-[#F0ECE8] pb-6">
               <h2 className="text-base font-bold">01. Select Template</h2>
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="customize-template-grid mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {templates.map((template) => (
                   <button
                     key={template.id}
