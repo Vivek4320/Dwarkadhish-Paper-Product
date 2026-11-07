@@ -233,8 +233,8 @@ export default function ProductsPage() {
   }, [query, category, sort]);
 
   return (
-    <main className="min-h-screen bg-white font-[Arial,Helvetica,sans-serif] text-[#211F1E]">
-      <div className="border-b border-[#E9E3DD] bg-white px-5 py-4 sm:px-8 lg:px-10">
+    <main className="products-amazon-page min-h-screen bg-[#f5f6f8] font-[Arial,Helvetica,sans-serif] text-[#211F1E]">
+      <div className="products-topbar border-b border-[#E9E3DD] bg-white px-5 py-4 sm:px-8 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <Link
             href="/"
@@ -245,7 +245,7 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 pb-20 pt-8 sm:px-8 lg:px-10">
+      <div className="products-amazon-content mx-auto max-w-7xl px-5 pb-20 pt-6 sm:px-8 lg:px-10">
         <p className="text-xs text-[#77716D]">
           <Link href="/" className="hover:text-[#D71920]">
             Home
@@ -253,7 +253,7 @@ export default function ProductsPage() {
           / <span className="text-[#D71920]">Products</span>
         </p>
 
-        <section className="relative mt-6 overflow-hidden rounded-2xl bg-[linear-gradient(98deg,#FFF2ED_0%,#FAF7F2_100%)] px-6 py-10 sm:px-10 sm:py-12 lg:min-h-72.5">
+        <section className="products-amazon-hero relative mt-4 overflow-hidden rounded-2xl bg-[linear-gradient(98deg,#FFF2ED_0%,#FAF7F2_100%)] px-6 py-8 sm:px-10 sm:py-10 lg:min-h-60">
           <div className="relative z-10 max-w-xl">
             <p className="text-[11px] font-bold tracking-[0.18em] text-[#D71920]">
               MADE FOR YOUR EVERYDAY
@@ -280,8 +280,8 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        <section className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <label className="flex h-12 w-full items-center gap-3 rounded-lg border border-[#E9E3DD] px-4 lg:max-w-112.5">
+        <section className="products-toolbar mt-6 flex flex-col gap-3 rounded-xl border border-[#e7e7e7] bg-white p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
+          <label className="products-search flex h-12 w-full items-center gap-3 rounded-lg border border-[#D5D9D9] bg-white px-4 lg:max-w-150">
             <span className="text-xl text-[#77716D]">⌕</span>
             <input
               value={query}
@@ -290,7 +290,7 @@ export default function ProductsPage() {
               className="w-full bg-transparent text-sm outline-none placeholder:text-[#999]"
             />
           </label>
-          <label className="flex h-12 items-center gap-3 rounded-lg border border-[#E9E3DD] px-4 text-sm">
+          <label className="products-sort flex h-12 items-center gap-3 rounded-lg border border-[#D5D9D9] bg-white px-4 text-sm">
             <span className="text-[#77716D]">Sort:</span>
             <select
               value={sort}
@@ -304,7 +304,7 @@ export default function ProductsPage() {
           </label>
         </section>
 
-        <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
+        <div className="products-categories mt-4 flex gap-2 overflow-x-auto rounded-xl bg-white p-3 pb-3 shadow-sm">
           {categories.map((item) => (
             <button
               key={item}
@@ -316,7 +316,7 @@ export default function ProductsPage() {
           ))}
         </div>
 
-        <div className="mt-10 flex items-center justify-between">
+        <div className="products-results-heading mt-7 flex items-center justify-between rounded-t-xl border-b border-[#e5e7eb] bg-white px-4 py-4">
           <h2 className="text-xl font-bold">Our Products</h2>
           <p className="text-xs text-[#77716D]">
             {visibleProducts.length}{" "}
@@ -325,13 +325,13 @@ export default function ProductsPage() {
         </div>
 
         {visibleProducts.length ? (
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="products-amazon-grid mt-0 grid gap-3 rounded-b-xl bg-white p-3 sm:grid-cols-2 xl:grid-cols-4">
             {visibleProducts.map((product) => (
               <article
                 key={product.id}
-                className="overflow-hidden rounded-xl border border-[#E9E3DD] bg-white transition duration-200 hover:-translate-y-1 hover:shadow-lg"
+                className="product-amazon-card group overflow-hidden rounded-xl border border-[#E5E7EB] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#c9cdd2] hover:shadow-lg"
               >
-                <div className="relative h-56.25 overflow-hidden">
+                <div className="product-amazon-image relative h-56.25 overflow-hidden">
                   <ProductArtwork type={product.artwork} />
                   {product.badge && (
                     <span className="absolute left-3 top-3 rounded-md bg-[#D71920] px-2.5 py-1.5 text-[10px] font-bold text-white">
@@ -339,11 +339,11 @@ export default function ProductsPage() {
                     </span>
                   )}
                 </div>
-                <div className="flex min-h-56.25 flex-col p-4">
+                <div className="product-amazon-copy flex min-h-56.25 flex-col p-4">
                   <p className="text-[10px] tracking-[0.08em] text-[#77716D]">
                     {product.detail}
                   </p>
-                  <h3 className="mt-3 text-[15px] font-bold leading-5">
+                  <h3 className="mt-2 text-[15px] font-bold leading-5 group-hover:text-[#B12704]">
                     {product.name}
                   </h3>
                   {product.status === "Available" ? (
@@ -351,7 +351,7 @@ export default function ProductsPage() {
                       <p className="mt-2 text-xs leading-5 text-[#77716D]">
                         Quality stationery for everyday writing.
                       </p>
-                      <div className="mt-4 flex items-center gap-2">
+                      <div className="mt-3 flex items-center gap-2">
                         <span className="text-xl font-bold">
                           ₹{product.price}
                         </span>
@@ -361,28 +361,27 @@ export default function ProductsPage() {
                           </span>
                         )}
                       </div>
-                      <div className="mt-auto grid grid-cols-2 gap-2 pt-5">
+                      <div className="mt-auto grid grid-cols-1 gap-2 pt-4">
                         <Link
-                          href="/contact"
-                          className="flex min-h-9 items-center justify-center rounded-md border border-[#D71920] px-2 text-[11px] font-bold text-[#D71920] transition hover:bg-[#fff4f3]"
-                          style={{ color: "#D71920" }}
+                          href="/customize-book"
+                          className="flex min-h-10 items-center justify-center rounded-full border border-[#D5A400] bg-[#FFD814] px-3 text-[12px] font-bold text-[#111827] transition hover:bg-[#F7CA00]"
                         >
-                          View Details
+                          View & Customize
                         </Link>
                         <Link
                           href="/customize-book"
-                          className="flex min-h-9 items-center justify-center rounded-md border border-[#D71920] bg-[#D71920] px-2 text-[11px] font-bold transition hover:bg-[#b81720]"
-                          style={{ color: "#FFFFFF" }}
+                          className="flex min-h-10 items-center justify-center rounded-full border border-[#D5D9D9] bg-white px-3 text-[12px] font-semibold text-[#111827] transition hover:bg-[#F7FAFA]"
+                          
                         >
                           Customize Now
                         </Link>
                       </div>
                     </>
                   ) : (
-                    <div className="mt-auto flex justify-center pt-7">
+                    <div className="mt-auto flex justify-start pt-5">
                       <Link
                         href={`/coming-soon?product=${encodeURIComponent(product.name)}`}
-                        className="inline-flex min-h-9 min-w-28 items-center justify-center rounded-md border border-[#D71920] bg-white px-5 text-[11px] font-semibold text-[#211F1E] transition hover:bg-[#fff4f3]"
+                        className="inline-flex min-h-10 min-w-32 items-center justify-center rounded-full border border-[#D5D9D9] bg-[#F7FAFA] px-5 text-[12px] font-semibold text-[#565959] transition hover:bg-[#E7E9EC]"
                       >
                         Coming Soon
                       </Link>
