@@ -371,7 +371,6 @@ export default function ProductsPage() {
                         <Link
                           href="/customize-book"
                           className="flex min-h-10 items-center justify-center rounded-full border border-[#D5D9D9] bg-white px-3 text-[12px] font-semibold text-[#111827] transition hover:bg-[#F7FAFA]"
-                          
                         >
                           Customize Now
                         </Link>
