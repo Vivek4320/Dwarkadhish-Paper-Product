@@ -2413,7 +2413,6 @@ button {
   }
 }
 
-
 /* Fix mobile product search and category controls */
 @media (max-width: 760px) {
   .products-toolbar {
