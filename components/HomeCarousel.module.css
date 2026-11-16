@@ -89,7 +89,10 @@
   max-height: 470px;
   object-fit: contain;
   overflow: visible;
-  filter: drop-shadow(0 18px 18px rgba(13, 40, 62, 0.12));
+  filter: drop-shadow(0 12px 16px rgba(10, 76, 112, 0.10));
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   transform-origin: 50% 85%;
   animation:
     showcase-arrive 1.15s cubic-bezier(0.18, 0.75, 0.22, 1) both,
@@ -98,7 +101,7 @@
   will-change: transform, translate;
 }
 .stage:hover .showcaseImage {
-  filter: drop-shadow(0 25px 22px rgba(13, 40, 62, 0.18));
+  filter: drop-shadow(0 16px 20px rgba(10, 76, 112, 0.14));
 }
 @keyframes heading-in {
   from {
