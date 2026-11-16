@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -9,19 +10,29 @@ export default function HomeCarousel() {
       className={styles.hero}
       aria-label="Dwarkadhish stationery product showcase"
     >
+      {/* Hero Heading */}
       <div className={styles.heading}>
-        <span className={styles.eyebrow}>EVERY AMBITION NEEDS PREPARATION</span>
+        <span className={styles.eyebrow}>
+          EVERY AMBITION NEEDS PREPARATION
+        </span>
+
         <h1>Every Ambition Needs Preparation</h1>
-        <p>Quality stationery and paper products, made with care</p>
+
+        <p>
+          Quality stationery and paper products, made with care
+        </p>
       </div>
 
+      {/* Product Showcase */}
       <div className={styles.stage}>
         <Image
-          src="/products-showcase.svg"
-          alt="Dwarkadhish Paper Products collection: bill book, letterhead, visiting cards, envelope, A4 notebook and spiral notebook"
-          width={1680}
-          height={470}
+          src="Dwarkadhish-Paper-Product\public\products-showcase.png"
+          alt="Dwarkadhish Paper Products collection including bill books, school diaries, A4 notebooks, calendars, visiting cards, ID cards and paper bags"
+          width={2048}
+          height={682}
           priority
+          quality={100}
+          unoptimized
           sizes="(max-width: 760px) 1100px, (max-width: 1200px) 1300px, 1680px"
           className={styles.showcaseImage}
         />
