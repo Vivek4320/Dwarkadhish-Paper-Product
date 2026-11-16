@@ -19,10 +19,10 @@ export default function HomeCarousel() {
         <Image
           src="/products-showcase.svg"
           alt="Dwarkadhish Paper Products collection: bill book, letterhead, visiting cards, envelope, A4 notebook and spiral notebook"
-          width={1500}
+          width={1680}
           height={470}
           priority
-          sizes="(max-width: 760px) 1100px, (max-width: 1200px) 1300px, 1500px"
+          sizes="(max-width: 760px) 1100px, (max-width: 1200px) 1300px, 1680px"
           className={styles.showcaseImage}
         />
       </div>
