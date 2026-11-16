@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -12,15 +11,11 @@ export default function HomeCarousel() {
     >
       {/* Hero Heading */}
       <div className={styles.heading}>
-        <span className={styles.eyebrow}>
-          EVERY AMBITION NEEDS PREPARATION
-        </span>
+        <span className={styles.eyebrow}>EVERY AMBITION NEEDS PREPARATION</span>
 
         <h1>Every Ambition Needs Preparation</h1>
 
-        <p>
-          Quality stationery and paper products, made with care
-        </p>
+        <p>Quality stationery and paper products, made with care</p>
       </div>
 
       {/* Product Showcase */}
