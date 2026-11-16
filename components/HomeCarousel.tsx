@@ -1,154 +1,157 @@
 "use client";
-import { useEffect, useState } from "react";
 
-const slides = [
-  {
-    eyebrow: "PAPER PRODUCTS, MADE PERSONAL",
-    title: ["Your ideas.", "Your notebook."],
-    accent: "Your way.",
-    description:
-      "Create notebooks that feel like yours, with thoughtful details, quality paper and a finish made to last.",
-    primary: "Customize Your Notebook",
-    primaryHref: "/customize-book",
-    secondary: "Explore Products",
-    secondaryHref: "/products",
-    cover: "carousel-cover-red",
-    monogram: "dp.",
-    coverTitle: ["Ideas Into", "Pages."],
-    coverNote: "YOUR STORY STARTS HERE",
-    visualLabel: "Make it yours",
-    visualNote: "Text, colours & logo",
-    theme: "carousel-slide-warm",
-  },
-  {
-    eyebrow: "MADE FOR EVERYDAY MOMENTS",
-    title: ["Write it down.", "Make it happen."],
-    accent: "One page at a time.",
-    description:
-      "Discover practical notebooks and stationery for study, work, planning and all the ideas in between.",
-    primary: "View Our Collection",
-    primaryHref: "/products",
-    secondary: "Contact Us",
-    secondaryHref: "/contact",
-    cover: "carousel-cover-blue",
-    monogram: "01",
-    coverTitle: ["Plan.", "Create.", "Achieve."],
-    coverNote: "MADE FOR YOUR EVERYDAY",
-    visualLabel: "Everyday essentials",
-    visualNote: "Study, work & gifting",
-    theme: "carousel-slide-blue",
-  },
-  {
-    eyebrow: "CUSTOM & BULK ORDERS",
-    title: ["Your brand.", "On every page."],
-    accent: "Made to represent you.",
-    description:
-      "Bring your notebooks and paper-product ideas to life with custom details for teams, businesses and special occasions.",
-    primary: "Start a Custom Order",
-    primaryHref: "/contact",
-    secondary: "Customize a Book",
-    secondaryHref: "/customize-book",
-    cover: "carousel-cover-gold",
-    monogram: "D",
-    coverTitle: ["Made", "For You."],
-    coverNote: "THOUGHTFUL BY DESIGN",
-    visualLabel: "Made for your needs",
-    visualNote: "Personal or bulk orders",
-    theme: "carousel-slide-gold",
-  },
-];
+import Image from "next/image";
+import { useCallback, useRef, useState } from "react";
+import styles from "./HomeCarousel.module.css";
+
+function ProductLogo({ size = 46 }: { size?: number }) {
+  return (
+    <span className={styles.logo} style={{ width: size, height: size }}>
+      <Image
+        src="/Logo.jpeg"
+        alt="Dwarkadhish Paper Products DP logo"
+        width={size}
+        height={size}
+      />
+    </span>
+  );
+}
+
+function BrandName({ left = false }: { left?: boolean }) {
+  return (
+    <>
+      <span className={styles.brand} style={left ? { textAlign: "left" } : undefined}>
+        DWARKADHISH
+      </span>
+      <span className={styles.brandSub} style={left ? { textAlign: "left" } : undefined}>
+        Paper Products
+      </span>
+    </>
+  );
+}
 
 export default function HomeCarousel() {
-  const [active, setActive] = useState(0);
-  useEffect(() => {
-    const timer = window.setInterval(
-      () => setActive((current) => (current + 1) % slides.length),
-      3000,
-    );
-    return () => window.clearInterval(timer);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [activeDot, setActiveDot] = useState(0);
+
+  const move = useCallback((direction: number) => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    viewport.scrollBy({
+      left: direction * viewport.clientWidth * 0.72,
+      behavior: "smooth",
+    });
   }, []);
-  const current = slides[active];
-  const previous = () =>
-    setActive((index) => (index - 1 + slides.length) % slides.length);
-  const next = () => setActive((index) => (index + 1) % slides.length);
+
+  const updateProgress = useCallback(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+    const progress = maxScroll > 0 ? viewport.scrollLeft / maxScroll : 0;
+    setActiveDot(Math.max(0, Math.min(2, Math.round(progress * 2))));
+  }, []);
+
+  const goToDot = (index: number) => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+    viewport.scrollTo({ left: (maxScroll * index) / 2, behavior: "smooth" });
+  };
 
   return (
-    <section
-      className={"home-carousel " + current.theme}
-      aria-label="Featured products"
-    >
-      <div className="carousel-inner">
-        <div className="carousel-copy" key={active}>
-          <div className="carousel-eyebrow">{current.eyebrow}</div>
-          <h1>
-            {current.title.map((line) => (
-              <span key={line}>
-                {line}
-                <br />
-              </span>
-            ))}
-          </h1>
-          <p className="carousel-accent">{current.accent}</p>
-          <p className="carousel-description">{current.description}</p>
-          <div className="carousel-actions">
-            <a className="button-primary" href={current.primaryHref}>
-              {current.primary} <span aria-hidden="true">↗</span>
-            </a>
-            <a className="button-secondary" href={current.secondaryHref}>
-              {current.secondary} <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-        <div className="carousel-visual" aria-hidden="true">
-          <div className="carousel-paper-shape" />
-          <div className="carousel-notebook-back" />
-          <div className={"carousel-notebook " + current.cover}>
-            <span className="carousel-monogram">{current.monogram}</span>
-            <span className="carousel-cover-rule" />
-            <strong>
-              {current.coverTitle.map((line) => (
-                <span key={line}>
-                  {line}
-                  <br />
-                </span>
-              ))}
-            </strong>
-            <small>{current.coverNote}</small>
-          </div>
-          <div className="carousel-floating-card">
-            <strong>✦ &nbsp;{current.visualLabel}</strong>
-            <span>{current.visualNote}</span>
-          </div>
-          <div className="carousel-stamp">
-            DWARKADHISH
-            <br />
-            PAPER PRODUCTS
-          </div>
-        </div>
+    <section className={styles.hero} aria-label="Dwarkadhish stationery product showcase">
+      <div className={styles.heading}>
+        <span className={styles.eyebrow}>EVERY AMBITION NEEDS PREPARATION</span>
+        <h1>Every Ambition Needs Preparation</h1>
+        <p>Quality stationery and paper products, made with care</p>
       </div>
-      <div className="carousel-controls">
-        <div className="carousel-dots" aria-label="Choose slide">
-          {slides.map((slide, index) => (
-            <button
-              key={slide.eyebrow}
-              className={index === active ? "active" : ""}
-              aria-label={"Go to slide " + (index + 1)}
-              aria-current={index === active ? "true" : undefined}
-              onClick={() => setActive(index)}
-            />
-          ))}
+
+      <div className={styles.stage}>
+        <button
+          className={styles.arrow + " " + styles.previous}
+          type="button"
+          onClick={() => move(-1)}
+          aria-label="Scroll to previous products"
+        >
+          ‹
+        </button>
+
+        <div
+          className={styles.viewport}
+          ref={viewportRef}
+          onScroll={updateProgress}
+          tabIndex={0}
+          aria-label="Scroll through our stationery products"
+        >
+          <div className={styles.track}>
+            <article className={styles.product + " " + styles.billBook} aria-label="Bill book mockup">
+              <ProductLogo />
+              <BrandName />
+              <h2>Bill Book</h2>
+              <div className={styles.invoice}>INVOICE<br />No. ______</div>
+            </article>
+
+            <article className={styles.product + " " + styles.letterhead} aria-label="Letterhead mockup">
+              <ProductLogo size={38} />
+              <BrandName left />
+              <div className={styles.letterLines} />
+            </article>
+
+            <article className={styles.product + " " + styles.cards} aria-label="Visiting card mockup">
+              <div className={styles.cardStack} />
+              <div className={styles.businessCard}>
+                <ProductLogo size={30} />
+                <BrandName left />
+              </div>
+            </article>
+
+            <article className={styles.product + " " + styles.envelope} aria-label="Envelope mockup">
+              <ProductLogo size={39} />
+              <BrandName />
+            </article>
+
+            <article className={styles.product + " " + styles.a4} aria-label="A4 notebook mockup">
+              <ProductLogo size={42} />
+              <BrandName />
+              <h2>A4<br />Note Book</h2>
+              <p>A4 SIZE · 80 GSM · RULED</p>
+            </article>
+
+            <article className={styles.product + " " + styles.spiral} aria-label="Spiral notebook mockup">
+              <ProductLogo size={43} />
+              <BrandName />
+              <h2>Note Book</h2>
+            </article>
+
+            <article className={styles.product + " " + styles.books} aria-label="Stack of branded books mockup">
+              <div className={styles.book}><span>DWARKADHISH · BOOKS</span></div>
+              <div className={styles.book}><span>NOTE BOOK</span></div>
+              <div className={styles.book}><span>PAPER PRODUCTS</span></div>
+            </article>
+          </div>
         </div>
-        <div className="carousel-arrows">
-          <button onClick={previous} aria-label="Previous slide">
-            ←
-          </button>
-          <span>
-            0{active + 1} <i>/</i> 0{slides.length}
-          </span>
-          <button onClick={next} aria-label="Next slide">
-            →
-          </button>
-        </div>
+
+        <button
+          className={styles.arrow + " " + styles.next}
+          type="button"
+          onClick={() => move(1)}
+          aria-label="Scroll to next products"
+        >
+          ›
+        </button>
+      </div>
+
+      <div className={styles.pagination} aria-label="Product showcase position">
+        {[0, 1, 2].map((dot) => (
+          <button
+            key={dot}
+            type="button"
+            className={dot === activeDot ? styles.dot + " " + styles.activeDot : styles.dot}
+            onClick={() => goToDot(dot)}
+            aria-label={"Go to product group " + (dot + 1)}
+            aria-current={dot === activeDot ? "true" : undefined}
+          />
+        ))}
       </div>
     </section>
   );
