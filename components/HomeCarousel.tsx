@@ -52,7 +52,9 @@ export default function HomeCarousel() {
         {slides.map((slide, index) => (
           <div
             key={slide.image}
-            className={index === active ? styles.bannerActive : styles.bannerHidden}
+            className={
+              index === active ? styles.bannerActive : styles.bannerHidden
+            }
             aria-hidden={index !== active}
           >
             <Image
