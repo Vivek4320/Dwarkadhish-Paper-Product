@@ -2,290 +2,118 @@
   position: relative;
   isolation: isolate;
   width: 100%;
-  min-height: min(680px, calc(100svh - 70px));
   overflow: hidden;
-  padding: clamp(36px, 5vw, 76px) 0 22px;
-  color: #07558d;
-  background:
-    radial-gradient(
-      ellipse at 50% 42%,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.32) 42%,
-      transparent 72%
-    ),
-    linear-gradient(180deg, #b9e7ff 0%, #83d4f8 56%, #27aee8 100%);
+  background: #0878c9;
 }
-.hero::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: -65% -25% -30%;
-  pointer-events: none;
-  opacity: 0.36;
-  background: repeating-conic-gradient(
-    from -8deg at 50% 49%,
-    rgba(255, 255, 255, 0.48) 0deg 2.2deg,
-    transparent 2.2deg 13deg
-  );
-  animation: rays-drift 38s linear infinite;
+.bannerStage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: min(720px, 68vw);
+  overflow: hidden;
+  background: linear-gradient(120deg, #b9e7ff, #0878c9);
 }
-.hero::after {
-  content: "";
+.bannerActive,
+.bannerHidden {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    110deg,
-    transparent 25%,
-    rgba(255, 255, 255, 0.14) 48%,
-    transparent 70%
-  );
-  background-size: 220% 100%;
-  animation: sky-shimmer 9s ease-in-out infinite;
+  transition: opacity 900ms ease, transform 1100ms cubic-bezier(.2,.7,.2,1);
 }
-.copy {
-  position: relative;
+.bannerActive {
   z-index: 1;
-  padding: 0 20px;
-  text-align: center;
-  animation: heading-in 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  opacity: 1;
+  transform: scale(1);
 }
-.eyebrow {
-  display: inline-block;
-  margin-bottom: 10px;
-  color: #07558d;
-  font-size: clamp(10px, 1vw, 13px);
-  font-weight: 900;
-  letter-spacing: 0.13em;
+.bannerHidden {
+  z-index: 0;
+  opacity: 0;
+  transform: scale(1.035);
+  pointer-events: none;
 }
-.copy h1 {
-  margin: 0;
-  color: #07558d;
-  font-size: clamp(29px, 3.2vw, 48px);
-  line-height: 1.12;
-  font-weight: 950;
-  letter-spacing: -0.035em;
-  text-transform: none;
-}
-.copy p {
-  margin: 12px 0 0;
-  color: #174f78;
-  font-size: clamp(13px, 1.15vw, 16px);
-  font-weight: 650;
-}
-.stage {
-  position: relative;
-  width: 100%;
-  max-width: 1840px;
-  margin: clamp(22px, 3vw, 42px) auto 0;
-  padding: 0 clamp(14px, 2.5vw, 40px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1400px;
-  animation: image-in 1.1s cubic-bezier(0.18, 0.75, 0.22, 1) both;
-}
-.imageGlow {
-  position: absolute;
-  z-index: -1;
-  width: 58%;
-  height: 70%;
-  left: 21%;
-  top: 12%;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.46);
-  filter: blur(38px);
-  animation: glow-pulse 5s ease-in-out infinite;
-}
-.showcaseImage {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: min(470px, 56vh);
-  object-fit: contain;
-  filter: drop-shadow(0 15px 18px rgba(10, 76, 112, 0.12));
-  transform-origin: 50% 85%;
-  animation: image-float 5.5s ease-in-out infinite;
-  will-change: transform;
+.bannerImage {
+  object-fit: cover;
+  object-position: center;
 }
 .controls {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   left: 0;
   right: 0;
-  bottom: 22px;
+  bottom: clamp(12px, 2vw, 24px);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(28px, 5vw, 72px);
+  gap: clamp(24px, 4vw, 60px);
+  pointer-events: none;
 }
 .dots {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+  pointer-events: auto;
 }
 .dot,
 .activeDot {
   width: 9px;
   height: 9px;
   padding: 0;
-  border: 0;
+  border: 1px solid rgba(255,255,255,.9);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255,255,255,.65);
   cursor: pointer;
-  transition:
-    width 0.3s ease,
-    background 0.3s ease;
+  transition: width .3s ease, background .3s ease;
 }
 .activeDot {
-  width: 27px;
+  width: 28px;
   background: #07558d;
 }
 .arrow {
   display: grid;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   place-items: center;
-  border: 0;
+  border: 1px solid rgba(255,255,255,.5);
   border-radius: 50%;
-  background: rgba(7, 85, 141, 0.22);
-  color: white;
+  background: rgba(5,65,112,.38);
+  color: #fff;
   cursor: pointer;
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 800;
-  transition:
-    background 0.25s ease,
-    transform 0.25s ease;
+  pointer-events: auto;
+  backdrop-filter: blur(8px);
+  transition: background .25s ease, transform .25s ease;
 }
 .arrow:hover {
-  background: rgba(7, 85, 141, 0.48);
+  background: rgba(5,65,112,.7);
   transform: scale(1.08);
 }
-@keyframes heading-in {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes image-in {
-  0% {
-    opacity: 0;
-    transform: translateY(38px) scale(0.96);
-  }
-  70% {
-    opacity: 1;
-    transform: translateY(-4px) scale(1.005);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-@keyframes image-float {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -7px;
-  }
-}
-@keyframes rays-drift {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes sky-shimmer {
-  0%,
-  100% {
-    background-position: 100% 0;
-    opacity: 0.35;
-  }
-  50% {
-    background-position: -100% 0;
-    opacity: 0.8;
-  }
-}
-@keyframes glow-pulse {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(0.96);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.04);
-  }
-}
 @media (max-width: 760px) {
-  .hero {
-    min-height: 470px;
-    padding: 32px 0 70px;
-  }
-  .copy h1 {
-    font-size: clamp(25px, 6.5vw, 35px);
-  }
-  .copy p {
-    max-width: 340px;
-    margin: 9px auto 0;
-    font-size: 12px;
-    line-height: 1.5;
-  }
-  .stage {
-    width: 100%;
-    margin-top: 30px;
-    padding: 0;
-    overflow: hidden;
-  }
-  .showcaseImage {
-    width: 1120px;
-    max-width: none;
+  .bannerStage {
+    aspect-ratio: 4 / 5;
     max-height: none;
   }
+  .bannerImage {
+    object-fit: cover;
+    object-position: center;
+  }
   .controls {
-    bottom: 16px;
-    gap: 30px;
+    bottom: 12px;
+    gap: 24px;
   }
   .arrow {
-    width: 36px;
-    height: 36px;
-    font-size: 21px;
+    width: 34px;
+    height: 34px;
+    font-size: 20px;
   }
 }
 @media (max-width: 420px) {
-  .hero {
-    min-height: 420px;
-  }
-  .copy h1 {
-    font-size: 26px;
-  }
-  .eyebrow {
-    font-size: 9px;
-  }
-  .stage {
-    margin-top: 24px;
-  }
-  .showcaseImage {
-    width: 980px;
+  .bannerStage {
+    aspect-ratio: 3 / 4;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero::before,
-  .hero::after,
-  .copy,
-  .stage,
-  .showcaseImage,
-  .imageGlow {
-    animation: none !important;
-  }
+  .bannerActive,
+  .bannerHidden,
   .dot,
   .activeDot,
   .arrow {
