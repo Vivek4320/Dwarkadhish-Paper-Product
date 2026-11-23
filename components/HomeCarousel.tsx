@@ -21,7 +21,8 @@ const slides = [
   },
   {
     title: "Make Every Page Count",
-    subtitle: "Thoughtful notebook designs for learning, planning and creating.",
+    subtitle:
+      "Thoughtful notebook designs for learning, planning and creating.",
     image: "/Templates/Template-3.png",
     alt: "Another notebook cover design from Dwarkadhish Paper Products",
     collection: false,
@@ -74,12 +75,21 @@ export default function HomeCarousel() {
           height={slide.collection ? 682 : 1200}
           priority={active === 0}
           sizes="(max-width: 760px) 100vw, 100vw"
-          className={slide.collection ? styles.showcaseImage : styles.notebookImage}
+          className={
+            slide.collection ? styles.showcaseImage : styles.notebookImage
+          }
         />
       </div>
 
       <div className={styles.controls}>
-        <button type="button" className={styles.arrow} onClick={() => goTo(active - 1)} aria-label="Previous slide">←</button>
+        <button
+          type="button"
+          className={styles.arrow}
+          onClick={() => goTo(active - 1)}
+          aria-label="Previous slide"
+        >
+          ←
+        </button>
         <div className={styles.dots} aria-label="Choose hero slide">
           {slides.map((item, index) => (
             <button
@@ -92,7 +102,14 @@ export default function HomeCarousel() {
             />
           ))}
         </div>
-        <button type="button" className={styles.arrow} onClick={() => goTo(active + 1)} aria-label="Next slide">→</button>
+        <button
+          type="button"
+          className={styles.arrow}
+          onClick={() => goTo(active + 1)}
+          aria-label="Next slide"
+        >
+          →
+        </button>
       </div>
     </section>
   );
