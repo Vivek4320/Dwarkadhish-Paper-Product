@@ -35,8 +35,14 @@ const slides = [
     secondaryHref: "/products",
     kind: "custom",
     images: [
-      { src: "/Templates/Template-1.png", alt: "Custom notebook cover design one" },
-      { src: "/Templates/Template-2.png", alt: "Custom notebook cover design two" },
+      {
+        src: "/Templates/Template-1.png",
+        alt: "Custom notebook cover design one",
+      },
+      {
+        src: "/Templates/Template-2.png",
+        alt: "Custom notebook cover design two",
+      },
     ],
     note: "Your cover. Your story.",
   },
@@ -71,7 +77,8 @@ export default function HomeCarousel() {
     return () => window.clearInterval(timer);
   }, [paused]);
 
-  const goTo = (index: number) => setActive((index + slides.length) % slides.length);
+  const goTo = (index: number) =>
+    setActive((index + slides.length) % slides.length);
   const slide = slides[active];
 
   return (
@@ -95,10 +102,12 @@ export default function HomeCarousel() {
           <p className={styles.description}>{slide.description}</p>
           <div className={styles.actions}>
             <Link className={styles.primary} href={slide.primaryHref}>
-              {slide.primary}<span aria-hidden="true">↗</span>
+              {slide.primary}
+              <span aria-hidden="true">↗</span>
             </Link>
             <Link className={styles.secondary} href={slide.secondaryHref}>
-              {slide.secondary}<span aria-hidden="true">→</span>
+              {slide.secondary}
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
           <div className={styles.slideMeta}>
@@ -126,7 +135,9 @@ export default function HomeCarousel() {
             <div className={styles.bookShowcase}>
               {slide.images.map((item, index) => (
                 <div
-                  className={index === 0 ? styles.bookPrimary : styles.bookSecondary}
+                  className={
+                    index === 0 ? styles.bookPrimary : styles.bookSecondary
+                  }
                   key={item.src}
                 >
                   <Image
@@ -159,11 +170,22 @@ export default function HomeCarousel() {
           ))}
         </div>
         <div className={styles.arrows}>
-          <button type="button" onClick={() => goTo(active - 1)} aria-label="Previous slide">
+          <button
+            type="button"
+            onClick={() => goTo(active - 1)}
+            aria-label="Previous slide"
+          >
             ←
           </button>
-          <span>0{active + 1}<i>/</i>0{slides.length}</span>
-          <button type="button" onClick={() => goTo(active + 1)} aria-label="Next slide">
+          <span>
+            0{active + 1}
+            <i>/</i>0{slides.length}
+          </span>
+          <button
+            type="button"
+            onClick={() => goTo(active + 1)}
+            aria-label="Next slide"
+          >
             →
           </button>
         </div>
