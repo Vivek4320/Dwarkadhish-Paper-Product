@@ -8,14 +8,14 @@ const slides = [
   {
     title: "Every Ambition Needs Preparation",
     instruction: "Quality stationery and paper products, made with care.",
-    image: "/products-showcase.png",
+    image: "/hero-banner-1.jpg",
     alt: "Dwarkadhish collection of notebooks, bill books, calendars and stationery",
     fit: "contain",
   },
   {
     title: "A Cover That Reflects Your Ideas",
     instruction: "Create a notebook that feels uniquely yours.",
-    image: "/Templates/Template-1.png",
+    image: "/hero-banner-2.png",
     alt: "Custom notebook cover design",
     fit: "contain",
   },
@@ -23,7 +23,7 @@ const slides = [
     title: "Make Every Page Count",
     instruction:
       "Thoughtful paper products for learning, planning and creating.",
-    image: "/Templates/Template-3.png",
+    image: "/hero-banner-2.png",
     alt: "Notebook cover design",
     fit: "contain",
   },
