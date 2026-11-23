@@ -5,7 +5,12 @@
   overflow: hidden;
   padding: clamp(18px, 2.4vw, 32px) 0 54px;
   background:
-    radial-gradient(ellipse at 50% 46%, rgba(255,255,255,.88) 0%, rgba(255,255,255,.2) 48%, transparent 74%),
+    radial-gradient(
+      ellipse at 50% 46%,
+      rgba(255, 255, 255, 0.88) 0%,
+      rgba(255, 255, 255, 0.2) 48%,
+      transparent 74%
+    ),
     linear-gradient(180deg, #c4edff 0%, #8bd8f8 55%, #39b8eb 100%);
 }
 .hero::before {
@@ -14,8 +19,12 @@
   z-index: -1;
   inset: -80% -30%;
   pointer-events: none;
-  opacity: .26;
-  background: repeating-conic-gradient(from -8deg at 50% 50%, rgba(255,255,255,.7) 0deg 2deg, transparent 2deg 13deg);
+  opacity: 0.26;
+  background: repeating-conic-gradient(
+    from -8deg at 50% 50%,
+    rgba(255, 255, 255, 0.7) 0deg 2deg,
+    transparent 2deg 13deg
+  );
   animation: hero-rays 45s linear infinite;
 }
 .copy {
@@ -23,7 +32,7 @@
   z-index: 1;
   padding: 0 18px;
   text-align: center;
-  animation: hero-copy-in .7s ease both;
+  animation: hero-copy-in 0.7s ease both;
 }
 .copy h1 {
   margin: 0;
@@ -31,7 +40,7 @@
   font-size: clamp(25px, 3vw, 43px);
   line-height: 1.12;
   font-weight: 950;
-  letter-spacing: -.035em;
+  letter-spacing: -0.035em;
 }
 .copy p {
   margin: 8px 0 0;
@@ -47,12 +56,12 @@
   margin: clamp(12px, 1.8vw, 24px) auto 0;
   overflow: hidden;
   border-radius: 4px;
-  animation: hero-image-in .9s cubic-bezier(.2,.7,.2,1) both;
+  animation: hero-image-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 .bannerImage {
   object-fit: contain;
   object-position: center;
-  filter: drop-shadow(0 14px 22px rgba(7,65,104,.12));
+  filter: drop-shadow(0 14px 22px rgba(7, 65, 104, 0.12));
   animation: hero-image-float 6s ease-in-out infinite;
 }
 .controls {
@@ -66,50 +75,122 @@
   justify-content: center;
   gap: clamp(22px, 4vw, 56px);
 }
-.dots { display: flex; align-items: center; gap: 8px; }
-.dot, .activeDot {
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dot,
+.activeDot {
   width: 9px;
   height: 9px;
   padding: 0;
-  border: 1px solid rgba(255,255,255,.95);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   border-radius: 20px;
-  background: rgba(255,255,255,.78);
+  background: rgba(255, 255, 255, 0.78);
   cursor: pointer;
-  transition: width .3s ease, background .3s ease;
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
 }
-.activeDot { width: 26px; background: #07558d; }
+.activeDot {
+  width: 26px;
+  background: #07558d;
+}
 .arrow {
   display: grid;
   width: 34px;
   height: 34px;
   place-items: center;
-  border: 1px solid rgba(255,255,255,.6);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 50%;
-  background: rgba(7,85,141,.25);
+  background: rgba(7, 85, 141, 0.25);
   color: white;
   cursor: pointer;
   font-size: 20px;
   font-weight: 800;
-  transition: background .2s ease, transform .2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
-.arrow:hover { background: rgba(7,85,141,.55); transform: scale(1.07); }
-@keyframes hero-copy-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes hero-image-in { from { opacity: 0; transform: translateY(22px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-@keyframes hero-image-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -5px; } }
-@keyframes hero-rays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.arrow:hover {
+  background: rgba(7, 85, 141, 0.55);
+  transform: scale(1.07);
+}
+@keyframes hero-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes hero-image-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes hero-image-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -5px;
+  }
+}
+@keyframes hero-rays {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 @media (max-width: 760px) {
-  .hero { padding: 22px 0 48px; }
-  .copy h1 { font-size: clamp(22px, 6vw, 32px); }
-  .copy p { max-width: 340px; margin: 7px auto 0; font-size: 12px; }
+  .hero {
+    padding: 22px 0 48px;
+  }
+  .copy h1 {
+    font-size: clamp(22px, 6vw, 32px);
+  }
+  .copy p {
+    max-width: 340px;
+    margin: 7px auto 0;
+    font-size: 12px;
+  }
   .bannerStage {
     width: calc(100% - 20px);
     height: clamp(220px, 66vw, 330px);
     margin-top: 14px;
   }
-  .controls { bottom: 8px; gap: 20px; }
-  .arrow { width: 30px; height: 30px; font-size: 18px; }
+  .controls {
+    bottom: 8px;
+    gap: 20px;
+  }
+  .arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero::before, .copy, .bannerStage, .bannerImage { animation: none !important; }
-  .dot, .activeDot, .arrow { transition: none; }
+  .hero::before,
+  .copy,
+  .bannerStage,
+  .bannerImage {
+    animation: none !important;
+  }
+  .dot,
+  .activeDot,
+  .arrow {
+    transition: none;
+  }
 }
