@@ -21,7 +21,8 @@ const slides = [
   },
   {
     title: "Make Every Page Count",
-    instruction: "Thoughtful paper products for learning, planning and creating.",
+    instruction:
+      "Thoughtful paper products for learning, planning and creating.",
     image: "/Templates/Template-3.png",
     alt: "Notebook cover design",
     fit: "contain",
@@ -40,7 +41,8 @@ export default function HomeCarousel() {
     return () => window.clearInterval(timer);
   }, [paused]);
 
-  const goTo = (index: number) => setActive((index + slides.length) % slides.length);
+  const goTo = (index: number) =>
+    setActive((index + slides.length) % slides.length);
   const slide = slides[active];
 
   return (
@@ -51,7 +53,8 @@ export default function HomeCarousel() {
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false);
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null))
+          setPaused(false);
       }}
     >
       <div className={styles.copy} key={slide.title}>
@@ -71,7 +74,14 @@ export default function HomeCarousel() {
       </div>
 
       <div className={styles.controls}>
-        <button type="button" className={styles.arrow} onClick={() => goTo(active - 1)} aria-label="Previous banner">←</button>
+        <button
+          type="button"
+          className={styles.arrow}
+          onClick={() => goTo(active - 1)}
+          aria-label="Previous banner"
+        >
+          ←
+        </button>
         <div className={styles.dots} aria-label="Choose hero banner">
           {slides.map((item, index) => (
             <button
@@ -84,7 +94,14 @@ export default function HomeCarousel() {
             />
           ))}
         </div>
-        <button type="button" className={styles.arrow} onClick={() => goTo(active + 1)} aria-label="Next banner">→</button>
+        <button
+          type="button"
+          className={styles.arrow}
+          onClick={() => goTo(active + 1)}
+          aria-label="Next banner"
+        >
+          →
+        </button>
       </div>
     </section>
   );
