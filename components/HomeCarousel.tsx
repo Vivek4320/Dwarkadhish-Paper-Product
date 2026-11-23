@@ -17,7 +17,8 @@ const slides = [
   {
     eyebrow: "MADE FOR YOUR EVERYDAY IDEAS",
     title: "Creativity Begins With The Right Stationery",
-    description: "Thoughtfully crafted paper products for school, office and business.",
+    description:
+      "Thoughtfully crafted paper products for school, office and business.",
     image: "/products-showcase.png",
     alt: "Collection of Dwarkadhish paper and stationery products",
     width: 2048,
