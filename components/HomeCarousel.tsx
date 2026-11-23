@@ -6,26 +6,16 @@ import styles from "./HomeCarousel.module.css";
 
 const slides = [
   {
-    title: "Every Ambition Needs Preparation",
-    subtitle: "Quality stationery and paper products, made with care.",
-    image: "/products-showcase.png",
-    alt: "Dwarkadhish collection of notebooks, bill books, calendars and stationery",
-    collection: true,
+    image: "/hero-banner-1.png",
+    alt: "Premium stationery collection with colourful notebooks and writing accessories",
   },
   {
-    title: "A Cover That Reflects Your Ideas",
-    subtitle: "Customised notebooks designed around your creativity.",
-    image: "/Templates/Template-1.png",
-    alt: "Custom notebook cover design from Dwarkadhish Paper Products",
-    collection: false,
+    image: "/hero-banner-2.png",
+    alt: "Dwarkadhish paper products collection with notebooks, calendars, bill books and stationery",
   },
   {
-    title: "Make Every Page Count",
-    subtitle:
-      "Thoughtful notebook designs for learning, planning and creating.",
-    image: "/Templates/Template-3.png",
-    alt: "Another notebook cover design from Dwarkadhish Paper Products",
-    collection: false,
+    image: "/hero-banner-3.png",
+    alt: "Business paper products including bill books, calendars, notebooks and printed stationery",
   },
 ];
 
@@ -35,20 +25,20 @@ export default function HomeCarousel() {
 
   useEffect(() => {
     if (paused) return;
-    const timer = window.setInterval(() => {
-      setActive((current) => (current + 1) % slides.length);
-    }, 6500);
+    const timer = window.setInterval(
+      () => setActive((current) => (current + 1) % slides.length),
+      6500,
+    );
     return () => window.clearInterval(timer);
   }, [paused]);
 
   const goTo = (index: number) =>
     setActive((index + slides.length) % slides.length);
-  const slide = slides[active];
 
   return (
     <section
       className={styles.hero}
-      aria-label="Dwarkadhish Paper Products highlights"
+      aria-label="Dwarkadhish Paper Products banners"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -58,27 +48,23 @@ export default function HomeCarousel() {
         }
       }}
     >
-      <div className={styles.copy} key={active}>
-        <h1>{slide.title}</h1>
-        <p>{slide.subtitle}</p>
-      </div>
-
-      <div
-        className={slide.collection ? styles.stage : styles.notebookStage}
-        key={"image-" + active}
-      >
-        <div className={styles.imageGlow} aria-hidden="true" />
-        <Image
-          src={slide.image}
-          alt={slide.alt}
-          width={slide.collection ? 2048 : 1200}
-          height={slide.collection ? 682 : 1200}
-          priority={active === 0}
-          sizes="(max-width: 760px) 100vw, 100vw"
-          className={
-            slide.collection ? styles.showcaseImage : styles.notebookImage
-          }
-        />
+      <div className={styles.bannerStage}>
+        {slides.map((slide, index) => (
+          <div
+            key={slide.image}
+            className={index === active ? styles.bannerActive : styles.bannerHidden}
+            aria-hidden={index !== active}
+          >
+            <Image
+              src={slide.image}
+              alt={slide.alt}
+              fill
+              priority={index === 0}
+              sizes="100vw"
+              className={styles.bannerImage}
+            />
+          </div>
+        ))}
       </div>
 
       <div className={styles.controls}>
@@ -86,17 +72,17 @@ export default function HomeCarousel() {
           type="button"
           className={styles.arrow}
           onClick={() => goTo(active - 1)}
-          aria-label="Previous slide"
+          aria-label="Previous banner"
         >
           ←
         </button>
-        <div className={styles.dots} aria-label="Choose hero slide">
-          {slides.map((item, index) => (
+        <div className={styles.dots} aria-label="Choose hero banner">
+          {slides.map((slide, index) => (
             <button
-              key={item.title}
+              key={slide.image}
               type="button"
               className={index === active ? styles.activeDot : styles.dot}
-              aria-label={"Show slide " + (index + 1)}
+              aria-label={"Show banner " + (index + 1)}
               aria-current={index === active ? "true" : undefined}
               onClick={() => goTo(index)}
             />
@@ -106,7 +92,7 @@ export default function HomeCarousel() {
           type="button"
           className={styles.arrow}
           onClick={() => goTo(active + 1)}
-          aria-label="Next slide"
+          aria-label="Next banner"
         >
           →
         </button>
