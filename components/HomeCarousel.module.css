@@ -32,7 +32,6 @@
   z-index: 1;
   padding: 0 18px;
   text-align: center;
-  animation: hero-copy-in 0.7s ease both;
 }
 .copy h1 {
   margin: 0;
@@ -41,6 +40,7 @@
   line-height: 1.12;
   font-weight: 950;
   letter-spacing: -0.035em;
+  animation: hero-text-drop 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .copy p {
   margin: 8px 0 0;
@@ -48,6 +48,7 @@
   font-size: clamp(12px, 1.1vw, 15px);
   line-height: 1.5;
   font-weight: 650;
+  animation: hero-text-drop 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) 0.18s both;
 }
 .bannerStage {
   position: relative;
@@ -117,10 +118,10 @@
   background: rgba(7, 85, 141, 0.55);
   transform: scale(1.07);
 }
-@keyframes hero-copy-in {
+@keyframes hero-text-drop {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(-42px);
   }
   to {
     opacity: 1;
@@ -183,7 +184,8 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .hero::before,
-  .copy,
+  .copy h1,
+  .copy p,
   .bannerStage,
   .bannerImage {
     animation: none !important;
