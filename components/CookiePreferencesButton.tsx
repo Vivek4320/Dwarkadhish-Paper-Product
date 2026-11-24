@@ -5,7 +5,9 @@ export default function CookiePreferencesButton() {
     <button
       type="button"
       className="transition hover:underline"
-      onClick={() => window.dispatchEvent(new Event("dpp:open-cookie-preferences"))}
+      onClick={() =>
+        window.dispatchEvent(new Event("dpp:open-cookie-preferences"))
+      }
     >
       Cookie Preferences
     </button>
