@@ -26,6 +26,19 @@ export default function CookieConsent() {
     } catch {
       setVisible(true);
     }
+    const openPreferences = () => {
+      setVisible(true);
+      setSettings(true);
+      try {
+        const saved = window.localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setChoices({ essential: true, analytics: Boolean(parsed.analytics), preferences: Boolean(parsed.preferences) });
+        }
+      } catch { /* Keep safe defaults if stored data is unavailable. */ }
+    };
+    window.addEventListener("dpp:open-cookie-preferences", openPreferences);
+    return () => window.removeEventListener("dpp:open-cookie-preferences", openPreferences);
   }, []);
 
   function save(next: Preferences) {
