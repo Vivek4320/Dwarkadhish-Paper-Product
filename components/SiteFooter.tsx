@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function SiteFooter() {
   return (
     <footer className="site-footer" id="contact">
@@ -40,6 +42,16 @@ export default function SiteFooter() {
           <span>Product and business enquiries</span>
           <a href="mailto:info@dwarkadhishpaper.in">info@dwarkadhishpaper.in</a>
         </div>
+      </div>
+      <div className="border-t border-current/10 px-5 py-4">
+        <nav aria-label="Legal" className="mx-auto flex max-w-7xl flex-wrap gap-x-5 gap-y-2 text-xs">
+          <Link href="/privacy-policy" className="transition hover:underline">Privacy Policy</Link>
+          <Link href="/cookie-policy" className="transition hover:underline">Cookie Policy</Link>
+          <Link href="/terms-and-conditions" className="transition hover:underline">Terms & Conditions</Link>
+          <Link href="/return-refund-policy" className="transition hover:underline">Return & Refund</Link>
+          <Link href="/shipping-policy" className="transition hover:underline">Shipping Policy</Link>
+          <a href="/cookie-policy#preferences" className="transition hover:underline">Cookie Preferences</a>
+        </nav>
       </div>
       <div className="footer-bottom">
         <span>© 2026 Dwarkadhish Paper Products. All rights reserved.</span>
