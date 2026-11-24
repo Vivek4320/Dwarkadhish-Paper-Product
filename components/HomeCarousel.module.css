@@ -140,6 +140,9 @@
   background: #07558d;
 }
 .arrow {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
   display: grid;
   width: 34px;
   height: 34px;
@@ -151,13 +154,33 @@
   cursor: pointer;
   font-size: 20px;
   font-weight: 800;
+  opacity: 0;
+  transform: translateY(-50%);
   transition:
+    opacity 0.25s ease,
     background 0.2s ease,
     transform 0.2s ease;
 }
+.arrowPrev {
+  left: clamp(8px, 1.6vw, 24px);
+}
+.arrowNext {
+  right: clamp(8px, 1.6vw, 24px);
+}
+/* Arrows appear while the pointer is over the banner (or when focused). */
+.hero:hover .arrow,
+.arrow:focus-visible {
+  opacity: 1;
+}
 .arrow:hover {
   background: rgba(7, 85, 141, 0.55);
-  transform: scale(1.07);
+  transform: translateY(-50%) scale(1.07);
+}
+/* Touch screens cannot hover, so keep the arrows visible there. */
+@media (hover: none) {
+  .arrow {
+    opacity: 1;
+  }
 }
 @keyframes hero-letter-drop {
   from {
@@ -228,7 +251,6 @@
   }
   .controls {
     bottom: 8px;
-    gap: 20px;
   }
   .arrow {
     width: 30px;

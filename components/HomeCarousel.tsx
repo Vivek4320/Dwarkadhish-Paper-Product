@@ -131,15 +131,24 @@ export default function HomeCarousel() {
         />
       </div>
 
+      <button
+        type="button"
+        className={`${styles.arrow} ${styles.arrowPrev}`}
+        onClick={() => goTo(active - 1)}
+        aria-label="Previous banner"
+      >
+        ←
+      </button>
+      <button
+        type="button"
+        className={`${styles.arrow} ${styles.arrowNext}`}
+        onClick={() => goTo(active + 1)}
+        aria-label="Next banner"
+      >
+        →
+      </button>
+
       <div className={styles.controls}>
-        <button
-          type="button"
-          className={styles.arrow}
-          onClick={() => goTo(active - 1)}
-          aria-label="Previous banner"
-        >
-          ←
-        </button>
         <div className={styles.dots} aria-label="Choose hero banner">
           {slides.map((item, index) => (
             <button
@@ -152,14 +161,6 @@ export default function HomeCarousel() {
             />
           ))}
         </div>
-        <button
-          type="button"
-          className={styles.arrow}
-          onClick={() => goTo(active + 1)}
-          aria-label="Next banner"
-        >
-          →
-        </button>
       </div>
     </section>
   );
