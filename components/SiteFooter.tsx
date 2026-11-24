@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CookiePreferencesButton from "./CookiePreferencesButton";
 
 export default function SiteFooter() {
   return (
