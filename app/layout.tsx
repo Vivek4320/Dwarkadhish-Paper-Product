@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import InnerPageNav from "../components/InnerPageNav";
 import MobileBottomNav from "../components/MobileBottomNav";
+import CookieConsent from "../components/CookieConsent";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Suspense fallback={null}>
             <MobileBottomNav />
           </Suspense>
+          <CookieConsent />
         </ClerkProvider>
       </body>
     </html>
