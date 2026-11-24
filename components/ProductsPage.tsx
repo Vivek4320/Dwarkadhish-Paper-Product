@@ -271,7 +271,7 @@ export default function ProductsPage() {
                       </div>
                     </>
                   ) : (
-                    <div className="mt-auto flex justify-start pt-5">
+                    <div className="mt-auto flex justify-center pt-5">
                       <Link
                         href={`/coming-soon?product=${encodeURIComponent(product.name)}`}
                         className="inline-flex min-h-10 min-w-32 items-center justify-center rounded-full border border-[#D5D9D9] bg-[#F7FAFA] px-5 text-[12px] font-semibold text-[#565959] transition hover:bg-[#E7E9EC]"
