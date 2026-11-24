@@ -272,12 +272,15 @@ export default function ProductsPage() {
                     </>
                   ) : (
                     <div className="mt-auto flex justify-center pt-5">
-                      <Link
-                        href={`/coming-soon?product=${encodeURIComponent(product.name)}`}
+                      <a
+                        href={`https://wa.me/919981543499?text=${encodeURIComponent(`Hello, I am interested in ${product.name}. Please share more details.`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex min-h-10 min-w-32 items-center justify-center rounded-full border border-[#D5D9D9] bg-[#F7FAFA] px-5 text-[12px] font-semibold text-[#565959] transition hover:bg-[#E7E9EC]"
+                        aria-label={`Enquire about ${product.name} on WhatsApp`}
                       >
                         Coming Soon
-                      </Link>
+                      </a>
                     </div>
                   )}
                 </div>
