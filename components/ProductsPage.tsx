@@ -13,15 +13,6 @@ type Product = {
   oldPrice?: number;
   status: "Available" | "Coming Soon";
   badge?: string;
-  artwork:
-    | "warrior"
-    | "diary"
-    | "banner"
-    | "file"
-    | "pen"
-    | "calendar"
-    | "card"
-    | "id";
 };
 
 const products: Product[] = [
@@ -34,7 +25,6 @@ const products: Product[] = [
     oldPrice: 110,
     status: "Available",
     badge: "Popular",
-    artwork: "warrior",
   },
   {
     id: 2,
@@ -43,7 +33,6 @@ const products: Product[] = [
     detail: "Personalised diaries for everyday planning.",
     status: "Coming Soon",
     badge: "Bestseller",
-    artwork: "diary",
   },
   {
     id: 3,
@@ -51,7 +40,6 @@ const products: Product[] = [
     category: "Customisable",
     detail: "Custom printed covers and promotional designs.",
     status: "Coming Soon",
-    artwork: "banner",
   },
   {
     id: 4,
@@ -59,7 +47,6 @@ const products: Product[] = [
     category: "Stationery",
     detail: "Organise documents with customised files.",
     status: "Coming Soon",
-    artwork: "file",
   },
   {
     id: 5,
@@ -67,7 +54,6 @@ const products: Product[] = [
     category: "Stationery",
     detail: "Branded stationery for teams and events.",
     status: "Coming Soon",
-    artwork: "pen",
   },
   {
     id: 6,
@@ -76,7 +62,6 @@ const products: Product[] = [
     detail: "Desk calendars for homes and businesses.",
     status: "Coming Soon",
     badge: "New",
-    artwork: "calendar",
   },
   {
     id: 7,
@@ -84,7 +69,6 @@ const products: Product[] = [
     category: "Customisable",
     detail: "Professional printed cards for your business.",
     status: "Coming Soon",
-    artwork: "card",
   },
   {
     id: 8,
@@ -92,7 +76,6 @@ const products: Product[] = [
     category: "Stationery",
     detail: "Identification cards for institutions and teams.",
     status: "Coming Soon",
-    artwork: "id",
   },
 ];
 
@@ -104,101 +87,6 @@ const categories = [
   "Customisable",
   "Stationery",
 ];
-
-function ProductArtwork({ type }: { type: Product["artwork"] }) {
-  if (type === "id") {
-    return (
-      <div className="flex h-full w-full items-center justify-center bg-[#FAF7F2]">
-        <div className="flex h-28 w-48 items-center gap-3 rounded-lg border border-[#e5d8c7] bg-white p-4 shadow-md">
-          <div className="h-14 w-12 rounded bg-[#f0e4d2]" />
-          <div className="space-y-2">
-            <div className="h-2 w-16 rounded bg-[#d71920]/80" />
-            <div className="h-1.5 w-20 rounded bg-[#ddd]" />
-            <div className="h-1.5 w-14 rounded bg-[#eee]" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-  if (type === "file") {
-    return (
-      <div className="flex h-full w-full items-center justify-center bg-[#FAF7F2]">
-        <div className="relative h-40 w-28 rounded-md border-1-10 border-[#272524] bg-[#f6e6c5] shadow-[9px_7px_0_0_#bf151b]">
-          <div className="absolute inset-3 border border-[#d6b65d]" />
-          <span className="absolute inset-x-0 top-16 text-center text-xs font-bold">
-            DOCUMENT
-          </span>
-        </div>
-      </div>
-    );
-  }
-  if (type === "pen") {
-    return (
-      <div className="flex h-full w-full items-center justify-center gap-5 bg-[#FAF7F2]">
-        <div className="h-40 w-3 rotate-12 rounded-full bg-[#d71920] shadow-md" />
-        <div className="h-36 w-3 -rotate-6 rounded-full bg-[#242222] shadow-md" />
-        <div className="h-32 w-3 rotate-6 rounded-full bg-[#d6b65d] shadow-md" />
-      </div>
-    );
-  }
-  if (type === "calendar") {
-    return (
-      <div className="flex h-full w-full items-center justify-center bg-[#FAF7F2]">
-        <div className="w-36 -rotate-3 overflow-hidden rounded-md border border-[#e9e3dd] bg-white shadow-lg">
-          <div className="bg-[#d71920] py-3 text-center text-xs font-bold tracking-widest text-white">
-            2026
-          </div>
-          <div className="grid grid-cols-4 gap-2 p-4">
-            {Array.from({ length: 12 }, (_, i) => (
-              <span key={i} className="h-5 rounded-sm bg-[#f3e9d8]" />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-  if (type === "banner" || type === "card") {
-    return (
-      <div className="flex h-full w-full items-center justify-center bg-[#FAF7F2]">
-        <div className="relative flex h-40 w-28 flex-col items-center justify-center rounded-md border-1-10 border-[#272524] bg-[#f6e6c5] shadow-[9px_7px_0_0_#bf151b]">
-          <div className="absolute inset-2 border border-[#d6b65d]" />
-          <span className="relative text-xs font-bold">WARRIOR</span>
-          <span className="relative mt-1 text-[10px] font-bold">YOUR BOOK</span>
-          <span className="relative mt-8 text-[7px] tracking-wider">
-            DWARKADHISH
-          </span>
-        </div>
-      </div>
-    );
-  }
-  if (type === "diary") {
-    return (
-      <div className="flex h-full w-full items-center justify-center bg-[#FAF7F2]">
-        <div className="relative h-44 w-28 -rotate-3 rounded-md border-l-[9px] border-[#272524] bg-[#d71920] shadow-xl">
-          <div className="absolute inset-3 border border-[#f2d68b]" />
-          <span className="absolute inset-x-0 top-16 text-center text-sm font-bold text-white">
-            DIARY
-          </span>
-          <span className="absolute inset-x-0 bottom-8 text-center text-[8px] tracking-widest text-white">
-            2026
-          </span>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div className="flex h-full w-full items-center justify-center bg-[#FAF7F2]">
-      <div className="relative flex h-40 w-28 rotate-2 items-center justify-center rounded-md border-l-[9px] border-[#242222] bg-[#f5e5c4] shadow-[10px_7px_0_0_#c5151d]">
-        <div className="absolute inset-2 border border-[#d6b65d]" />
-        <span className="relative text-center text-sm font-bold leading-5">
-          YOUR
-          <br />
-          NOTEBOOK
-        </span>
-      </div>
-    </div>
-  );
-}
 
 export default function ProductsPage() {
   const [query, setQuery] = useState("");
@@ -332,7 +220,13 @@ export default function ProductsPage() {
                 className="product-amazon-card group overflow-hidden rounded-xl border border-[#E5E7EB] bg-white transition duration-200 hover:-translate-y-1 hover:border-[#c9cdd2] hover:shadow-lg"
               >
                 <div className="product-amazon-image relative h-56.25 overflow-hidden">
-                  <ProductArtwork type={product.artwork} />
+                  <Image
+                    src={`/product${product.id}.png`}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                    className="object-contain p-3 transition-transform duration-300 group-hover:scale-105"
+                  />
                   {product.badge && (
                     <span className="absolute left-3 top-3 rounded-md bg-[#D71920] px-2.5 py-1.5 text-[10px] font-bold text-white">
                       {product.badge}
