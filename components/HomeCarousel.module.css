@@ -4,14 +4,7 @@
   width: 100%;
   overflow: hidden;
   padding: clamp(18px, 2.4vw, 32px) 0 54px;
-  background:
-    radial-gradient(
-      ellipse at 50% 46%,
-      rgba(255, 255, 255, 0.88) 0%,
-      rgba(255, 255, 255, 0.2) 48%,
-      transparent 74%
-    ),
-    linear-gradient(180deg, #c4edff 0%, #8bd8f8 55%, #39b8eb 100%);
+  background: #8bd8f8;
 }
 .hero::before {
   content: "";
@@ -27,11 +20,60 @@
   );
   animation: hero-rays 45s linear infinite;
 }
+.bg {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.9s ease;
+}
+.bg0 {
+  background:
+    radial-gradient(
+      ellipse at 50% 46%,
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(255, 255, 255, 0.2) 48%,
+      transparent 74%
+    ),
+    linear-gradient(180deg, #fff7cf 0%, #ffe892 55%, #ffd34f 100%);
+}
+.bg1 {
+  background:
+    radial-gradient(
+      ellipse at 50% 46%,
+      rgba(255, 255, 255, 0.88) 0%,
+      rgba(255, 255, 255, 0.2) 48%,
+      transparent 74%
+    ),
+    linear-gradient(180deg, #c4edff 0%, #8bd8f8 55%, #39b8eb 100%);
+}
+.bg2 {
+  background:
+    radial-gradient(
+      ellipse at 50% 46%,
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(255, 255, 255, 0.2) 48%,
+      transparent 74%
+    ),
+    linear-gradient(180deg, #d9f7f2 0%, #9fe4dd 55%, #52c8c3 100%);
+}
 .copy {
   position: relative;
   z-index: 1;
   padding: 0 18px;
   text-align: center;
+  transition: opacity 0.35s ease;
+}
+.leaving {
+  opacity: 0;
+}
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.letter {
+  display: inline-block;
+  animation: hero-letter-drop 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .copy h1 {
   margin: 0;
@@ -40,7 +82,6 @@
   line-height: 1.12;
   font-weight: 950;
   letter-spacing: -0.035em;
-  animation: hero-text-drop 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .copy p {
   margin: 8px 0 0;
@@ -48,7 +89,7 @@
   font-size: clamp(12px, 1.1vw, 15px);
   line-height: 1.5;
   font-weight: 650;
-  animation: hero-text-drop 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) 0.18s both;
+  animation: hero-fade-up 0.6s ease both;
 }
 .bannerStage {
   position: relative;
@@ -118,10 +159,23 @@
   background: rgba(7, 85, 141, 0.55);
   transform: scale(1.07);
 }
-@keyframes hero-text-drop {
+@keyframes hero-letter-drop {
   from {
     opacity: 0;
-    transform: translateY(-42px);
+    transform: translateY(-0.9em) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -184,8 +238,9 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .hero::before,
-  .copy h1,
+  .letter,
   .copy p,
+  .bg,
   .bannerStage,
   .bannerImage {
     animation: none !important;

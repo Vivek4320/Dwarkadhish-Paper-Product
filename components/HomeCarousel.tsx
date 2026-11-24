@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./HomeCarousel.module.css";
 
 const slides = [
@@ -29,20 +29,60 @@ const slides = [
   },
 ];
 
+const LEAVE_MS = 350;
+const SLIDE_MS = 6500;
+const LETTER_STEP = 0.07;
+
+/** Headline split into words and letters so each letter can drop in. */
+function Headline({ text }: { text: string }) {
+  let index = 0;
+  return (
+    <h1 aria-label={text}>
+      {text.split(" ").map((word, wordIndex) => (
+        <span key={wordIndex} aria-hidden="true">
+          {wordIndex > 0 && " "}
+          <span className={styles.word}>
+            {word.split("").map((letter) => (
+              <span
+                key={index}
+                className={styles.letter}
+                style={{ animationDelay: `${0.25 + index++ * LETTER_STEP}s` }}
+              >
+                {letter}
+              </span>
+            ))}
+          </span>
+        </span>
+      ))}
+    </h1>
+  );
+}
+
 export default function HomeCarousel() {
   const [active, setActive] = useState(0);
+  const [leaving, setLeaving] = useState(false);
   const [paused, setPaused] = useState(false);
+  const leaveTimer = useRef<number | undefined>(undefined);
+
+  // Fade the old slide's text out, then swap to the new slide.
+  const changeTo = useCallback((index: number) => {
+    window.clearTimeout(leaveTimer.current);
+    setLeaving(true);
+    leaveTimer.current = window.setTimeout(() => {
+      setActive(((index % slides.length) + slides.length) % slides.length);
+      setLeaving(false);
+    }, LEAVE_MS);
+  }, []);
+
+  useEffect(() => () => window.clearTimeout(leaveTimer.current), []);
 
   useEffect(() => {
     if (paused) return;
-    const timer = window.setInterval(() => {
-      setActive((current) => (current + 1) % slides.length);
-    }, 6500);
-    return () => window.clearInterval(timer);
-  }, [paused]);
+    const timer = window.setTimeout(() => changeTo(active + 1), SLIDE_MS);
+    return () => window.clearTimeout(timer);
+  }, [paused, active, changeTo]);
 
-  const goTo = (index: number) =>
-    setActive((index + slides.length) % slides.length);
+  const goTo = (index: number) => changeTo(index);
   const slide = slides[active];
 
   return (
@@ -57,9 +97,27 @@ export default function HomeCarousel() {
           setPaused(false);
       }}
     >
-      <div className={styles.copy} key={slide.title}>
-        <h1>{slide.title}</h1>
-        <p>{slide.instruction}</p>
+      {slides.map((item, index) => (
+        <div
+          key={item.title}
+          className={`${styles.bg} ${styles["bg" + index]}`}
+          style={{ opacity: index === active ? 1 : 0 }}
+          aria-hidden="true"
+        />
+      ))}
+
+      <div
+        className={`${styles.copy} ${leaving ? styles.leaving : ""}`}
+        key={slide.title}
+      >
+        <Headline text={slide.title} />
+        <p
+          style={{
+            animationDelay: `${0.25 + slide.title.length * LETTER_STEP}s`,
+          }}
+        >
+          {slide.instruction}
+        </p>
       </div>
 
       <div className={styles.bannerStage} key={slide.image}>
