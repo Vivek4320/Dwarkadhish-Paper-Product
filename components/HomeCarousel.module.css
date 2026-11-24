@@ -121,19 +121,27 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 4px 14px rgba(7, 65, 104, 0.14);
+  backdrop-filter: blur(6px);
 }
 .dot,
 .activeDot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.78);
+  border: 0;
+  border-radius: 999px;
+  background: rgba(7, 85, 141, 0.28);
   cursor: pointer;
   transition:
     width 0.3s ease,
     background 0.3s ease;
+}
+.dot:hover {
+  background: rgba(7, 85, 141, 0.55);
 }
 .activeDot {
   width: 26px;
@@ -144,22 +152,27 @@
   z-index: 4;
   top: 50%;
   display: grid;
-  width: 34px;
-  height: 34px;
+  width: 46px;
+  height: 46px;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 0;
+  border: 0;
   border-radius: 50%;
-  background: rgba(7, 85, 141, 0.25);
-  color: white;
+  background: #fff;
+  color: #07558d;
+  box-shadow: 0 6px 18px rgba(7, 65, 104, 0.22);
   cursor: pointer;
-  font-size: 20px;
-  font-weight: 800;
   opacity: 0;
   transform: translateY(-50%);
   transition:
     opacity 0.25s ease,
     background 0.2s ease,
+    color 0.2s ease,
     transform 0.2s ease;
+}
+.arrow svg {
+  width: 20px;
+  height: 20px;
 }
 .arrowPrev {
   left: clamp(8px, 1.6vw, 24px);
@@ -173,8 +186,9 @@
   opacity: 1;
 }
 .arrow:hover {
-  background: rgba(7, 85, 141, 0.55);
-  transform: translateY(-50%) scale(1.07);
+  background: #07558d;
+  color: #fff;
+  transform: translateY(-50%) scale(1.06);
 }
 /* Touch screens cannot hover, so keep the arrows visible there. */
 @media (hover: none) {
@@ -253,9 +267,12 @@
     bottom: 8px;
   }
   .arrow {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
+    width: 36px;
+    height: 36px;
+  }
+  .arrow svg {
+    width: 16px;
+    height: 16px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
